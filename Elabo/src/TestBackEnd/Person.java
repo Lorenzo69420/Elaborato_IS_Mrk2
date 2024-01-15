@@ -27,16 +27,16 @@ public class Person {
 	@Override
 	public String toString() {
 		Date birth = dateBirth.getTime();
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
 		
 		return "Name: " + name + "\nSurname: " + surname + "\nID code: " + IDcode + "\nPlace of birth: " + placeBirth + "\nDate of birth: " + dateFormatter.format(birth);
 	}
 	
 	public boolean isAdult() {
-		Calendar currentDate = Calendar.getInstance();
+		Calendar minBirthAdult = Calendar.getInstance();
 		
-		currentDate.add(Calendar.YEAR, -18);
+		minBirthAdult.add(Calendar.YEAR, -18);
 		
-		return currentDate.after(this.dateBirth);
+		return minBirthAdult.after(this.dateBirth);
 	}
 }
