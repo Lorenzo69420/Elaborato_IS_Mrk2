@@ -34,7 +34,7 @@ public class LoginPage extends AbstractAppPane {
 		ArrayList<String> Names = new ArrayList<>();
 		for (var x: ButtonNames.values()) {
 			String s = x.toString();
-			if (s.equals(ButtonNames.AdminLogin)) {
+			if (x.equals(ButtonNames.AdminLogin)) {
 				s = "Admin Login";
 			}
 			Names.add(s);
