@@ -1,8 +1,10 @@
 package frontEnd;
 
-import javafx.scene.Scene;
+import java.util.List;
 
+import javafx.scene.Scene;
 public interface AppPane {
 	public Scene getScene();
-	public 
+	public void gridSetup( List<Integer> xSub, List<Integer> ySub);
 }
+
