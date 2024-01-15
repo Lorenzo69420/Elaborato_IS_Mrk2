@@ -5,11 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Person {
-	private String IDcode;
-	private String name;
-	private String surname;
-	private String placeBirth;
-	private Calendar dateBirth;
+	private final String IDcode;
+	private final String name;
+	private final String surname;
+	private final String placeBirth;
+	private final Calendar dateBirth;
 	private Person tutor = null;
 	
 	public Person(String IDcode, String name, String surname, String placeBirth, Calendar dateBirth) {
