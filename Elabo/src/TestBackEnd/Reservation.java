@@ -3,6 +3,18 @@ package TestBackEnd;
 import java.time.LocalDateTime;
 
 public class Reservation {
+	public enum ReservationState {
+		BOOCKABLE,
+		BOOKED_UP,
+		CONFIRMED,
+		ALREDY_DONE
+	}
+	
+	public enum ReservationType {
+		COLLECTION,
+		ISSUANCE
+	}
+	
 	private ReservationState state;
 	private final ReservationType type;
 	private final LocalDateTime date;
@@ -21,15 +33,4 @@ public class Reservation {
 		this.state = newState;
 	}
 	
-	private enum ReservationState {
-		BOOCKABLE,
-		BOOKED_UP,
-		CONFIRMED,
-		ALREDY_DONE
-	}
-	
-	private enum ReservationType {
-		COLLECTION,
-		ISSUANCE
-	}
 }

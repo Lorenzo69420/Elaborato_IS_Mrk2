@@ -4,6 +4,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Passport {
+	public enum PassportState {
+		VALID,
+		EXPIRED,
+		LOST,
+		STOLEN,
+		DAMEGED
+	}
+	
 	private final String taxID;
 	private final Calendar releaseDate;
 	private final Calendar expiryDate;
@@ -23,4 +31,5 @@ public class Passport {
 		
 		return "TaxID: " + taxID + "\nRelease date: " + dateFormatter.format(releaseDate.getTime()) + "\nExpiry date: " + dateFormatter.format(expiryDate.getTime()); 
 	}
+	
 }
