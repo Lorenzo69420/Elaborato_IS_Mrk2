@@ -1,13 +1,21 @@
 package frontEnd;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 public class Maintest extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		LoginPage LP = new LoginPage();
-		new SelectPage();
+		//LoginPage LP = new LoginPage();
+		//new SelectPage();
+		BorderPane root = FXMLLoader.load(getClass().getResource("../view/Register.fxml"));
+		Scene diob = new Scene(root);
+		
+		stage.setScene(diob);
+		stage.show();
 	}
 
 	public static void main(String[] args) {

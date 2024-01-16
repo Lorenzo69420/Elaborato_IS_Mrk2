@@ -14,6 +14,7 @@ public class LoginPage extends AbstractAppPane {
 	private ArrayList<Button> ButtonList = new ArrayList<>();
 	private ArrayList<Node> nodeList = new ArrayList<>();
 	private Label errorLabel;
+	private
 	public LoginPage () {
 		int x = 0;
 		Integer colP[] = {33,33,33};
