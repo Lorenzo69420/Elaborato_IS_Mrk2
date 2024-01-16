@@ -3,26 +3,37 @@ package frontEnd;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.stage.Stage;
 
 public abstract class AbstractAppPane implements AppPane {
-	protected GridPane MainPane = new GridPane(); 
-	private Scene AppScene = new Scene(MainPane);
+	private GridPane mainPane = new GridPane(); 
+	private Scene appScene = new Scene(mainPane);
+	private Stage mainStage = new Stage();
 	@Override
 	public Scene getScene() {
-		return AppScene;
+		return appScene;
+	}
+	public Stage getStage() {
+		return mainStage;
+	}
+	public GridPane getPane() {
+		return mainPane;
 	}
 	@Override
-	public void gridSetup(List<Integer> xSub, List<Integer> ySub) {
+	public void closeStage() {
+		mainStage.close();
+	}
+	@Override
+	public void gridInit(List<Integer> xSub, List<Integer> ySub) {
 		ArrayList<ColumnConstraints> colSub = new ArrayList<>();
 		ArrayList<RowConstraints> rowSub = new ArrayList<>();
-		MainPane.setLayoutX(xSub.size());
-		MainPane.setLayoutY(ySub.size());
-		MainPane.setGridLinesVisible(true);
+		mainPane.setLayoutX(xSub.size());
+		mainPane.setLayoutY(ySub.size());
+		mainPane.setGridLinesVisible(true);
 		for (var x :xSub) {
 			ColumnConstraints tmp = new ColumnConstraints();
 			tmp.setPercentWidth(x);
@@ -33,8 +44,12 @@ public abstract class AbstractAppPane implements AppPane {
 			tmp.setPercentHeight(y);
 			rowSub.add(tmp);
 		}
-		MainPane.getColumnConstraints().addAll(colSub);
-		MainPane.getRowConstraints().addAll(rowSub);
-		MainPane.setHgap(MainPane.heightProperty().get()/10);
+		mainPane.getColumnConstraints().addAll(colSub);
+		mainPane.getRowConstraints().addAll(rowSub);
+		mainPane.setHgap(10);
+		mainPane.setVgap(10);
+		mainPane.setMinHeight(ySub.size()*45);
+		mainPane.setMinWidth(xSub.size()*180);
+		
 	}
 }

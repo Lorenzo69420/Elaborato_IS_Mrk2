@@ -6,8 +6,8 @@ public class Maintest extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		stage.setScene(new LoginPage().getScene());
-		stage.show();
+		LoginPage LP = new LoginPage();
+		new SelectPage();
 	}
 
 	public static void main(String[] args) {
