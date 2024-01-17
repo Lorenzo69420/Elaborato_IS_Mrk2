@@ -1,8 +1,8 @@
-package TestBackEnd;
+package model;
 
 import java.util.Calendar;
 
-import TestBackEnd.Passport.PassportState;
+import model.Passport.PassportState;
 
 public class Main {
 

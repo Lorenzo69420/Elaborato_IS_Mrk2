@@ -1,4 +1,4 @@
-package TestBackEnd;
+package model;
 
 
 import java.sql.Connection;
@@ -9,6 +9,18 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Reservation {
+	public enum ReservationState {
+		BOOKABLE,
+		BOOKED_UP,
+		CONFIRMED,
+		ALREADY_DONE
+	}
+	
+	public enum ReservationType {
+		COLLECTION,
+		ISSUANCE
+	}
+	
 	private ReservationState state;
 	private final ReservationType type;
 	private final LocalDateTime date;
@@ -40,18 +52,6 @@ public class Reservation {
 			System.err.println("wrong function\n");
 		}
 		this.state = newState;
-	}
-	
-	public enum ReservationState {
-		BOOKABLE,
-		BOOKED_UP,
-		CONFIRMED,
-		ALREADY_DONE
-	}
-	
-	public enum ReservationType {
-		COLLECTION,
-		ISSUANCE
 	}
 	
 	public void insert() throws SQLException {

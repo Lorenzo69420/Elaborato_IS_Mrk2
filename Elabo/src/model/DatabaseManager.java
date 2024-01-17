@@ -1,4 +1,4 @@
-package TestBackEnd;
+package model;
 
 
 import java.sql.Connection;
