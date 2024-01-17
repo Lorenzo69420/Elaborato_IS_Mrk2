@@ -57,4 +57,8 @@ public class Passport {
 	public PassportState getState() {
 		return state;
 	}
+
+	public int getPassID() {
+		return passportID;
+	}
 }
