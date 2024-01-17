@@ -1,22 +1,18 @@
 package TestBackEnd;
 
-
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.sql.Date;
 
 public class Person {
-	private String taxID;
-	private String name;
-	private String surname;
-	private char sex;
-	private String placeBirth;
-	private Calendar dateBirth;
-	private String belongingCategory; //TODO: non so se sia il termine corretto
-	private Long healthCardNumber; //TODO: anche qua
+	private final String taxID;
+	private final String name;
+	private final String surname;
+	private final char sex;
+	private final String placeBirth;
+	private final Calendar dateBirth;
+	private final String belongingCategory; //TODO: non so se sia il termine corretto
+	private final Long healthCardNumber; //TODO: anche qua
 	private Person tutor = null;
 	
 	public Person(String IDcode, String name, String surname, char sex, String placeBirth, Calendar dateBirth, String belongingCategory, Long healthCardNumber) throws SQLException {
@@ -56,7 +52,7 @@ public class Person {
 	}
 	
 	public void insert() throws SQLException {
-		DatabaseManager.insertPerson(this);
+		DatabaseManager.insert(this);
 	}
 
 	public String getTaxID() {
@@ -87,7 +83,7 @@ public class Person {
 		return belongingCategory;
 	}
 
-	public Object getTutorID() {
+	public String getTutorID() {
 		if (tutor == null) {
 			return null;
 		}
