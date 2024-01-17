@@ -9,30 +9,25 @@ import java.util.Calendar;
 import java.sql.Date;
 
 public class Person {
-	private String IDcode;
+	private String taxID;
 	private String name;
 	private String surname;
 	private char sex;
 	private String placeBirth;
 	private Calendar dateBirth;
-	private String belonging_category; //TODO: non so se sia il termine corretto
-	private Long num_sanitario; //TODO: anche qua
-	private Person tutor;
+	private String belongingCategory; //TODO: non so se sia il termine corretto
+	private Long healthCardNumber; //TODO: anche qua
+	private Person tutor = null;
 	
-	private Connection connection = null;
-	
-	public Person(String IDcode, String name, String surname, char sex, String placeBirth, Calendar dateBirth, String belonging_category, Long num_sanitario) throws SQLException {
-		this.IDcode = IDcode;
+	public Person(String IDcode, String name, String surname, char sex, String placeBirth, Calendar dateBirth, String belongingCategory, Long healthCardNumber) throws SQLException {
+		this.taxID = IDcode;
 		this.name = name;
 		this.surname = surname;
 		this.sex = sex;
 		this.placeBirth = placeBirth;
 		this.dateBirth = dateBirth;
-		this.belonging_category = belonging_category;
-		this.num_sanitario = num_sanitario;
-		
-		Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ingegneria", "neto", "fethergay");
-		this.connection = connection;
+		this.belongingCategory = belongingCategory;
+		this.healthCardNumber = healthCardNumber;
 	}
 	
 	//TODO
@@ -49,7 +44,7 @@ public class Person {
 		java.util.Date birth = dateBirth.getTime();
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 		
-		return "Name: " + name + "\nSurname: " + surname + "\nID code: " + IDcode + "\nPlace of birth: " + placeBirth + "\nDate of birth: " + dateFormatter.format(birth);
+		return "Name: " + name + "\nSurname: " + surname + "\nID code: " + taxID + "\nPlace of birth: " + placeBirth + "\nDate of birth: " + dateFormatter.format(birth);
 	}
 	
 	public boolean isAdult() {
@@ -60,24 +55,47 @@ public class Person {
 		return currentDate.after(this.dateBirth);
 	}
 	
-	
-	
 	public void insert() throws SQLException {
-		var stmt = connection.prepareStatement("INSERT INTO person VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		DatabaseManager.insertPerson(this);
+	}
 
-	    stmt.setString(1, this.IDcode);
-	    stmt.setString(2, this.name);
-	    stmt.setString(3, this.surname);
-	    stmt.setDate(4, new Date(this.dateBirth.getTime().getTime()));
-	    stmt.setString(5, this.placeBirth);
-	    stmt.setLong(6, this.num_sanitario);
-	    stmt.setString(7, this.belonging_category);
-	    stmt.setObject(8, this.tutor);
-	    stmt.setString(9, String.valueOf(this.sex));
-	    
-	    System.out.println(stmt);
+	public String getTaxID() {
+		return taxID;
+	}
 
-	    stmt.executeUpdate();
+	public String getName() {
+		return name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public Calendar getDateBirth() {
+		return dateBirth;
+	}
+
+	public long getHealthCardNumber() {
+		return healthCardNumber;
+	}
+
+	public String getPlaceBirth() {
+		return placeBirth;
+	}
+
+	public String getBelongingCategory() {
+		return belongingCategory;
+	}
+
+	public Object getTutorID() {
+		if (tutor == null) {
+			return null;
+		}
+		return tutor.taxID;
+	}
+
+	public char getSex() {
+		return sex;
 	}
 
 }

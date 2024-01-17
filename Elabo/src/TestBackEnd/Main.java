@@ -4,10 +4,14 @@ import java.util.Calendar;
 
 public class Main {
 
-	public static void main(String[] args) {
-		Person eli = new Person("ELI", "Elia", "Tonoli", "Verona", new Calendar.Builder().setCalendarType("iso8601").setDate(2001, Calendar.JULY, 30).build(), "", "");
-		System.out.println(eli);
-		System.out.println("eli is adult: " + eli.isAdult());
+	public static void main(String[] args) throws Exception {
+		DatabaseManager.init("jdbc:postgresql://localhost:5432/elaborato_is", "edidec", "Univr2024");
+		DatabaseManager.createTable();
+		
+		Person sbatachiones = new Person("TIA2", "Mattias", "Giambirtones", 't', 
+				"Terronia", new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build(), 
+				"Africa", Long.valueOf(69420));
+		sbatachiones.insert();
 	}
 
 }

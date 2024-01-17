@@ -28,11 +28,11 @@ public class Reservation {
 		this.connection = connection;
 	}
 	
-	public void book(Person person) {
+	public void book(Person person) throws SQLException {
 		this.bookedBy = person;
 		this.state = ReservationState.BOOKED_UP;
 		
-		var statement = connection.prepareStatement("UPDATE reservation SET reservationState = 'BOOKED', person = ? where reservationType = ?)
+		var statement = connection.prepareStatement("UPDATE reservation SET reservationState = 'BOOKED', person = ? where reservationType = ?)");
 	}
 	
 	public void changeState(ReservationState newState) {
