@@ -1,10 +1,11 @@
+package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.layout.HBox;
 
-public class PleaseProvideControllerClassName {
+public class ActivityReservationController{
 
     @FXML
     private ComboBox<?> activitySelector;

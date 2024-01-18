@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SetSlotsController">
    <top>
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
@@ -103,7 +103,7 @@
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Text fx:id="text1" strokeType="OUTSIDE" strokeWidth="0.0" text="None" />
+                                    <Text fx:id="text1" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" />
                                  </children>
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
@@ -126,7 +126,7 @@
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Text fx:id="text2" strokeType="OUTSIDE" strokeWidth="0.0" text="None" />
+                                    <Text fx:id="text2" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" />
                                  </children>
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
@@ -149,7 +149,7 @@
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Text fx:id="text3" strokeType="OUTSIDE" strokeWidth="0.0" text="None" />
+                                    <Text fx:id="text3" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" />
                                  </children>
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
@@ -172,7 +172,7 @@
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Text fx:id="text4" strokeType="OUTSIDE" strokeWidth="0.0" text="None" />
+                                    <Text fx:id="text4" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" />
                                  </children>
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">

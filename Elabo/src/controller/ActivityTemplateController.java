@@ -1,9 +1,11 @@
+package controller;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.text.Text;
 
-public class PleaseProvideControllerClassName {
+public class ActivityTemplateController {
 
     @FXML
     private Text descText;
