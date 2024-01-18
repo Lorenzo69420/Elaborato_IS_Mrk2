@@ -19,13 +19,16 @@ public class Reservation {
 	private ReservationState state;
 	private final ReservationType type;
 	private final LocalDateTime date;
+	private final Passport passport;
 	private Person bookedBy;
 	private final PoliceStation place;
 	
-	public Reservation(ReservationType type, LocalDateTime date, Person person, PoliceStation place) throws SQLException {
+	
+	public Reservation(ReservationType type, LocalDateTime date, Passport passport, Person person, PoliceStation place) throws SQLException {
 		this.state = ReservationState.BOOKABLE;
 		this.type = type;
 		this.date = date;
+		this.passport = passport;
 		this.bookedBy = person;
 		this.place = place;
 	}
@@ -52,6 +55,10 @@ public class Reservation {
 	
 	public ReservationType getType() {
 		return type;
+	}
+	
+	public Passport getPassport() {
+		return passport;
 	}
 	
 	public LocalDateTime getDate() {

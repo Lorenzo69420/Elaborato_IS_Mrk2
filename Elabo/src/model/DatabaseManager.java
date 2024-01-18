@@ -54,7 +54,8 @@ public class DatabaseManager {
 											   "town TEXT PRIMARY KEY NOT NULL);";
 	
 	private static final String RESERVATION_TABLE = "CREATE TABLE IF NOT EXISTS reservation(" +
-													"booked_by VARCHAR(16) PRIMARY KEY NOT NULL, " +
+													"passport_id BIGINT PRIMARY KEY NOT NULL, " +
+													"booked_by VARCHAR(16) NOT NULL, " +
 													"state TEXT NOT NULL, " +
 													"type TEXT NOT NULL, " +
 													"date TIMESTAMP NOT NULL, " +
@@ -118,6 +119,7 @@ public class DatabaseManager {
 		dropPersonTable(cascade);
 		dropPassportTable(cascade);
 		dropPoliceTable(cascade);
+		dropReservationTable(cascade);
 	}
 	
 	public static void dropPersonTable(boolean cascade) throws SQLException {
@@ -184,15 +186,14 @@ public class DatabaseManager {
 	}
 	
 	public static void insert(Reservation reservation) throws SQLException {
-		var statement = connection.prepareStatement("INSERT INTO reservation VALUES (?, ?, ?, ?, ?)");
+		var statement = connection.prepareStatement("INSERT INTO reservation VALUES (?, ?, ?, ?, ?, ?)");
 		
-		statement.setString(1, reservation.getBookedBy().getTaxID());
-		statement.setString(2, reservation.getState().toString());
-		statement.setString(3, reservation.getType().toString());
-		statement.setTimestamp(4, Timestamp.valueOf(reservation.getDate()));
-		statement.setString(5, reservation.getPlace().getTown());
-		
-		System.out.println(statement);
+		statement.setInt(1, reservation.getPassport().getPassID());
+		statement.setString(2, reservation.getBookedBy().getTaxID());
+		statement.setString(3, reservation.getState().toString());
+		statement.setString(4, reservation.getType().toString());
+		statement.setTimestamp(5, Timestamp.valueOf(reservation.getDate()));
+		statement.setString(6, reservation.getPlace().getTown());
 		
 		statement.executeUpdate();
 	}
