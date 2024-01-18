@@ -12,10 +12,10 @@ public class Person {
 	private final String placeBirth;
 	private final Calendar dateBirth;
 	private final String belongingCategory; //TODO: non so se sia il termine corretto
-	private final Long healthCardNumber; //TODO: anche qua
+	private final int healthCardNumber; //TODO: anche qua
 	private Person tutor = null;
 	
-	public Person(String IDcode, String name, String surname, char sex, String placeBirth, Calendar dateBirth, String belongingCategory, Long healthCardNumber) throws SQLException {
+	public Person(String IDcode, String name, String surname, char sex, String placeBirth, Calendar dateBirth, String belongingCategory, int healthCardNumber) throws SQLException {
 		this.taxID = IDcode;
 		this.name = name;
 		this.surname = surname;
@@ -71,7 +71,7 @@ public class Person {
 		return dateBirth;
 	}
 
-	public long getHealthCardNumber() {
+	public int getHealthCardNumber() {
 		return healthCardNumber;
 	}
 

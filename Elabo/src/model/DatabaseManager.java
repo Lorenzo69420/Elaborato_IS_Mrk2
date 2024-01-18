@@ -1,16 +1,12 @@
 package model;
 
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.NoSuchElementException;
-
-import model.Reservation.ReservationState;
-import model.Reservation.ReservationType;
 
 public class DatabaseManager {
 	private static boolean initialized = false;
@@ -146,7 +142,7 @@ public class DatabaseManager {
 	    statement.setString(3, person.getSurname());
 	    statement.setDate(4, new Date(person.getDateBirth().getTime().getTime()));
 	    statement.setString(5, person.getPlaceBirth());
-	    statement.setLong(6, person.getHealthCardNumber());
+	    statement.setInt(6, person.getHealthCardNumber());
 	    statement.setString(7, person.getBelongingCategory());
 	    statement.setString(8, person.getTutorID());
 	    statement.setString(9, String.valueOf(person.getSex()));
@@ -196,5 +192,22 @@ public class DatabaseManager {
 		statement.setString(6, reservation.getPlace().getTown());
 		
 		statement.executeUpdate();
+	}
+	
+	public static Person getPerson(String taxID) throws SQLException, NoSuchUserException {
+		var query = connection.prepareStatement("SELECT * FROM person WHERE tax_id = ?");
+		
+		query.setString(1, taxID);
+		
+		var result = query.executeQuery();
+		if (!result.next()) {
+			throw new NoSuchUserException();
+		}
+		
+		var cal = Calendar.getInstance();		
+		cal.setTime(result.getDate("date_birth"));
+		
+		return new Person(taxID, result.getString("name"), result.getString("surname"), result.getString("sex").charAt(0), result.getString("place_birth"),
+						  cal, result.getString("belonging_category"), result.getInt("health_card_num"));
 	}
 }
