@@ -1,25 +1,18 @@
 package frontEnd;
 
-import controller.RegisterController;
+import controller.MainController;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.DatabaseManager;
 public class Maintest extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
 		//LoginPage LP = new LoginPage();
 		//new SelectPage();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/Register.fxml"));
-        
-		BorderPane root = loader.load();
-		RegisterController RG = loader.getController();
-		Scene diob = new Scene(root);
-		
-		stage.setScene(diob);
-		stage.show();
+		DatabaseManager.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password");
+		MainController MC = new MainController();
+		MC.start();
 	}
 
 	public static void main(String[] args) {

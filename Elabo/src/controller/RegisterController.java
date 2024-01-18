@@ -55,7 +55,7 @@ public class RegisterController {
     @FXML
     private Label surLabel;
     
-    
+    private MainController MC;
 
     @FXML
     void appExit(ActionEvent event) {
@@ -108,5 +108,9 @@ public class RegisterController {
     void switchToLogin(ActionEvent event) {
 
     }
+
+	public void setMC(MainController mC) {
+		MC = mC;
+	}
 
 }
