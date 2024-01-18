@@ -25,4 +25,4 @@ replay_pid*
 /bin/
 /.metadata/
 Elabo/.settings/
-Elabo/.classpath
+.classpath
