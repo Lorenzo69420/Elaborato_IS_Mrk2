@@ -1,4 +1,7 @@
 package controller;
+
+import java.time.LocalDate;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -51,6 +54,8 @@ public class RegisterController {
 
     @FXML
     private Label surLabel;
+    
+    
 
     @FXML
     void appExit(ActionEvent event) {
@@ -63,32 +68,44 @@ public class RegisterController {
     }
 
     @FXML
-    void setCountry(ActionEvent event) {
+    void setBirhdate(ActionEvent event) {
+    	if (dateField.getValue().isAfter(LocalDate.now()) || dateField.getValue().toString().equals("")) {
+    		dateLabel.setText("Put a valid Date");
+    	} else {
+    		dateLabel.setText("");
+    	}
+    }
+
+    @FXML
+    void setBirthplace(ActionEvent event) {
+    	
+    }
+
+    @FXML
+    void setID(ActionEvent event) {
+    	if (IDField.getText().equals("")) {
+    		IDLabel.setText("Put a valid ID");
+    	} else {
+    		IDLabel.setText("");
+    	}
+    }
+
+    @FXML
+    void setName(ActionEvent event) {
+    	if (nameField.getText().equals("")) {
+    		nameLabel.setText("Put a valid name");
+    	} else {
+    		nameLabel.setText("");
+    	}
+    }
+
+    @FXML
+    void setSurname(ActionEvent event) {
 
     }
 
     @FXML
-    void setDate(ActionEvent event) {
-
-    }
-
-    @FXML
-    void setIdText(ActionEvent event) {
-
-    }
-
-    @FXML
-    void setNameText(ActionEvent event) {
-
-    }
-
-    @FXML
-    void setSurnameText(ActionEvent event) {
-
-    }
-
-    @FXML
-    void switchScene(ActionEvent event) {
+    void switchToLogin(ActionEvent event) {
 
     }
 

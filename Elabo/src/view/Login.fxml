@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="134.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <StackPane prefHeight="134.0" prefWidth="281.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="229.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Esegui il Login" />
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="197.0">
+                           <children>
+                              <Button fx:id="logButton" mnemonicParsing="false" onAction="#logReq" text="Login" />
+                           </children>
+                        </StackPane>
+                     </children>
+                  </VBox>
+               </children>
+            </StackPane>
+            <StackPane prefHeight="134.0" prefWidth="287.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Login per chi lavora in Questura" wrappingWidth="113.83154296875" />
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="adminLogButton" mnemonicParsing="false" onAction="#adminLogReq" text="Admin Login" />
+                           </children>
+                        </StackPane>
+                     </children>
+                  </VBox>
+               </children>
+            </StackPane>
+            <StackPane prefHeight="134.0" prefWidth="140.0">
+               <children>
+                  <VBox prefHeight="134.0" prefWidth="160.0">
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Se non hai un acocount registrati qui" wrappingWidth="121.7158203125" />
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="regButton" mnemonicParsing="false" onAction="#switchReg" text="Register" />
+                           </children>
+                        </StackPane>
+                     </children>
+                  </VBox>
+               </children>
+            </StackPane>
+            <StackPane prefHeight="134.0" prefWidth="274.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="108.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Chiudi l'applicazione" wrappingWidth="105.4140625" />
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="exitButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exitApp" text="Exit" />
+                           </children>
+                        </StackPane>
+                     </children>
+                  </VBox>
+               </children>
+            </StackPane>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="40.0" left="20.0" right="20.0" />
+         </BorderPane.margin>
+         <StackPane.margin>
+            <Insets />
+         </StackPane.margin>
+      </HBox>
+   </bottom>
+   <center>
+      <VBox fillWidth="false" prefHeight="216.0" prefWidth="260.0" BorderPane.alignment="CENTER">
+         <children>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="IDField" onAction="#setName" />
+               </children>
+            </StackPane>
+         </children>
+      </VBox>
+   </center>
+   <left>
+      <VBox prefHeight="216.0" prefWidth="199.0" BorderPane.alignment="CENTER">
+         <children>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Codice Fiscale" />
+               </children>
+            </StackPane>
+         </children>
+      </VBox>
+   </left>
+   <right>
+      <VBox prefHeight="216.0" prefWidth="164.0" BorderPane.alignment="CENTER">
+         <children>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="IDLabel" />
+               </children>
+            </StackPane>
+         </children>
+      </VBox>
+   </right>
+   <top>
+      <VBox prefHeight="96.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuti nel Sistema di prenotazione della questura di Verona" wrappingWidth="254.0" />
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Inserite il vostro Codice Fiscale per eeguire l'accesso" wrappingWidth="255.7294921875" />
+               </children>
+            </StackPane>
+         </children>
+      </VBox>
+   </top>
+</BorderPane>
