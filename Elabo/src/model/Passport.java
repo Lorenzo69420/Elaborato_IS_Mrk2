@@ -17,14 +17,16 @@ public class Passport {
 	private final Calendar releaseDate;
 	private final Calendar expiryDate;
 	private final PassportState state;
+	private final PoliceStation releaseLocation;
 	private int passportID;
 	
-	public Passport(String taxID, Calendar releaseDate, PassportState state) {
+	public Passport(String taxID, Calendar releaseDate, PassportState state, PoliceStation releaseLocation) {
 		this.taxID = taxID;
 		this.releaseDate = releaseDate;
 		this.expiryDate = (Calendar) releaseDate.clone();
 		expiryDate.add(Calendar.YEAR, 10);
 		this.state = state;
+		this.releaseLocation = releaseLocation;
 	}
 	
 	@Override
@@ -60,5 +62,9 @@ public class Passport {
 
 	public int getPassID() {
 		return passportID;
+	}
+	
+	public PoliceStation getReleaseLocation() {
+		return releaseLocation;
 	}
 }

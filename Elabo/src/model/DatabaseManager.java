@@ -5,7 +5,12 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
+
+import model.Reservation.ReservationState;
+import model.Reservation.ReservationType;
 
 public class DatabaseManager {
 	private static boolean initialized = false;
@@ -33,13 +38,37 @@ public class DatabaseManager {
 												 "tax_id VARCHAR(16) NOT NULL, " + 
 												 "release_date DATE NOT NULL, " +
 												 "expiry_date DATE NOT NULL, " +
+												 "release_location TEXT NOT NULL, " +
 												 "state TEXT NOT NULL);";
 	
 	private static final String PASSPORT_CONSTRAINT = "DO $$ BEGIN" +
 													  "    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_person_id') THEN" +
 													  "        ALTER TABLE passport ADD CONSTRAINT fk_person_id FOREIGN KEY (tax_id) REFERENCES person(tax_id);" +
 													  "    END IF;" +
+													  "    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_release_location') THEN" +
+													  "        ALTER TABLE passport ADD CONSTRAINT fk_release_location FOREIGN KEY (release_location) REFERENCES police_station(town);" +
+													  "    END IF;" +
 													  "END $$;";
+	
+	private static final String POLICE_TABLE = "CREATE TABLE IF NOT EXISTS police_station(" +
+											   "town TEXT PRIMARY KEY NOT NULL);";
+	
+	private static final String RESERVATION_TABLE = "CREATE TABLE IF NOT EXISTS reservation(" +
+													"booked_by VARCHAR(16) PRIMARY KEY NOT NULL, " +
+													"state TEXT NOT NULL, " +
+													"type TEXT NOT NULL, " +
+													"date TIMESTAMP NOT NULL, " +
+													"place TEXT NOT NULL);";
+	
+	private static final String RESERVATION_CONSTRAINT = "DO $$ BEGIN" +
+			  											 "    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_booked_by') THEN" +
+			  											 "        ALTER TABLE reservation ADD CONSTRAINT fk_booked_by FOREIGN KEY (booked_by) REFERENCES person(tax_id);" +
+			  											 "    END IF;" +
+			  											 "    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_place') THEN" +
+			  											 "        ALTER TABLE reservation ADD CONSTRAINT fk_place FOREIGN KEY (place) REFERENCES police_station(town);" +
+			  											 "    END IF;" +
+			  											 "END $$;";
+	
 	
 	public static void init(String url, String username, String password) throws SQLException {
 		if (initialized) {
@@ -60,23 +89,35 @@ public class DatabaseManager {
 	}
 	
 	public static void createTable() throws SQLException {
-		DatabaseManager.createPersonTable();
-		DatabaseManager.createPassportTable();
+		createPersonTable();
+		createPoliceTable();
+		createPassportTable();
+		createReservationTable();
 	}
 		
 	public static void createPersonTable() throws SQLException {
-		DatabaseManager.connection.prepareStatement(PERSON_TABLE).execute();
-		DatabaseManager.connection.prepareStatement(PERSON_CONSTRAINT).execute();
+		connection.prepareStatement(PERSON_TABLE).execute();
+		connection.prepareStatement(PERSON_CONSTRAINT).execute();
 	}
 	
 	public static void createPassportTable() throws SQLException {
-		DatabaseManager.connection.prepareStatement(PASSPORT_TABLE).execute();
-		DatabaseManager.connection.prepareStatement(PASSPORT_CONSTRAINT).execute();
+		connection.prepareStatement(PASSPORT_TABLE).execute();
+		connection.prepareStatement(PASSPORT_CONSTRAINT).execute();
+	}
+	
+	public static void createPoliceTable() throws SQLException {
+		connection.prepareStatement(POLICE_TABLE).execute();
+	}
+	
+	public static void createReservationTable() throws SQLException {
+		connection.prepareStatement(RESERVATION_TABLE).execute();
+		connection.prepareStatement(RESERVATION_CONSTRAINT).execute();
 	}
 	
 	public static void dropTable(boolean cascade) throws SQLException {
-		DatabaseManager.dropPersonTable(cascade);
-		DatabaseManager.dropPassportTable(cascade);
+		dropPersonTable(cascade);
+		dropPassportTable(cascade);
+		dropPoliceTable(cascade);
 	}
 	
 	public static void dropPersonTable(boolean cascade) throws SQLException {
@@ -85,6 +126,14 @@ public class DatabaseManager {
 	
 	public static void dropPassportTable(boolean cascade) throws SQLException {
 		connection.prepareStatement("DROP TABLE IF EXISTS passport " + (cascade ? "CASCADE" : "") + ";").execute();
+	}
+	
+	public static void dropPoliceTable(boolean cascade) throws SQLException {
+		connection.prepareStatement("DROP TABLE IF EXISTS police_station " + (cascade ? "CASCADE" : "") + ";").execute();
+	}
+	
+	public static void dropReservationTable(boolean cascade) throws SQLException {
+		connection.prepareStatement("DROP TABLE IF EXISTS reservation " + (cascade ? "CASCADE" : "") + ";").execute();
 	}
 	
 	public static void insert(Person person) throws SQLException {
@@ -104,12 +153,13 @@ public class DatabaseManager {
 	}
 	
 	public static void insert(Passport passport) throws SQLException {
-		var statement = connection.prepareStatement("INSERT INTO passport(tax_id, release_date, expiry_date, state) VALUES (?, ?, ?, ?)");
+		var statement = connection.prepareStatement("INSERT INTO passport(tax_id, release_date, expiry_date, release_location, state) VALUES (?, ?, ?, ?, ?)");
 		
 		statement.setString(1, passport.getTaxID());
 		statement.setDate(2, new Date(passport.getReleaseDate().getTime().getTime()));
 		statement.setDate(3, new Date(passport.getExpiryDate().getTime().getTime()));
-		statement.setString(4, passport.getState().toString());
+		statement.setString(4, passport.getReleaseLocation().getTown());
+		statement.setString(5, passport.getState().toString());
 		
 		statement.executeUpdate();
 		
@@ -123,5 +173,27 @@ public class DatabaseManager {
         }
 		
 		passport.setID(result.getInt("passport_id"));
+	}
+	
+	public static void insert(PoliceStation policeStation) throws SQLException {
+		var statement = connection.prepareStatement("INSERT INTO police_station VALUES (?)");
+		
+		statement.setString(1, policeStation.getTown());
+		
+		statement.executeUpdate();
+	}
+	
+	public static void insert(Reservation reservation) throws SQLException {
+		var statement = connection.prepareStatement("INSERT INTO reservation VALUES (?, ?, ?, ?, ?)");
+		
+		statement.setString(1, reservation.getBookedBy().getTaxID());
+		statement.setString(2, reservation.getState().toString());
+		statement.setString(3, reservation.getType().toString());
+		statement.setTimestamp(4, Timestamp.valueOf(reservation.getDate()));
+		statement.setString(5, reservation.getPlace().getTown());
+		
+		System.out.println(statement);
+		
+		statement.executeUpdate();
 	}
 }

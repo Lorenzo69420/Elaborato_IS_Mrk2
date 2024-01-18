@@ -1,11 +1,6 @@
 package model;
 
-
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Reservation {
@@ -24,27 +19,24 @@ public class Reservation {
 	private ReservationState state;
 	private final ReservationType type;
 	private final LocalDateTime date;
-	private final String office;
 	private Person bookedBy;
-	//TODO da spostare
-	private Connection connection;
+	private final PoliceStation place;
 	
-	public Reservation(ReservationType type, LocalDateTime date, String office) throws SQLException {
+	public Reservation(ReservationType type, LocalDateTime date, Person person, PoliceStation place) throws SQLException {
 		this.state = ReservationState.BOOKABLE;
 		this.type = type;
 		this.date = date;
-		this.office = office;
-		this.bookedBy = null;
-		
-		Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ingegneria", "neto", "fethergay");
-		this.connection = connection;
+		this.bookedBy = person;
+		this.place = place;
+	}
+	
+	public void insert() throws SQLException {
+		DatabaseManager.insert(this);
 	}
 	
 	public void book(Person person) throws SQLException {
 		this.bookedBy = person;
 		this.state = ReservationState.BOOKED_UP;
-		
-		var statement = connection.prepareStatement("UPDATE reservation SET reservationState = 'BOOKED', person = ? where reservationType = ?)");
 	}
 	
 	public void changeState(ReservationState newState) {
@@ -54,17 +46,23 @@ public class Reservation {
 		this.state = newState;
 	}
 	
-	public void insert() throws SQLException {
-		var stmt = connection.prepareStatement("INSERT INTO reservation VALUES (?, ?, ?, ?, ?)");
-
-	    stmt.setString(1, this.state.toString());
-	    stmt.setString(2, this.type.toString());
-	    stmt.setTimestamp(3, Timestamp.valueOf(this.date));
-	    stmt.setString(4, this.office);
-	    stmt.setObject(5, this.bookedBy);
-	    
-	    System.out.println(stmt);
-
-	    stmt.executeUpdate();
+	public ReservationState getState() {
+		return state;
+	}
+	
+	public ReservationType getType() {
+		return type;
+	}
+	
+	public LocalDateTime getDate() {
+		return date;
+	}
+	
+	public Person getBookedBy() {
+		return bookedBy;
+	}
+	
+	public PoliceStation getPlace() {
+		return place;
 	}
 }
