@@ -10,7 +10,7 @@ public class Maintest extends Application {
 	public void start(Stage stage) throws Exception {
 		//LoginPage LP = new LoginPage();
 		//new SelectPage();
-		DatabaseManager.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password");
+		
 		MainController MC = new MainController();
 		MC.start();
 	}
