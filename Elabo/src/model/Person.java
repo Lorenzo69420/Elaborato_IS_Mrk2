@@ -36,6 +36,19 @@ public class Person {
 	}
 	
 	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Person)) {
+			return false;
+		}
+		Person other = (Person)obj;
+		
+		return this.getTaxID().equals(other.getTaxID()) && this.getName().equals(other.getName()) && this.getSurname().equals(other.getSurname()) &&
+				this.getSex() == other.getSex() && this.getPlaceBirth().equals(other.getPlaceBirth()) && this.getDateBirth().equals(other.getDateBirth()) &&
+				this.getHealthCardNumber() == other.getHealthCardNumber();
+	}
+	
+	
+	@Override
 	public String toString() {
 		java.util.Date birth = dateBirth.getTime();
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -53,6 +66,10 @@ public class Person {
 	
 	public void insert() throws SQLException {
 		DatabaseManager.insert(this);
+	}
+	
+	public static Person get(String taxID) throws SQLException, NoSuchUserException {
+		return DatabaseManager.getPerson(taxID);
 	}
 
 	public String getTaxID() {
