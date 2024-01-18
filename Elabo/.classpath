@@ -16,6 +16,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/shaggy/Scrivania/JavaLib/postgresql-42.6.0.jar"/>
+	<classpathentry kind="lib" path="/home/edidec/Desktop/PostgreSQL/postgresql-42.7.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

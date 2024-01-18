@@ -11,11 +11,12 @@ public class Person {
 	private final char sex;
 	private final String placeBirth;
 	private final Calendar dateBirth;
-	private final String belongingCategory; //TODO: non so se sia il termine corretto
-	private final int healthCardNumber; //TODO: anche qua
+	private final String belongingCategory; // TODO: non so se sia il termine corretto
+	private final int healthCardNumber; // TODO: anche qua
 	private Person tutor = null;
-	
-	public Person(String IDcode, String name, String surname, char sex, String placeBirth, Calendar dateBirth, String belongingCategory, int healthCardNumber) throws SQLException {
+
+	public Person(String IDcode, String name, String surname, char sex, String placeBirth, Calendar dateBirth,
+			String belongingCategory, int healthCardNumber) throws SQLException {
 		this.taxID = IDcode;
 		this.name = name;
 		this.surname = surname;
@@ -25,49 +26,51 @@ public class Person {
 		this.belongingCategory = belongingCategory;
 		this.healthCardNumber = healthCardNumber;
 	}
-	
-	//TODO
+
+	// TODO
 	public boolean exists() {
 		return false;
 	}
-	
+
 	public void asignTutor(Person tutor) {
 		this.tutor = tutor;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof Person)) {
 			return false;
 		}
-		Person other = (Person)obj;
-		
-		return this.getTaxID().equals(other.getTaxID()) && this.getName().equals(other.getName()) && this.getSurname().equals(other.getSurname()) &&
-				this.getSex() == other.getSex() && this.getPlaceBirth().equals(other.getPlaceBirth()) && this.getDateBirth().equals(other.getDateBirth()) &&
-				this.getHealthCardNumber() == other.getHealthCardNumber();
+		Person other = (Person) obj;
+
+		return this.getTaxID().equals(other.getTaxID()) && this.getName().equals(other.getName())
+				&& this.getSurname().equals(other.getSurname()) && this.getSex() == other.getSex()
+				&& this.getPlaceBirth().equals(other.getPlaceBirth())
+				&& this.getDateBirth().equals(other.getDateBirth())
+				&& this.getHealthCardNumber() == other.getHealthCardNumber();
 	}
-	
-	
+
 	@Override
 	public String toString() {
 		java.util.Date birth = dateBirth.getTime();
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-		
-		return "Name: " + name + "\nSurname: " + surname + "\nID code: " + taxID + "\nPlace of birth: " + placeBirth + "\nDate of birth: " + dateFormatter.format(birth);
+
+		return "Name: " + name + "\nSurname: " + surname + "\nID code: " + taxID + "\nPlace of birth: " + placeBirth
+				+ "\nDate of birth: " + dateFormatter.format(birth);
 	}
-	
+
 	public boolean isAdult() {
 		Calendar currentDate = Calendar.getInstance();
-		
+
 		currentDate.add(Calendar.YEAR, -18);
-		
+
 		return currentDate.after(this.dateBirth);
 	}
-	
+
 	public void insert() throws SQLException {
 		DatabaseManager.insert(this);
 	}
-	
+
 	public static Person get(String taxID) throws SQLException, NoSuchUserException {
 		return DatabaseManager.getPerson(taxID);
 	}
