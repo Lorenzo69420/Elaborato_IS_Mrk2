@@ -40,6 +40,7 @@ public class LoginController {
     void adminLogReq(ActionEvent event) {
     	try {
     		this.logPerson = DatabaseManager.getPerson(IDField.getText());
+    		if (true) {}
     		MC.switchToActivitySetter();
     	} catch (NoSuchUserException e ) {
     		IDLabel.setText("User not found");

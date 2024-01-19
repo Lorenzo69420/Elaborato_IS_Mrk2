@@ -64,6 +64,7 @@ public class DatabaseManager {
 		
 		if (debugMode) {
 			dropTable(true);
+			createTable();
 		}
 	}
 

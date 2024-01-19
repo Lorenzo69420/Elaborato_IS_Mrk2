@@ -97,43 +97,10 @@
          </StackPane.margin>
       </HBox>
    </bottom>
-   <center>
-      <VBox fillWidth="false" prefHeight="216.0" prefWidth="260.0" BorderPane.alignment="CENTER">
-         <children>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
-               <children>
-                  <TextField fx:id="IDField" onAction="#setName" />
-               </children>
-            </StackPane>
-         </children>
-      </VBox>
-   </center>
-   <left>
-      <VBox prefHeight="216.0" prefWidth="199.0" BorderPane.alignment="CENTER">
-         <children>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Codice Fiscale" />
-               </children>
-            </StackPane>
-         </children>
-      </VBox>
-   </left>
-   <right>
-      <VBox prefHeight="216.0" prefWidth="164.0" BorderPane.alignment="CENTER">
-         <children>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
-               <children>
-                  <Label fx:id="IDLabel" />
-               </children>
-            </StackPane>
-         </children>
-      </VBox>
-   </right>
    <top>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
+            <StackPane prefHeight="101.0" prefWidth="288.0">
                <children>
                   <ImageView fitHeight="101.0" fitWidth="195.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -142,7 +109,7 @@
                   </ImageView>
                </children>
             </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
+            <StackPane prefHeight="101.0" prefWidth="374.0">
                <children>
                   <VBox prefHeight="96.0" prefWidth="600.0">
                      <children>
@@ -166,4 +133,49 @@
          </BorderPane.margin>
       </HBox>
    </top>
+   <center>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="216.0" prefWidth="199.0">
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Codice Fiscale" />
+                           </children>
+                        </StackPane>
+                     </children>
+                  </VBox>
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <VBox fillWidth="false" prefHeight="216.0" prefWidth="260.0">
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="IDField" onAction="#setName" />
+                           </children>
+                        </StackPane>
+                     </children>
+                  </VBox>
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="216.0" prefWidth="164.0">
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Label fx:id="IDLabel" />
+                           </children>
+                        </StackPane>
+                     </children>
+                  </VBox>
+               </children>
+            </StackPane>
+         </children>
+      </HBox>
+   </center>
 </BorderPane>
