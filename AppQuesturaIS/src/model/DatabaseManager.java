@@ -293,8 +293,9 @@ public class DatabaseManager {
 		query.setTimestamp(1, Timestamp.valueOf());
 		
 		var result = query.executeQuery();
-		if(!result.next())
-			return null;
+		if (!result.next()) {
+			return null;			
+		}
 		
 		return  new Reservation(ReservationType.valueOf(result.getString("type")), result.getTimestamp("date"), new);
 	}
