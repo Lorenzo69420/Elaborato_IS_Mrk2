@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Calendar;
 
 import model.Passport.PassportState;
+import model.Reservation.ReservationState;
 import model.Reservation.ReservationType;
 
 public class Main {
@@ -38,7 +39,7 @@ public class Main {
 		Passport pass = new Passport("TIA3", Calendar.getInstance(), PassportState.VALID, ps);
 		pass.insert();
 
-		Reservation res = new Reservation(ReservationType.COLLECTION, LocalDateTime.now(), pass, sbatachiones, ps);
+		Reservation res = new Reservation(ReservationType.COLLECTION, LocalDateTime.now(), pass, sbatachiones, ps, ReservationState.BOOKABLE);
 		res.insert();
 
 		Person sbat = new Person("TIA3", "Mattias", "Giambirtones", "Terronia",

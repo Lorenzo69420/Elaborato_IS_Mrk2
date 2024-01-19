@@ -16,14 +16,7 @@ public class Person {
 	private Person tutor = null;
 	
 	public Person(String taxID, String name, String surname, String placeBirth, Calendar dateBirth) {
-		this.taxID = taxID;
-		this.name = name;
-		this.surname = surname;
-		this.placeBirth = placeBirth;
-		this.dateBirth = dateBirth;
-		this.sex = 'm';
-		this.belongingCategory = null;
-		this.healthCardNumber = 0;
+		this(taxID, name, surname, 'm', placeBirth, dateBirth, null, 0);
 	}
 
 	public Person(String taxID, String name, String surname, char sex, String placeBirth, Calendar dateBirth,

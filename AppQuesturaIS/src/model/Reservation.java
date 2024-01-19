@@ -44,9 +44,12 @@ public class Reservation {
 	private Person bookedBy;
 	private final PoliceStation place;
 	
+	public Reservation(ReservationType type, LocalDateTime date, PoliceStation place) {
+		this(type, date, (Passport)null, (Person)null, place, ReservationState.BOOKABLE);
+	}
 	
-	public Reservation(ReservationType type, LocalDateTime date, Passport passport, Person person, PoliceStation place) throws SQLException {
-		this.state = ReservationState.BOOKABLE;
+	public Reservation(ReservationType type, LocalDateTime date, Passport passport, Person person, PoliceStation place, ReservationState state) {
+		this.state = state;
 		this.type = type;
 		this.date = date;
 		this.passport = passport;
