@@ -5,7 +5,9 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public class DatabaseManager {
@@ -195,5 +197,18 @@ public class DatabaseManager {
 		return new Person(taxID, result.getString("name"), result.getString("surname"),
 				result.getString("sex").charAt(0), result.getString("place_birth"), cal,
 				result.getString("belonging_category"), result.getInt("health_card_num"));
+	}
+	
+	public static List<String> getPoliceStation() throws SQLException {
+		List<String> result = new ArrayList();
+		
+		var query = connection.prepareStatement("SELECT * FROM police_station");
+		
+		var resultQuery = query.executeQuery();
+		while (resultQuery.next()) {
+			result.add(resultQuery.getString("town"));
+		}
+		
+		return result;
 	}
 }
