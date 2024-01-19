@@ -13,14 +13,26 @@ public class Reservation {
 	
 	public enum ReservationType {
 		COLLECTION,
-		ISSUANCE;
+		ISSUANCE_NEW,
+		ISSUANCE_DAMEGED,
+		ISSUANCE_EXPIRED,
+		ISSUANCE_LOST,
+		ISSUANCE_STOLEN;
 		
 		public String toString() {
 			switch(this) {
 			case COLLECTION:
 				return "Ritiro";
+			case ISSUANCE_DAMEGED:
+				return "Emissione per deterioramento";
+			case ISSUANCE_EXPIRED:
+				return "Emissione per scadenza";
+			case ISSUANCE_NEW:
+				return "Prima emissione";
+			case ISSUANCE_LOST:
+				return "Emissione per perdita";
 			default:
-				return "Emissione";
+				return "Emissione per furto";
 			}
 		}
 	}
