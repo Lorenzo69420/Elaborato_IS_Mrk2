@@ -109,5 +109,12 @@ public class Person {
 	public char getSex() {
 		return sex;
 	}
+	
+	public void register() throws SQLException {
+		DatabaseManager.register(this);
+	}
 
+	public void makeAdmin() throws SQLException {
+		DatabaseManager.makeAdmin(this);
+	}
 }

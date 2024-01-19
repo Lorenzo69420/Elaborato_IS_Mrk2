@@ -18,7 +18,7 @@ public class DatabaseManager {
 			+ "tax_id VARCHAR(16) PRIMARY KEY NOT NULL, " + "name TEXT NOT NULL, " + "surname TEXT NOT NULL, "
 			+ "date_birth DATE NOT NULL, " + "place_birth TEXT NOT NULL, " + "health_card_num BIGINT, "
 			+ "belonging_category TEXT, " + "tutor_id VARCHAR(16), " + "sex CHAR NOT NULL, " 
-			+ "register BOOLEAN NOT NULL, " + "admin BOOLEAN NOT NULL);";
+			+ "registerd BOOLEAN NOT NULL, " + "admin BOOLEAN NOT NULL);";
 
 	private static final String PERSON_CONSTRAINT = "DO $$ BEGIN"
 			+ "    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_tutor_id') THEN"
@@ -42,8 +42,9 @@ public class DatabaseManager {
 			+ "town TEXT PRIMARY KEY NOT NULL);";
 
 	private static final String RESERVATION_TABLE = "CREATE TABLE IF NOT EXISTS reservation("
-			+ "passport_id BIGINT PRIMARY KEY NOT NULL, " + "booked_by VARCHAR(16) NOT NULL, " + "state TEXT NOT NULL, "
-			+ "type TEXT NOT NULL, " + "date TIMESTAMP NOT NULL, " + "place TEXT NOT NULL);";
+			+ "passport_id BIGINT, " + "booked_by VARCHAR(16), " + "state TEXT NOT NULL, "
+			+ "type TEXT NOT NULL, " + "date TIMESTAMP NOT NULL, " + "place TEXT NOT NULL," 
+			+ "PRIMAY KEY(date, place));";
 
 	private static final String RESERVATION_CONSTRAINT = "DO $$ BEGIN"
 			+ "    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_booked_by') THEN"
@@ -232,5 +233,42 @@ public class DatabaseManager {
 		var result = query.executeQuery();
 		
 		return result.next();
+	}
+	
+	public static void register(Person person) throws SQLException {
+		var query = connection.prepareStatement("UPDATE person SET {registered = TRUE} WHERE tax_id = ?");
+		
+		query.setString(1, person.getTaxID());
+		
+		query.executeQuery();
+	}
+	
+	public static void makeAdmin(Person person) throws SQLException {
+		var query = connection.prepareStatement("UPDATE person SET {admin = TRUE} WHERE tax_id = ?");
+		
+		query.setString(1, person.getTaxID());
+		
+		query.executeQuery();
+	}
+	
+	public static void changeState(Passport passport) throws SQLException {
+		var query = connection.prepareStatement("UPDATE passport SET {state = ?} WHERE passport_id = ?");
+		
+		query.setString(1, passport.getState().toString());
+		query.setInt(2, passport.getPassID());
+		
+		query.executeQuery();
+	}
+	
+	public static void book(Reservation reservation) throws SQLException {
+		var query = connection.prepareStatement("UPDATE reservation SET {passport_id = ?, booked_by = ?, state = ?} WHERE date = ? AND place = ?");
+		
+		query.setInt(1, reservation.getPassport().getPassID());
+		query.setString(2, reservation.getBookedBy().getTaxID());
+		query.setString(3, reservation.getState().toString());
+		query.setTimestamp(4, Timestamp.valueOf(reservation.getDate()));
+		query.setString(5, reservation.getPlace().getTown());
+		
+		query.executeQuery();
 	}
 }

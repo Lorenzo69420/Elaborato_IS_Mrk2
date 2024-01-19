@@ -17,7 +17,7 @@ public class Passport {
 	private final String taxID;
 	private final Calendar releaseDate;
 	private final Calendar expiryDate;
-	private final PassportState state;
+	private PassportState state;
 	private final PoliceStation releaseLocation;
 	private int passportID;
 	
@@ -67,5 +67,10 @@ public class Passport {
 	
 	public PoliceStation getReleaseLocation() {
 		return releaseLocation;
+	}
+	
+	public void changeState(PassportState state) throws SQLException {
+		this.state = state;
+		DatabaseManager.changeState(this);
 	}
 }
