@@ -11,13 +11,24 @@ public class Person {
 	private final char sex;
 	private final String placeBirth;
 	private final Calendar dateBirth;
-	private final String belongingCategory; // TODO: non so se sia il termine corretto
-	private final int healthCardNumber; // TODO: anche qua
+	private final String belongingCategory; 
+	private final int healthCardNumber; 
 	private Person tutor = null;
+	
+	public Person(String taxID, String name, String surname, String placeBirth, Calendar dateBirth) {
+		this.taxID = taxID;
+		this.name = name;
+		this.surname = surname;
+		this.placeBirth = placeBirth;
+		this.dateBirth = dateBirth;
+		this.sex = 'm';
+		this.belongingCategory = null;
+		this.healthCardNumber = 0;
+	}
 
-	public Person(String IDcode, String name, String surname, char sex, String placeBirth, Calendar dateBirth,
-			String belongingCategory, int healthCardNumber) throws SQLException {
-		this.taxID = IDcode;
+	public Person(String taxID, String name, String surname, char sex, String placeBirth, Calendar dateBirth,
+			String belongingCategory, int healthCardNumber) {
+		this.taxID = taxID;
 		this.name = name;
 		this.surname = surname;
 		this.sex = sex;
@@ -28,26 +39,12 @@ public class Person {
 	}
 
 	// TODO
-	public boolean exists() {
-		return false;
+	public boolean exists(String taxID) throws SQLException, NoSuchUserException {
+		return DatabaseManager.existsPerson(this);
 	}
 
 	public void asignTutor(Person tutor) {
 		this.tutor = tutor;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof Person)) {
-			return false;
-		}
-		Person other = (Person) obj;
-
-		return this.getTaxID().equals(other.getTaxID()) && this.getName().equals(other.getName())
-				&& this.getSurname().equals(other.getSurname()) && this.getSex() == other.getSex()
-				&& this.getPlaceBirth().equals(other.getPlaceBirth())
-				&& this.getDateBirth().equals(other.getDateBirth())
-				&& this.getHealthCardNumber() == other.getHealthCardNumber();
 	}
 
 	@Override
