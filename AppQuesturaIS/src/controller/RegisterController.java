@@ -82,7 +82,7 @@ public class RegisterController {
         	P = new Person(IDField.getText(), nameField.getText(), surField.getText(), placeField.getText(),cl);
         	try {
         		P.exists();
-        		P = null;
+        		P = null; // :,)
         		MC.switchToLogin();
         	} catch (SQLException e) {
         		MC.close();

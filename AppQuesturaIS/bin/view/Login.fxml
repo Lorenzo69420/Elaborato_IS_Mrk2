@@ -27,7 +27,7 @@
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="197.0">
                            <children>
-                              <Button fx:id="logButton" mnemonicParsing="false" onAction="#logReq" text="Login" />
+                              <Button fx:id="logButton" mnemonicParsing="false" onAction="#logReq" text="Accesso" />
                            </children>
                         </StackPane>
                      </children>
@@ -45,7 +45,7 @@
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Button fx:id="adminLogButton" mnemonicParsing="false" onAction="#adminLogReq" text="Admin Login" />
+                              <Button fx:id="adminLogButton" mnemonicParsing="false" onAction="#adminLogReq" text="Accesso Admin" />
                            </children>
                         </StackPane>
                      </children>
@@ -63,7 +63,7 @@
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Button fx:id="regButton" mnemonicParsing="false" onAction="#switchReg" text="Register" />
+                              <Button fx:id="regButton" mnemonicParsing="false" onAction="#switchReg" text="Registrati" />
                            </children>
                         </StackPane>
                      </children>
@@ -81,7 +81,7 @@
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Button fx:id="exitButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exitApp" text="Exit" />
+                              <Button fx:id="exitButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exitApp" text="Esci" />
                            </children>
                         </StackPane>
                      </children>
