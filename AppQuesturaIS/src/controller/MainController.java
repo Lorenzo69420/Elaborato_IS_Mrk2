@@ -105,5 +105,8 @@ public class MainController {
 	private void getPSList() throws SQLException{
 		policeStationList.addAll(DatabaseManager.getPoliceStation());
 	}
+	public void close() {
+		mainStage.close();
+	}
 	
 }

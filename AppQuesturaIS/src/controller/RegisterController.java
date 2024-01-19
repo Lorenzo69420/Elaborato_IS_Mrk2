@@ -38,7 +38,7 @@ public class RegisterController {
     private Label nameLabel;
 
     @FXML
-    private ComboBox<?> placeField;
+    private ComboBox<String> placeField;
 
     @FXML
     private Label placeLabel;
@@ -59,7 +59,7 @@ public class RegisterController {
 
     @FXML
     void appExit(ActionEvent event) {
-
+    	MC.close();
     }
 
     @FXML
@@ -78,13 +78,17 @@ public class RegisterController {
 
     @FXML
     void setBirthplace(ActionEvent event) {
-    	
+    	if (placeField.getValue().equals("")) {
+    		placeLabel.setText("Inserisci un luogo valido");
+    	} else {
+    		placeLabel.setText("");
+    	}
     }
 
     @FXML
     void setID(ActionEvent event) {
     	if (IDField.getText().equals("")) {
-    		IDLabel.setText("Put a valid ID");
+    		IDLabel.setText("Inserisci un Codice Fiscale valido");
     	} else {
     		IDLabel.setText("");
     	}
@@ -93,7 +97,7 @@ public class RegisterController {
     @FXML
     void setName(ActionEvent event) {
     	if (nameField.getText().equals("")) {
-    		nameLabel.setText("Put a valid name");
+    		nameLabel.setText("Inserisci un nome valido");
     	} else {
     		nameLabel.setText("");
     	}
@@ -101,7 +105,11 @@ public class RegisterController {
 
     @FXML
     void setSurname(ActionEvent event) {
-
+    	if(surField.getText().equals("")) {
+    		surLabel.setText("Inserisci un cognome valido");
+    	} else {
+    		surLabel.setText("");
+    	}
     }
 
     @FXML

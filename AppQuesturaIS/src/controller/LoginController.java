@@ -40,12 +40,11 @@ public class LoginController {
     void adminLogReq(ActionEvent event) {
     	try {
     		this.logPerson = DatabaseManager.getPerson(IDField.getText());
+    		MC.switchToActivitySetter();
     	} catch (NoSuchUserException e ) {
     		IDLabel.setText("User not found");
     	} catch (SQLException E ) {
 			System.out.println("Database compro-fjDSVIAM...Database compromised");
-		} finally {
-			MC.switchToActivitySetter();
 		}
     }
 
@@ -59,12 +58,11 @@ public class LoginController {
     	try {
     		System.out.println("dioboia : " + IDField.getText());
     		this.logPerson = Person.get(IDField.getText());
+    		MC.switchToActivitySelector();
     	} catch (NoSuchUserException e ) {
-    		IDLabel.setText("User not found");
+    		IDLabel.setText("Utente non trovato");
     	} catch (SQLException E ) {
 			System.out.println("Database compro-fjDSVIAM...Database compromised");
-		} finally {
-			MC.switchToActivitySelector();
 		}
     }
 
