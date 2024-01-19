@@ -11,13 +11,13 @@ import javafx.scene.text.Text;
 public class ActivitySetterController{
 
     @FXML
-    private ComboBox<?> activitySelector;
+    private ComboBox<String> activitySelector;
 
     @FXML
     private DatePicker dateSelector;
 
     @FXML
-    private ComboBox<?> policeStationSelector;
+    private ComboBox<String> policeStationSelector;
 
     @FXML
     private Button saveButton;
@@ -90,6 +90,15 @@ public class ActivitySetterController{
 
 	public void setMC(MainController mainController) {
 		MC = mainController;
+	}
+	
+	public ComboBox<String> getActSelector() {
+		return activitySelector;
+	}
+
+	public ComboBox<String> getPSSelector() {
+		// TODO Auto-generated method stub
+		return policeStationSelector;
 	}
 
 }

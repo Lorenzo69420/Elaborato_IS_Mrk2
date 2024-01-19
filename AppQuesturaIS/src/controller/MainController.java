@@ -10,10 +10,13 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.DatabaseManager;
+import model.Reservation;
 
 public class MainController {
 	
 	private Stage mainStage = new Stage();
+	private ObservableList<String> activityList = FXCollections.observableArrayList();
+	private ObservableList<String> policeStationList = FXCollections.observableArrayList();
 	
 	//Login page
 	private FXMLLoader logLoader; 
@@ -41,6 +44,9 @@ public class MainController {
 	
 	public MainController () throws IOException, SQLException {
 		DatabaseManager.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password");
+		getActivityList();
+		getPSList();
+		
 		// Login setup
 		logLoader = new FXMLLoader(getClass().getResource("../view/Login.fxml"));
 		logPane = logLoader.load();
@@ -66,6 +72,7 @@ public class MainController {
 		actSetController = actSetLoader.getController();
 		actSetController.setMC(this);
 		actSetScene = new Scene(actSetPane);
+		populateActivitySetter();
 	}
 	public void start() {
 		mainStage.show();
@@ -87,6 +94,16 @@ public class MainController {
 		start();
 	}
 	private void populateActivitySetter() {
-		ObservableList activityList = FXCollections.observableArrayList();
+		actSetController.getActSelector().getItems().addAll(activityList);
+		actSetController.getPSSelector().getItems().addAll(policeStationList);
 	}
+	private void getActivityList() {
+		for (var S : Reservation.ReservationType.values()) {
+			activityList.add(S.toString());
+		}
+	}
+	private void getPSList() throws SQLException{
+		policeStationList.addAll(DatabaseManager.getPoliceStation());
+	}
+	
 }

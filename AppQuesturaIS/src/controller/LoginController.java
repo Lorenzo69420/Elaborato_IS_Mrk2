@@ -57,7 +57,8 @@ public class LoginController {
     @FXML
     void logReq(ActionEvent event) {
     	try {
-    		this.logPerson = DatabaseManager.getPerson(IDField.getText());
+    		System.out.println("dioboia : " + IDField.getText());
+    		this.logPerson = Person.get(IDField.getText());
     	} catch (NoSuchUserException e ) {
     		IDLabel.setText("User not found");
     	} catch (SQLException E ) {
