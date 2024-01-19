@@ -137,7 +137,8 @@ public class DatabaseManager {
 		statement.setString(5, person.getPlaceBirth());
 		statement.setInt(6, person.getHealthCardNumber());
 		statement.setString(7, person.getBelongingCategory());
-		statement.setString(8, person.getTutorID());
+		String tutor_id = (person.getTutor() != null ? person.getTutor().getTaxID() : null);
+		statement.setString(8, tutor_id);
 		statement.setString(9, String.valueOf(person.getSex()));
 		statement.setBoolean(10, false);
 		statement.setBoolean(11, false);
@@ -271,6 +272,15 @@ public class DatabaseManager {
 		query.setString(3, reservation.getState().toString());
 		query.setTimestamp(4, Timestamp.valueOf(reservation.getDate()));
 		query.setString(5, reservation.getPlace().getTown());
+		
+		query.executeQuery();
+	}
+
+	public static void updateTutor(Person person) throws SQLException {
+		var query = connection.prepareStatement("UPDATE person SET {tutor_id = ?} WHERE taxID = ?");
+		
+		query.setString(1, person.getTaxID());
+		query.setString(2, person.getTutor().getTaxID());
 		
 		query.executeQuery();
 	}

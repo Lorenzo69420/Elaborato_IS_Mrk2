@@ -36,8 +36,7 @@ public class Main {
 
 		Person sbat = new Person("TIA3", "Mattias", "Giambirtones", "Terronia",
 				new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build());
-		
-		System.out.println(sbat.exists());
+		sbat.exists();
 		DatabaseManager.close();
 	}
 

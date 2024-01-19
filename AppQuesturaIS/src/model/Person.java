@@ -62,6 +62,12 @@ public class Person {
 
 		return currentDate.after(this.dateBirth);
 	}
+	
+	public void addTutor(Person tutor) throws SQLException {
+		this.tutor = tutor;
+		
+		DatabaseManager.updateTutor(this);
+	}
 
 	public void insert() throws SQLException {
 		DatabaseManager.insert(this);
@@ -99,11 +105,8 @@ public class Person {
 		return belongingCategory;
 	}
 
-	public String getTutorID() {
-		if (tutor == null) {
-			return null;
-		}
-		return tutor.taxID;
+	public Person getTutor() {
+		return tutor;
 	}
 
 	public char getSex() {
