@@ -12,6 +12,7 @@ public class Main {
 		DatabaseManager.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password", true);
 
 		DatabaseManager.createTable();
+		//TODO: tzt
 
 		Person sbatachiones = new Person("TIA3", "Mattias", "Giambirtones", 't', "Terronia",
 				new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build(), "Africa", 69420);
