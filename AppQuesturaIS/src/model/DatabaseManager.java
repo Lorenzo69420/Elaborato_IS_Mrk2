@@ -16,8 +16,9 @@ public class DatabaseManager {
 
 	private static final String PERSON_TABLE = "CREATE TABLE IF NOT EXISTS person("
 			+ "tax_id VARCHAR(16) PRIMARY KEY NOT NULL, " + "name TEXT NOT NULL, " + "surname TEXT NOT NULL, "
-			+ "date_birth DATE NOT NULL, " + "place_birth TEXT NOT NULL, " + "health_card_num BIGINT NOT NULL,"
-			+ "belonging_category TEXT NOT NULL, " + "tutor_id VARCHAR(16), " + "sex CHAR NOT NULL);";
+			+ "date_birth DATE NOT NULL, " + "place_birth TEXT NOT NULL, " + "health_card_num BIGINT, "
+			+ "belonging_category TEXT, " + "tutor_id VARCHAR(16), " + "sex CHAR NOT NULL" 
+			+ "register BOOLEAN NOT NULL" + "admin BOOLEAN NOT NULL);";
 
 	private static final String PERSON_CONSTRAINT = "DO $$ BEGIN"
 			+ "    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_tutor_id') THEN"
@@ -50,14 +51,19 @@ public class DatabaseManager {
 			+ "    END IF;" + "    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_place') THEN"
 			+ "        ALTER TABLE reservation ADD CONSTRAINT fk_place FOREIGN KEY (place) REFERENCES police_station(town);"
 			+ "    END IF;" + "END $$;";
-
-	public static void init(String url, String username, String password) throws SQLException {
+	
+	
+	public static void init(String url, String username, String password, boolean debugMode) throws SQLException {
 		if (initialized) {
 			throw new RuntimeException("The database manager is alredy initialized");
 		}
 
 		connection = DriverManager.getConnection(url, username, password);
 		initialized = true;
+		
+		if (debugMode) {
+			dropTable(true);
+		}
 	}
 
 	public static void close() throws SQLException {
@@ -120,7 +126,7 @@ public class DatabaseManager {
 	}
 
 	public static void insert(Person person) throws SQLException {
-		var statement = connection.prepareStatement("INSERT INTO person VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		var statement = connection.prepareStatement("INSERT INTO person VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 		statement.setString(1, person.getTaxID());
 		statement.setString(2, person.getName());
@@ -131,7 +137,9 @@ public class DatabaseManager {
 		statement.setString(7, person.getBelongingCategory());
 		statement.setString(8, person.getTutorID());
 		statement.setString(9, String.valueOf(person.getSex()));
-
+		statement.setBoolean(10, false);
+		statement.setBoolean(11, false);
+		
 		statement.executeUpdate();
 	}
 

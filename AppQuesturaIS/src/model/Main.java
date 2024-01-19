@@ -9,9 +9,8 @@ import model.Reservation.ReservationType;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		DatabaseManager.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password");
+		DatabaseManager.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password", true);
 
-		DatabaseManager.dropTable(true);
 		DatabaseManager.createTable();
 
 		Person sbatachiones = new Person("TIA3", "Mattias", "Giambirtones", 't', "Terronia",
