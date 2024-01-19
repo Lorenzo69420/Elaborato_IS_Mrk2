@@ -3,6 +3,8 @@ package controller;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -83,5 +85,8 @@ public class MainController {
 	public void switchToActivitySetter() {
 		mainStage.setScene(actSetScene);
 		start();
+	}
+	private void populateActivitySetter() {
+		ObservableList activityList = FXCollections.observableArrayList();
 	}
 }
