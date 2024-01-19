@@ -44,6 +44,10 @@ public class Reservation {
 	private Person bookedBy;
 	private final PoliceStation place;
 	
+	public Reservation(LocalDateTime date, PoliceStation place) {
+		this((ReservationType)null, date, (Passport)null, (Person)null, place, (ReservationState)null);
+	}
+	
 	public Reservation(ReservationType type, LocalDateTime date, PoliceStation place) {
 		this(type, date, (Passport)null, (Person)null, place, ReservationState.BOOKABLE);
 	}
