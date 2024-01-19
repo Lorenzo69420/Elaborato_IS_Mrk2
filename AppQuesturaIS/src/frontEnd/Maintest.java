@@ -3,7 +3,6 @@ package frontEnd;
 import controller.MainController;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import model.DatabaseManager;
 public class Maintest extends Application {
 
 	@Override

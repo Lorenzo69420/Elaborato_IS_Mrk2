@@ -18,6 +18,8 @@ public class ActivityReservationController{
 
     @FXML
     private HBox slotBox;
+    
+    private MainController MC;
 
     @FXML
     void setActivity(ActionEvent event) {
@@ -33,5 +35,10 @@ public class ActivityReservationController{
     void setPoliceSrtation(ActionEvent event) {
 
     }
+
+	public void setMC(MainController mC) {
+		MC = mC;
+	}
+    
 
 }

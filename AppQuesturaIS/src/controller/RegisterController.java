@@ -106,7 +106,7 @@ public class RegisterController {
 
     @FXML
     void switchToLogin(ActionEvent event) {
-
+    	MC.switchToLogin();
     }
 
 	public void setMC(MainController mC) {

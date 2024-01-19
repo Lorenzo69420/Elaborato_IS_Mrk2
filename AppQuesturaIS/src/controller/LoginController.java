@@ -49,13 +49,13 @@ public class LoginController {
     @FXML
     void logReq(ActionEvent event) {
     	try {
-    		this.logPerson = DatabaseManager.getPerson(ID);
+    		this.logPerson = DatabaseManager.getPerson(IDField.getText());
     	} catch (NoSuchUserException e ) {
     		IDLabel.setText("User not found");
     	} catch (SQLException E ) {
 			System.out.println("Database compro-fjDSVIAM...Database compromised");
 		} finally {
-			
+			MC.switchToActivitySelector();
 		}
     }
 
@@ -71,7 +71,7 @@ public class LoginController {
 
     @FXML
     void switchReg(ActionEvent event) {
-    	MC.switchToReg();
+    	MC.switchToRegister();
     }
     
 	public void setMC(MainController mC) {
