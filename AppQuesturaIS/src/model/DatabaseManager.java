@@ -222,7 +222,7 @@ public class DatabaseManager {
 		return result;
 	}
 
-	public static boolean existsPerson(Person person) throws SQLException {
+	public static void existsPerson(Person person) throws SQLException, NoSuchUserException {
 		var query = connection.prepareStatement("SELECT 1 FROM person WHERE tax_id = ? AND name = ? AND surname = ? AND place_birth = ? AND date_birth = ? LIMIT 1");
 		
 		query.setString(1, person.getTaxID());
@@ -233,7 +233,9 @@ public class DatabaseManager {
 		
 		var result = query.executeQuery();
 		
-		return result.next();
+		if (!result.next()) {
+			throw new NoSuchUserException();
+		}
 	}
 	
 	public static void register(Person person) throws SQLException {

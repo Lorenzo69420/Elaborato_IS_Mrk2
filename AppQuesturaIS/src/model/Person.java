@@ -38,8 +38,8 @@ public class Person {
 		this.healthCardNumber = healthCardNumber;
 	}
 
-	public boolean exists() throws SQLException, NoSuchUserException {
-		return DatabaseManager.existsPerson(this);
+	public void exists() throws SQLException, NoSuchUserException {
+		DatabaseManager.existsPerson(this);
 	}
 
 	public void asignTutor(Person tutor) {
