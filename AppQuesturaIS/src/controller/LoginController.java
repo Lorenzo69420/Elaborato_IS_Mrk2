@@ -51,7 +51,7 @@ public class LoginController {
 
     @FXML
     void exitApp(ActionEvent event) {
-
+    	MC.close();
     }
 
     @FXML
@@ -66,10 +66,8 @@ public class LoginController {
 
 		}
 
-		} 
-
+	} 
     
-
     @FXML
     void setName(ActionEvent event) {
     	if (IDField.getText().equals("")) {
