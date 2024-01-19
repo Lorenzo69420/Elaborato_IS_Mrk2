@@ -244,7 +244,7 @@ public class DatabaseManager {
 		
 		query.setString(1, person.getTaxID());
 		
-		query.executeQuery();
+		query.executeUpdate();
 	}
 	
 	public static void makeAdmin(Person person) throws SQLException {
@@ -252,7 +252,7 @@ public class DatabaseManager {
 		
 		query.setString(1, person.getTaxID());
 		
-		query.executeQuery();
+		query.executeUpdate();
 	}
 	
 	public static void changeState(Passport passport) throws SQLException {
@@ -261,7 +261,7 @@ public class DatabaseManager {
 		query.setString(1, passport.getState().toString());
 		query.setInt(2, passport.getPassID());
 		
-		query.executeQuery();
+		query.executeUpdate();
 	}
 	
 	public static void book(Reservation reservation) throws SQLException {
@@ -273,15 +273,15 @@ public class DatabaseManager {
 		query.setTimestamp(4, Timestamp.valueOf(reservation.getDate()));
 		query.setString(5, reservation.getPlace().getTown());
 		
-		query.executeQuery();
+		query.executeUpdate();
 	}
 
 	public static void updateTutor(Person person) throws SQLException {
 		var query = connection.prepareStatement("UPDATE person SET tutor_id = ? WHERE tax_id = ?");
 		
-		query.setString(1, person.getTaxID());
-		query.setString(2, person.getTutor().getTaxID());
+		query.setString(2, person.getTaxID());
+		query.setString(1, person.getTutor().getTaxID());
 		
-		query.executeQuery();
+		query.executeUpdate();
 	}
 }
