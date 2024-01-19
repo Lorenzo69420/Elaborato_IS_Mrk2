@@ -56,15 +56,18 @@ public class LoginController {
     @FXML
     void logReq(ActionEvent event) {
     	try {
-    		System.out.println("dioboia : " + IDField.getText());
     		this.logPerson = Person.get(IDField.getText());
     		MC.switchToActivitySelector();
     	} catch (NoSuchUserException e ) {
     		IDLabel.setText("Utente non trovato");
     	} catch (SQLException E ) {
 			System.out.println("Database compro-fjDSVIAM...Database compromised");
+
 		}
-    }
+
+		} 
+
+    
 
     @FXML
     void setName(ActionEvent event) {

@@ -17,8 +17,8 @@ public class DatabaseManager {
 	private static final String PERSON_TABLE = "CREATE TABLE IF NOT EXISTS person("
 			+ "tax_id VARCHAR(16) PRIMARY KEY NOT NULL, " + "name TEXT NOT NULL, " + "surname TEXT NOT NULL, "
 			+ "date_birth DATE NOT NULL, " + "place_birth TEXT NOT NULL, " + "health_card_num BIGINT, "
-			+ "belonging_category TEXT, " + "tutor_id VARCHAR(16), " + "sex CHAR NOT NULL" 
-			+ "register BOOLEAN NOT NULL" + "admin BOOLEAN NOT NULL);";
+			+ "belonging_category TEXT, " + "tutor_id VARCHAR(16), " + "sex CHAR NOT NULL, " 
+			+ "register BOOLEAN NOT NULL, " + "admin BOOLEAN NOT NULL);";
 
 	private static final String PERSON_CONSTRAINT = "DO $$ BEGIN"
 			+ "    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_tutor_id') THEN"
