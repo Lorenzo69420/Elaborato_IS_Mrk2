@@ -34,7 +34,10 @@ public class Main {
 		Reservation res = new Reservation(ReservationType.COLLECTION, LocalDateTime.now(), pass, sbatachiones, ps);
 		res.insert();
 
-		System.out.println(Person.get(""));
+		Person sbat = new Person("TIA3", "Mattias", "Giambirtones", "Terronia",
+				new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build());
+		
+		System.out.println(sbat.exists());
 		DatabaseManager.close();
 	}
 

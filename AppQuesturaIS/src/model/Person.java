@@ -38,7 +38,7 @@ public class Person {
 		this.healthCardNumber = healthCardNumber;
 	}
 
-	public boolean exists(String taxID) throws SQLException, NoSuchUserException {
+	public boolean exists() throws SQLException, NoSuchUserException {
 		return DatabaseManager.existsPerson(this);
 	}
 
