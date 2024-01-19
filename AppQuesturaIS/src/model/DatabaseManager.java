@@ -295,7 +295,7 @@ public class DatabaseManager {
 		var result = query.executeQuery();
 		if (!result.next()) {
 			return null;			
-		}
+		} 
 		
 		return  new Reservation(ReservationType.valueOf(result.getString("type")), result.getTimestamp("date"), new);
 	}
