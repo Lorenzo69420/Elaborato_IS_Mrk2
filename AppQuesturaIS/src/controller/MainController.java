@@ -31,6 +31,12 @@ public class MainController {
 	private ActivityReservationController actController;
 	private Scene actScene;
 	
+	//ActivitySetter page
+	private FXMLLoader actSetLoader; 
+	private BorderPane actSetPane;
+	private ActivitySetterController actSetController;
+	private Scene actSetScene;
+	
 	public MainController () throws IOException, SQLException {
 		DatabaseManager.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password");
 		// Login setup
@@ -52,6 +58,12 @@ public class MainController {
 		actController = actLoader.getController();
 		actController.setMC(this);
 		actScene = new Scene(actPane);
+		// Activity Setter setup
+		actSetLoader = new FXMLLoader(getClass().getResource("../view/ActivitySetter.fxml"));
+		actSetPane = actSetLoader.load();
+		actSetController = actSetLoader.getController();
+		actSetController.setMC(this);
+		actSetScene = new Scene(actSetPane);
 	}
 	public void start() {
 		mainStage.show();
@@ -66,6 +78,10 @@ public class MainController {
 	}
 	public void switchToActivitySelector() {
 		mainStage.setScene(actScene);
+		start();
+	}
+	public void switchToActivitySetter() {
+		mainStage.setScene(actSetScene);
 		start();
 	}
 }

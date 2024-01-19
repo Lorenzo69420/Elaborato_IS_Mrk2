@@ -4,13 +4,15 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <bottom>
       <HBox alignment="CENTER" prefHeight="134.0" prefWidth="600.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
@@ -129,19 +131,39 @@
       </VBox>
    </right>
    <top>
-      <VBox prefHeight="96.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <StackPane prefHeight="150.0" prefWidth="200.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuti nel Sistema di prenotazione della questura di Verona" wrappingWidth="254.0" />
+                  <ImageView fitHeight="101.0" fitWidth="195.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/LogoStato.jpeg" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
             <StackPane prefHeight="150.0" prefWidth="200.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Inserite il vostro Codice Fiscale per eeguire l'accesso" wrappingWidth="255.7294921875" />
+                  <VBox prefHeight="96.0" prefWidth="600.0">
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuti nel Sistema di prenotazione dei passaporti per le Questure Italiane" wrappingWidth="254.0" />
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Inserite il vostro Codice Fiscale per eeguire l'accesso" wrappingWidth="255.7294921875" />
+                           </children>
+                        </StackPane>
+                     </children>
+                  </VBox>
                </children>
             </StackPane>
          </children>
-      </VBox>
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+      </HBox>
    </top>
 </BorderPane>

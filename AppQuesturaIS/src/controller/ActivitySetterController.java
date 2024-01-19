@@ -8,7 +8,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.text.Text;
 
-public class SetSlotsController{
+public class ActivitySetterController{
 
     @FXML
     private ComboBox<?> activitySelector;
@@ -45,6 +45,8 @@ public class SetSlotsController{
 
     @FXML
     private Text text4;
+    
+    public  MainController MC;
 
     @FXML
     void add1(ActionEvent event) {
@@ -85,5 +87,9 @@ public class SetSlotsController{
     void setPoliceSrtation(ActionEvent event) {
 
     }
+
+	public void setMC(MainController mainController) {
+		MC = mainController;
+	}
 
 }
