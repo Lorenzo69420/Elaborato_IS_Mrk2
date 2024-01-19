@@ -10,6 +10,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import model.Reservation.ReservationType;
+
 public class DatabaseManager {
 	private static boolean initialized = false;
 	private static Connection connection = null;
@@ -279,9 +281,21 @@ public class DatabaseManager {
 	public static void updateTutor(Person person) throws SQLException {
 		var query = connection.prepareStatement("UPDATE person SET tutor_id = ? WHERE tax_id = ?");
 		
-		query.setString(2, person.getTaxID());
 		query.setString(1, person.getTutor().getTaxID());
+		query.setString(2, person.getTaxID());
 		
 		query.executeUpdate();
+	}
+	
+	public static Reservation getReservation() {
+		var query = connection.prepareStatement("SELECT * FROM reservation WHERE date = ? LIMIT 1");
+		
+		query.setTimestamp(1, Timestamp.valueOf());
+		
+		var result = query.executeQuery();
+		if(!result.next())
+			return null;
+		
+		return  new Reservation(ReservationType.valueOf(result.getString("type")), result.getTimestamp("date"), new);
 	}
 }
