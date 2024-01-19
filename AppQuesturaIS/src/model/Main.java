@@ -18,6 +18,11 @@ public class Main {
 		  27).build(), "Africa", 69420); sbatachiones.insert();
 		  
 		  PoliceStation ps = new PoliceStation("Verona"); ps.insert();
+		  ps = new PoliceStation("Vicenza"); ps.insert();
+		  ps = new PoliceStation("Padova"); ps.insert();
+		  ps = new PoliceStation("Belluno"); ps.insert();
+		  
+		  System.out.println(DatabaseManager.getPoliceStation());
 		  
 		  Passport pass = new Passport("TIA3", Calendar.getInstance(),
 		  PassportState.VALID, ps); pass.insert();
