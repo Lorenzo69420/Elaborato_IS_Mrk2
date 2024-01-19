@@ -1,5 +1,9 @@
 package controller;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -7,6 +11,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.text.Text;
+import model.Reservation;
 
 public class ActivitySetterController{
 
@@ -21,6 +26,12 @@ public class ActivitySetterController{
 
     @FXML
     private Button saveButton;
+    
+    @FXML
+    private Button backButton;
+    
+    @FXML
+    private Button selectButton;
 
     @FXML
     private CheckBox select1;
@@ -47,6 +58,16 @@ public class ActivitySetterController{
     private Text text4;
     
     public  MainController MC;
+    
+    private ArrayList<Text> actTexts = new ArrayList<>();
+    private ArrayList<CheckBox> actBoxs = new ArrayList<>();
+    void addAll() {
+    	Text[] txts = {text1,text2,text3,text4};
+    	actTexts.addAll(Arrays.asList(txts));
+    	CheckBox[] CBs = {select1,select2,select3,select4};
+    	actBoxs.addAll(Arrays.asList(CBs));
+    }
+    
 
     @FXML
     void add1(ActionEvent event) {
@@ -67,10 +88,23 @@ public class ActivitySetterController{
     void add4(ActionEvent event) {
 
     }
+    @FXML
+    void getReservation(ActionEvent event) {
+    	LocalDate ld = dateSelector.getValue();
+    	for (int hour = 8; hour < 12 ; hour++) {
+    		ld.atTime(hour,0);
+    		//Reservation R = new Reservation();
+    		System.out.println("ora : " + ld.toString());
+    	}
+    }
 
     @FXML
     void saveSelections(ActionEvent event) {
 
+    }
+    @FXML
+    void goBack(ActionEvent event) {
+    	MC.switchToLogin();
     }
 
     @FXML
