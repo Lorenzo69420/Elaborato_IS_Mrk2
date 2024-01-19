@@ -44,7 +44,7 @@ public class DatabaseManager {
 	private static final String RESERVATION_TABLE = "CREATE TABLE IF NOT EXISTS reservation("
 			+ "passport_id BIGINT, " + "booked_by VARCHAR(16), " + "state TEXT NOT NULL, "
 			+ "type TEXT NOT NULL, " + "date TIMESTAMP NOT NULL, " + "place TEXT NOT NULL," 
-			+ "PRIMAY KEY(date, place));";
+			+ "PRIMARY KEY(date, place));";
 
 	private static final String RESERVATION_CONSTRAINT = "DO $$ BEGIN"
 			+ "    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_booked_by') THEN"
