@@ -200,7 +200,7 @@ public class DatabaseManager {
 	}
 	
 	public static List<String> getPoliceStation() throws SQLException {
-		List<String> result = new ArrayList();
+		List<String> result = new ArrayList<>();
 		
 		var query = connection.prepareStatement("SELECT * FROM police_station");
 		

@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class PoliceStation {
 	public final String town;
@@ -15,5 +16,9 @@ public class PoliceStation {
 	
 	public String getTown() {
 		return town;
+	}
+	
+	public static List<String> get() throws SQLException {
+		return DatabaseManager.getPoliceStation();
 	}
 }
