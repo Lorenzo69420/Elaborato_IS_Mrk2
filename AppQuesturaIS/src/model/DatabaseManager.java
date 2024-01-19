@@ -248,7 +248,7 @@ public class DatabaseManager {
 	}
 	
 	public static void makeAdmin(Person person) throws SQLException {
-		var query = connection.prepareStatement("UPDATE person SET {admin = TRUE} WHERE tax_id = ?");
+		var query = connection.prepareStatement("UPDATE person SET admin = TRUE WHERE tax_id = ?");
 		
 		query.setString(1, person.getTaxID());
 		
@@ -277,7 +277,7 @@ public class DatabaseManager {
 	}
 
 	public static void updateTutor(Person person) throws SQLException {
-		var query = connection.prepareStatement("UPDATE person SET {tutor_id = ?} WHERE taxID = ?");
+		var query = connection.prepareStatement("UPDATE person SET tutor_id = ? WHERE tax_id = ?");
 		
 		query.setString(1, person.getTaxID());
 		query.setString(2, person.getTutor().getTaxID());

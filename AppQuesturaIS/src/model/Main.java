@@ -16,6 +16,13 @@ public class Main {
 		Person sbatachiones = new Person("TIA3", "Mattias", "Giambirtones", 't', "Terronia",
 				new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build(), "Africa", 69420);
 		sbatachiones.insert();
+		
+		Person IlKingNeto = new Person("CH4D", "Neto", "Whites", '$', "vostri muri",
+				new Calendar.Builder().setDate(2002, Calendar.SEPTEMBER, 14).build(), "Supremo", 9001);
+		IlKingNeto.insert();
+		IlKingNeto.makeAdmin();
+		//sbatachiones.addTutor(IlKingNeto);
+		
 
 		PoliceStation ps = new PoliceStation("Verona");
 		ps.insert();
