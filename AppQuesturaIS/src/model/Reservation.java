@@ -13,7 +13,16 @@ public class Reservation {
 	
 	public enum ReservationType {
 		COLLECTION,
-		ISSUANCE
+		ISSUANCE;
+		
+		public String toString() {
+			switch(this) {
+			case COLLECTION:
+				return "Ritiro";
+			default:
+				return "Emissione";
+			}
+		}
 	}
 	
 	private ReservationState state;
