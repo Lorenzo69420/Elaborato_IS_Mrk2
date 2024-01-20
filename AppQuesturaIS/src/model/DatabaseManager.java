@@ -10,6 +10,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import model.Passport.PassportState;
+import model.Reservation.ReservationState;
 import model.Reservation.ReservationType;
 
 public class DatabaseManager {
@@ -20,47 +22,29 @@ public class DatabaseManager {
 			+ "tax_id VARCHAR(16) PRIMARY KEY NOT NULL, " + "name TEXT NOT NULL, " + "surname TEXT NOT NULL, "
 			+ "date_birth DATE NOT NULL, " + "place_birth TEXT NOT NULL, " + "health_card_num BIGINT, "
 			+ "belonging_category TEXT, " + "tutor_id VARCHAR(16), " + "sex CHAR NOT NULL, " 
-			+ "registerd BOOLEAN NOT NULL, " + "admin BOOLEAN NOT NULL);";
-
-	private static final String PERSON_CONSTRAINT = "DO $$ BEGIN"
-			+ "    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_tutor_id') THEN"
-			+ "        ALTER TABLE person ADD CONSTRAINT fk_tutor_id FOREIGN KEY (tutor_id) REFERENCES person(tax_id);"
-			+ "    END IF;" + "END $$;";
+			+ "registerd BOOLEAN NOT NULL, " + "admin BOOLEAN NOT NULL, " 
+			+ "CONSTRAINT fk_tutor_id FOREIGN KEY (tutor_id) REFERENCES person(tax_id));";
 
 	private static final String PASSPORT_TABLE = "CREATE TABLE IF NOT EXISTS passport("
-			+ "passport_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY," + "tax_id VARCHAR(16) NOT NULL, "
+			+ "passport_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, " + "tax_id VARCHAR(16) NOT NULL, "
 			+ "release_date DATE NOT NULL, " + "expiry_date DATE NOT NULL, " + "release_location TEXT NOT NULL, "
-			+ "state TEXT NOT NULL);";
-
-	private static final String PASSPORT_CONSTRAINT = "DO $$ BEGIN"
-			+ "    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_person_id') THEN"
-			+ "        ALTER TABLE passport ADD CONSTRAINT fk_person_id FOREIGN KEY (tax_id) REFERENCES person(tax_id);"
-			+ "    END IF;"
-			+ "    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_release_location') THEN"
-			+ "        ALTER TABLE passport ADD CONSTRAINT fk_release_location FOREIGN KEY (release_location) REFERENCES police_station(town);"
-			+ "    END IF;" + "END $$;";
+			+ "state TEXT NOT NULL, CONSTRAINT fk_release_location FOREIGN KEY (release_location) REFERENCES police_station(town), " 
+			+ "CONSTRAINT fk_person_id FOREIGN KEY (tax_id) REFERENCES person(tax_id));";
 
 	private static final String POLICE_TABLE = "CREATE TABLE IF NOT EXISTS police_station("
 			+ "town TEXT PRIMARY KEY NOT NULL);";
 
 	private static final String RESERVATION_TABLE = "CREATE TABLE IF NOT EXISTS reservation("
 			+ "passport_id BIGINT, " + "booked_by VARCHAR(16), " + "state TEXT NOT NULL, "
-			+ "type TEXT NOT NULL, " + "date TIMESTAMP NOT NULL, " + "place TEXT NOT NULL," 
-			+ "PRIMARY KEY(date, place));";
-
-	private static final String RESERVATION_CONSTRAINT = "DO $$ BEGIN"
-			+ "    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_booked_by') THEN"
-			+ "        ALTER TABLE reservation ADD CONSTRAINT fk_booked_by FOREIGN KEY (booked_by) REFERENCES person(tax_id);"
-			+ "    END IF;" + "    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'fk_place') THEN"
-			+ "        ALTER TABLE reservation ADD CONSTRAINT fk_place FOREIGN KEY (place) REFERENCES police_station(town);"
-			+ "    END IF;" + "END $$;";
-	
+			+ "type TEXT NOT NULL, " + "date TIMESTAMP NOT NULL, " + "place TEXT NOT NULL, " 
+			+ "PRIMARY KEY(date, place), CONSTRAINT fk_booked_by FOREIGN KEY (booked_by) REFERENCES person(tax_id), "
+			+ "CONSTRAINT fk_place FOREIGN KEY (place) REFERENCES police_station(town));";	
 	
 	public static void init(String url, String username, String password, boolean debugMode) throws SQLException {
 		if (initialized) {
 			throw new RuntimeException("The database manager is alredy initialized");
 		}
-
+		
 		connection = DriverManager.getConnection(url, username, password);
 		initialized = true;
 		
@@ -80,29 +64,10 @@ public class DatabaseManager {
 	}
 
 	public static void createTable() throws SQLException {
-		createPersonTable();
-		createPoliceTable();
-		createPassportTable();
-		createReservationTable();
-	}
-
-	public static void createPersonTable() throws SQLException {
 		connection.prepareStatement(PERSON_TABLE).execute();
-		connection.prepareStatement(PERSON_CONSTRAINT).execute();
-	}
-
-	public static void createPassportTable() throws SQLException {
-		connection.prepareStatement(PASSPORT_TABLE).execute();
-		connection.prepareStatement(PASSPORT_CONSTRAINT).execute();
-	}
-
-	public static void createPoliceTable() throws SQLException {
 		connection.prepareStatement(POLICE_TABLE).execute();
-	}
-
-	public static void createReservationTable() throws SQLException {
+		connection.prepareStatement(PASSPORT_TABLE).execute();
 		connection.prepareStatement(RESERVATION_TABLE).execute();
-		connection.prepareStatement(RESERVATION_CONSTRAINT).execute();
 	}
 
 	public static void dropTable(boolean cascade) throws SQLException {
@@ -204,12 +169,28 @@ public class DatabaseManager {
 			throw new NoSuchUserException();
 		}
 
-		var cal = Calendar.getInstance();
-		cal.setTime(result.getDate("date_birth"));
+		var calendar = Calendar.getInstance();
+		calendar.setTime(result.getDate("date_birth"));
 
 		return new Person(taxID, result.getString("name"), result.getString("surname"),
-				result.getString("sex").charAt(0), result.getString("place_birth"), cal,
+				result.getString("sex").charAt(0), result.getString("place_birth"), calendar,
 				result.getString("belonging_category"), result.getInt("health_card_num"));
+	}
+
+	public static Passport getPassport(int passportID) throws SQLException {
+		var query = connection.prepareStatement("SELECT * FROM passport WHERE passport_id = ?");
+
+		query.setInt(1, passportID);
+
+		var result = query.executeQuery();
+		if (!result.next()) {
+			throw new SQLException();
+		}
+
+		var calendar = Calendar.getInstance();
+		calendar.setTime(result.getDate("release_date"));
+
+		return new Passport(result.getString("tax_id"), calendar, PassportState.valueOf(result.getString("state")), new PoliceStation(result.getString("release_location")));
 	}
 	
 	public static List<String> getPoliceStation() throws SQLException {
@@ -287,16 +268,30 @@ public class DatabaseManager {
 		query.executeUpdate();
 	}
 	
-	public static Reservation getReservation() {
-		var query = connection.prepareStatement("SELECT * FROM reservation WHERE date = ? LIMIT 1");
+	
+	public static Reservation getReservation(Reservation reservation) throws NoSuchUserException, SQLException {
+		var query = connection.
+				prepareStatement("SELECT * FROM reservation WHERE date = ? AND place = ? LIMIT 1");
+
+		query.setTimestamp(1, Timestamp.valueOf(reservation.getDate()));
+		query.setString(2, reservation.getPlace().getTown());
 		
-		query.setTimestamp(1, Timestamp.valueOf());
-		
-		var result = query.executeQuery();
-		if (!result.next()) {
-			return null;			
-		} 
-		
-		return  new Reservation(ReservationType.valueOf(result.getString("type")), result.getTimestamp("date"), new);
+		var result = query.executeQuery(); 
+		if (!result.next()) { 
+			return null; 
+		}
+
+		Person person = null;
+		if (result.getString("booked_by") != null) {
+			person = getPerson(result.getString("booked_by"));
+		}
+
+		Passport passport = null; 
+		if (result.getString("passport_id") != null) {
+			passport = getPassport(result.getInt("passport_id"));
+		}
+
+		return new Reservation(ReservationType.valueOf("type"), result.getTimestamp("date").toLocalDateTime(), passport, person, new PoliceStation("place"), ReservationState.valueOf(result.getString("state"))); 
 	}
+
 }

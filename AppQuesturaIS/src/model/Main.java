@@ -44,10 +44,6 @@ public class Main {
 
 		Person sbat = new Person("TIA3", "Mattias", "Giambirtones", "Terronia",
 				new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build());
-<<<<<<< Updated upstream
-=======
-		
->>>>>>> Stashed changes
 		sbat.exists();
 		DatabaseManager.close();
 	}
