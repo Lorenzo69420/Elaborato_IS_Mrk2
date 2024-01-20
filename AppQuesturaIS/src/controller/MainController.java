@@ -43,7 +43,7 @@ public class MainController {
 	private Scene actSetScene;
 	
 	public MainController () throws IOException, SQLException {
-		DatabaseManager.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password",true);
+		DatabaseManager.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password",false);
 		
 		getActivityList();
 		getPSList();

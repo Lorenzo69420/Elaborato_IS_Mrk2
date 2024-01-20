@@ -11,6 +11,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.text.Text;
+import model.PoliceStation;
 import model.Reservation;
 
 public class ActivitySetterController{
@@ -57,6 +58,9 @@ public class ActivitySetterController{
     @FXML
     private Text text4;
     
+    @FXML
+    private Text errorText;
+    
     public  MainController MC;
     
     private ArrayList<Text> actTexts = new ArrayList<>();
@@ -90,15 +94,43 @@ public class ActivitySetterController{
     }
     @FXML
     void getReservation(ActionEvent event) {
-    	LocalDate ld = dateSelector.getValue();
-    	for (int hour = 8; hour < 12 ; hour++) {
-    		ld.atTime(hour,0);
-    		//Reservation R = new Reservation();
-    		System.out.println("ora : " + ld.toString());
+    	if (checkAll()) {
+    		ArrayList<Reservation> resList = new ArrayList<>();
+    		LocalDate ld = dateSelector.getValue();
+        	for (int hour = 8; hour < 12 ; hour++) {
+        		Reservation R = new Reservation(ld.atTime(hour,0),new PoliceStation(policeStationSelector.getValue()));
+        		
+        		resList.add(R);
+        	}
+        	for (int slot = 0; slot < 4; slot++) {
+        		(actTexts.get(slot)).setText(resList.get(slot).toString());
+        	}
+    	} else {
+    		errorText.setText("Uno o più campi sono vuoti. \nInserisci correttamente la questura e il giorno che desideri");
     	}
+    	
     }
 
-    @FXML
+    private boolean checkAll() {
+		// TODO Auto-generated method stub
+		return checkDate() && checkPS();
+	}
+
+
+	private boolean checkPS() {
+		// TODO Auto-generated method stub
+		return !(policeStationSelector.getValue() == null) && !policeStationSelector.getValue().isBlank();
+	}
+
+
+	private boolean checkDate() {
+		// TODO Auto-generated method stub
+		return !(dateSelector.getValue() == null) && !dateSelector.getValue().toString().isBlank();
+	}
+    
+
+
+	@FXML
     void saveSelections(ActionEvent event) {
 
     }
@@ -118,7 +150,7 @@ public class ActivitySetterController{
     }
 
     @FXML
-    void setPoliceSrtation(ActionEvent event) {
+    void setPoliceStation(ActionEvent event) {
 
     }
 
