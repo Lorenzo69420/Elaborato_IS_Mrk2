@@ -72,6 +72,7 @@ public class MainController {
 		actSetPane = actSetLoader.load();
 		actSetController = actSetLoader.getController();
 		actSetController.setMC(this);
+		actSetController.addAll();
 		actSetScene = new Scene(actSetPane);
 		populateActivitySetter();
 	}

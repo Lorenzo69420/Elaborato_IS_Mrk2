@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +12,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.text.Text;
+import model.NoSuchUserException;
 import model.PoliceStation;
 import model.Reservation;
 
@@ -93,17 +95,19 @@ public class ActivitySetterController{
 
     }
     @FXML
-    void getReservation(ActionEvent event) {
+    void getReservation(ActionEvent event) throws NoSuchUserException, SQLException {
     	if (checkAll()) {
     		ArrayList<Reservation> resList = new ArrayList<>();
     		LocalDate ld = dateSelector.getValue();
         	for (int hour = 8; hour < 12 ; hour++) {
         		Reservation R = new Reservation(ld.atTime(hour,0),new PoliceStation(policeStationSelector.getValue()));
-        		
-        		resList.add(R);
+        		R = R.getCompleteReservation();
+        		System.out.println("add result: " + resList.add(R));
         	}
         	for (int slot = 0; slot < 4; slot++) {
-        		(actTexts.get(slot)).setText(resList.get(slot).toString());
+        		Reservation.ReservationType rt = resList.get(slot).getType();
+        		String str = rt == null ? "Vuoto" : rt.toString();
+        		actTexts.get(slot).setText(str);
         	}
     	} else {
     		errorText.setText("Uno o più campi sono vuoti. \nInserisci correttamente la questura e il giorno che desideri");

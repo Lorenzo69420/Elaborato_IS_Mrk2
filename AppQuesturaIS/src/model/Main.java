@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Calendar;
 
 import model.Passport.PassportState;
@@ -41,6 +42,7 @@ public class Main {
 
 		Reservation res = new Reservation(ReservationType.COLLECTION, LocalDateTime.now(), pass, sbatachiones, ps, ReservationState.BOOKABLE);
 		res.insert();
+		Reservation res2 = new Reservation(ReservationType.ISSUANCE_LOST,LocalDateTime.of(2023, Month.JANUARY, 1, 9, 0),new PoliceStation("Verona"));
 
 		Person sbat = new Person("TIA3", "Mattias", "Giambirtones", "Terronia",
 				new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build());
