@@ -1,4 +1,4 @@
-package src.model;
+package model;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -10,9 +10,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import src.model.Passport.PassportState;
-import src.model.Reservation.ReservationState;
-import src.model.Reservation.ReservationType;
+import model.Passport.PassportState;
+import model.Reservation.ReservationState;
+import model.Reservation.ReservationType;
 
 public class DatabaseManager {
 	private static boolean initialized = false;
@@ -39,6 +39,10 @@ public class DatabaseManager {
 			+ "place TEXT NOT NULL, "
 			+ "PRIMARY KEY(date, place), CONSTRAINT fk_booked_by FOREIGN KEY (booked_by) REFERENCES person(tax_id), "
 			+ "CONSTRAINT fk_place FOREIGN KEY (place) REFERENCES police_station(town));";
+	
+	private static final String PASSPORT_REQUEST_TABLE = "CREATE TABLE IF NOT ESISTS passport_request(" 
+			+ "tax_id VARCHAR(16) PRIMARY KEY, date DATE NOT NULL, type TEXT NOT NULL, "
+			+ "CONSTRAINT fk_tax_id FOREIGN KEY (tax_id) REFERENCES person(tax_id));";
 
 	public static void init(String url, String username, String password, boolean debugMode) throws SQLException {
 		if (initialized) {
@@ -67,12 +71,14 @@ public class DatabaseManager {
 		connection.prepareStatement(PERSON_TABLE).execute();
 		connection.prepareStatement(POLICE_TABLE).execute();
 		connection.prepareStatement(PASSPORT_TABLE).execute();
+		connection.prepareStatement(PASSPORT_REQUEST_TABLE).execute();
 		connection.prepareStatement(RESERVATION_TABLE).execute();
 	}
 
 	public static void dropTable(boolean cascade) throws SQLException {
 		dropPersonTable(cascade);
 		dropPassportTable(cascade);
+		dropPassportRequestTable(cascade);
 		dropPoliceTable(cascade);
 		dropReservationTable(cascade);
 	}
@@ -85,6 +91,10 @@ public class DatabaseManager {
 		connection.prepareStatement("DROP TABLE IF EXISTS passport " + (cascade ? "CASCADE" : "") + ";").execute();
 	}
 
+	public static void dropPassportRequestTable(boolean cascade) throws SQLException {
+		connection.prepareStatement("DROP TABLE IF EXISTS passport_request " + (cascade ? "CASCADE" : "") + ";").execute();
+	}
+	
 	public static void dropPoliceTable(boolean cascade) throws SQLException {
 		connection.prepareStatement("DROP TABLE IF EXISTS police_station " + (cascade ? "CASCADE" : "") + ";")
 				.execute();
