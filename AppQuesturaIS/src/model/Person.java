@@ -4,8 +4,6 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import model.Reservation.ReservationType;
-
 public class Person {
 	private final String taxID;
 	private final String name;

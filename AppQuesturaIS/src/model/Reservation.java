@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 import model.Passport.PassportState;
-import model.Reservation.ReservationType;
 
 public class Reservation {
 	public enum ReservationState {
@@ -71,26 +70,35 @@ public class Reservation {
 	public void book(Person person) throws SQLException, notBookableException {
 		ReservationType type = this.getType();
 		
-		if(type == ReservationType.COLLECTION) {
-			//controlla che ci sia un passaporto in richiesto
-			
-		}else if(type == ReservationType.ISSUANCE_NEW) {
-			if(person.getLastPassport().getState() != null)
-				throw new notBookableException();
-			//e che non ce ne sia uno richiesto
-		}else {
-			if(person.getLastPassport().getState() != PassportState.VALID)
-			//contolla che abbia un passaporto valido
-			// e che non ce ne sia uno richiesto
+		switch(type) {
+			case COLLECTION:
+				if(!DatabaseManager.hasRequest(person) || !DatabaseManager.getRequestDate(person)) { //fai qua
+					throw new notBookableExcecption();
+				}
+				break;
+				//controlla che ci sia un passaporto in richiesto (fatto)
+				//e che sia un mese prima di this.date
+				
+			case ISSUANCE_NEW:
+				if(person.getLastPassport() != null || DatabaseManager.hasRequest(person)) {
+					throw new notBookableException();
+				}
+				break;
+			default:
+				if(person.getLastPassport().getState() != PassportState.VALID || DatabaseManager.hasRequest(person)) {
+					throw new notBookableException();
+				}
+				break;
 		}
 		
 		this.bookedBy = person;
 		this.state = ReservationState.BOOKED_UP;
 	}
 	
-	public void changeState(ReservationState newState) {
+	public void changeState(ReservationState newState) throws Exception {
 		if(newState == ReservationState.BOOKED_UP) {
 			System.err.println("wrong function\n");
+			throw new Exception();
 		}
 		this.state = newState;
 	}
