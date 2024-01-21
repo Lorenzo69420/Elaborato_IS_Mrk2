@@ -19,11 +19,11 @@
          <children>
             <StackPane prefHeight="150.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveSelections" text="Salva" />
+                  <Button mnemonicParsing="false" onAction="#saveSelections" text="Salva" />
                </children></StackPane>
             <StackPane prefHeight="150.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#goBack" text="Esci" />
+                  <Button mnemonicParsing="false" onAction="#goBack" text="Esci" />
                </children>
             </StackPane>
          </children>
@@ -53,7 +53,7 @@
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <CheckBox fx:id="select1" mnemonicParsing="false" onAction="#add1" text="Conferma" />
+                                    <CheckBox fx:id="select1" mnemonicParsing="false" text="Conferma" />
                                  </children>
                               </StackPane>
                            </children>
@@ -76,7 +76,7 @@
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <CheckBox fx:id="select2" mnemonicParsing="false" onAction="#add2" text="Conferma" />
+                                    <CheckBox fx:id="select2" mnemonicParsing="false" text="Conferma" />
                                  </children>
                               </StackPane>
                            </children>
@@ -99,7 +99,7 @@
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <CheckBox fx:id="select3" mnemonicParsing="false" onAction="#add3" text="Conferma" />
+                                    <CheckBox fx:id="select3" mnemonicParsing="false" text="Conferma" />
                                  </children>
                               </StackPane>
                            </children>
@@ -122,7 +122,7 @@
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <CheckBox fx:id="select4" mnemonicParsing="false" onAction="#add4" text="Conferma" />
+                                    <CheckBox fx:id="select4" mnemonicParsing="false" text="Conferma" />
                                  </children>
                               </StackPane>
                            </children>
@@ -222,7 +222,7 @@
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Button fx:id="selectButton" mnemonicParsing="false" onAction="#getReservation" text="Conferma" />
+                              <Button mnemonicParsing="false" onAction="#getReservation" text="Conferma" />
                            </children>
                         </StackPane>
                      </children>

@@ -13,116 +13,127 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ActivitySetterController">
-   <right>
-      <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
-         <children>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
-               <children>
-                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveSelections" text="Salva" />
-               </children></StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
-               <children>
-                  <Button fx:id="backButton" mnemonicParsing="false" onAction="#goBack" text="Esci" />
-               </children>
-            </StackPane>
-         </children>
-         <BorderPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </BorderPane.margin>
-      </VBox>
-   </right>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="743.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ActivitySetterController">
    <center>
       <StackPane prefHeight="281.0" prefWidth="500.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="TOP_CENTER" prefHeight="235.0" prefWidth="500.0" spacing="20.0">
+            <HBox alignment="TOP_CENTER" prefHeight="284.0" prefWidth="791.0" spacing="20.0">
                <children>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                  <StackPane prefHeight="284.0" prefWidth="615.0">
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
+                        <HBox prefHeight="284.0" prefWidth="539.0" spacing="30.0">
                            <children>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane prefHeight="284.0" prefWidth="250.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="8:00 / 9:00" wrappingWidth="73.88037109375" />
+                                    <VBox prefHeight="284.0" prefWidth="116.0">
+                                       <children>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="8:00 / 9:00" wrappingWidth="73.88037109375" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text fx:id="text1" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="66.0">
+                                             <children>
+                                                <CheckBox fx:id="select1" mnemonicParsing="false" prefHeight="18.0" prefWidth="137.0" text="Conferma" />
+                                             </children>
+                                          </StackPane>
+                                       </children>
+                                    </VBox>
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane prefHeight="284.0" prefWidth="250.0">
                                  <children>
-                                    <Text fx:id="text1" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" />
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="10:00 / 11:00" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text fx:id="text3" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <CheckBox fx:id="select3" mnemonicParsing="false" text="Conferma" />
+                                             </children>
+                                          </StackPane>
+                                       </children>
+                                    </VBox>
                                  </children>
                               </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane prefHeight="284.0" prefWidth="250.0">
                                  <children>
-                                    <CheckBox fx:id="select1" mnemonicParsing="false" onAction="#add1" text="Conferma" />
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" 9:00 / 10:00" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text fx:id="text2" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <CheckBox fx:id="select2" mnemonicParsing="false" text="Conferma" />
+                                             </children>
+                                          </StackPane>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="284.0" prefWidth="250.0">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" 11:00 / 12:00" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text fx:id="text4" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <CheckBox fx:id="select4" mnemonicParsing="false" text="Conferma" />
+                                             </children>
+                                          </StackPane>
+                                       </children>
+                                    </VBox>
                                  </children>
                               </StackPane>
                            </children>
-                        </VBox>
+                        </HBox>
                      </children>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
                   </StackPane>
-                  <StackPane layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="200.0">
+                  <StackPane prefHeight="284.0" prefWidth="90.0">
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
+                        <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
                            <children>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" 9:00 / 10:00" />
+                                    <Button mnemonicParsing="false" onAction="#saveSelections" text="Salva" />
                                  </children>
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Text fx:id="text2" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" />
-                                 </children>
-                              </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <CheckBox fx:id="select2" mnemonicParsing="false" onAction="#add2" text="Conferma" />
-                                 </children>
-                              </StackPane>
-                           </children>
-                        </VBox>
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="10:00 / 11:00" />
-                                 </children>
-                              </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <Text fx:id="text3" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" />
-                                 </children>
-                              </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <CheckBox fx:id="select3" mnemonicParsing="false" onAction="#add3" text="Conferma" />
-                                 </children>
-                              </StackPane>
-                           </children>
-                        </VBox>
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" 11:00 / 12:00" />
-                                 </children>
-                              </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <Text fx:id="text4" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" />
-                                 </children>
-                              </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <CheckBox fx:id="select4" mnemonicParsing="false" onAction="#add4" text="Conferma" />
+                                    <Button mnemonicParsing="false" onAction="#goBack" text="Esci" />
                                  </children>
                               </StackPane>
                            </children>
@@ -133,7 +144,7 @@
             </HBox>
          </children>
          <BorderPane.margin>
-            <Insets bottom="40.0" left="40.0" />
+            <Insets />
          </BorderPane.margin>
       </StackPane>
    </center>
@@ -146,13 +157,16 @@
                      <children>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <ImageView fitHeight="62.0" fitWidth="73.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="126.0" fitWidth="77.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@img/LogoStato.jpeg" />
                                  </image>
                               </ImageView>
                            </children></StackPane>
-                        <StackPane prefHeight="150.0" prefWidth="200.0" />
+                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto nel sistema di inserimento degli appuntamenti da prendere in questura" wrappingWidth="220.5791015625" />
+                           </children></StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
                               <Text fx:id="errorText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="261.0" />
@@ -177,7 +191,7 @@
                                     </StackPane>
                                     <StackPane prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <ComboBox fx:id="activitySelector" onAction="#setActivity" prefWidth="150.0" />
+                                          <ComboBox fx:id="activitySelector" prefWidth="150.0" />
                                        </children>
                                     </StackPane>
                                  </children>
@@ -195,7 +209,7 @@
                                     </StackPane>
                                     <StackPane prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <ComboBox fx:id="policeStationSelector" onAction="#setPoliceStation" prefWidth="150.0" />
+                                          <ComboBox fx:id="policeStationSelector" prefWidth="150.0" />
                                        </children>
                                     </StackPane>
                                  </children>
@@ -213,7 +227,7 @@
                                     </StackPane>
                                     <StackPane prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <DatePicker fx:id="dateSelector" editable="false" onAction="#setDate" />
+                                          <DatePicker fx:id="dateSelector" editable="false" />
                                        </children>
                                     </StackPane>
                                  </children>
@@ -222,7 +236,7 @@
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Button fx:id="selectButton" mnemonicParsing="false" onAction="#getReservation" text="Conferma" />
+                              <Button mnemonicParsing="false" onAction="#getReservation" text="Conferma" />
                            </children>
                         </StackPane>
                      </children>

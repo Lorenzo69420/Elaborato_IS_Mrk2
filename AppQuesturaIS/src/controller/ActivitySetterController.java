@@ -29,15 +29,6 @@ public class ActivitySetterController{
     private ComboBox<String> policeStationSelector;
 
     @FXML
-    private Button saveButton;
-    
-    @FXML
-    private Button backButton;
-    
-    @FXML
-    private Button selectButton;
-
-    @FXML
     private CheckBox select1;
 
     @FXML
@@ -78,26 +69,6 @@ public class ActivitySetterController{
     	actBoxs.addAll(Arrays.asList(CBs));
     }
     
-
-    @FXML
-    void add1(ActionEvent event) {
-
-    }
-
-    @FXML
-    void add2(ActionEvent event) {
-
-    }
-
-    @FXML
-    void add3(ActionEvent event) {
-
-    }
-
-    @FXML
-    void add4(ActionEvent event) {
-
-    }
     @FXML
     void getReservation(ActionEvent event) throws NoSuchUserException, SQLException {
     	if (checkConfirm()) {
@@ -112,7 +83,10 @@ public class ActivitySetterController{
         		//System.out.println("add result: " + );
         	}
         	for (int slot = 0; slot < 4; slot++) {
-        		Reservation.ReservationType rt = resList.get(slot).getType();
+        		Reservation R = resList.get(slot);
+        		Reservation.ReservationType rt = R.getType();
+        		CheckBox B = actBoxs.get(slot);
+        		B.setDisable(R.getState().equals(Reservation.ReservationState.BOOKED_UP));
         		String str = rt == null ? "Vuoto" : rt.toDisplayString();
         		actTexts.get(slot).setText(str);
         	}
@@ -183,22 +157,7 @@ public class ActivitySetterController{
     void goBack(ActionEvent event) {
     	MC.switchToLogin();
     }
-
-    @FXML
-    void setActivity(ActionEvent event) {
-    	//need to remove not used
-    }
-
-    @FXML
-    void setDate(ActionEvent event) {
-    	//need to remove not used
-    }
-
-    @FXML
-    void setPoliceStation(ActionEvent event) {
-    	//need to remove not used
-    }
-
+	
 	public void setMC(MainController mainController) {
 		MC = mainController;
 	}
