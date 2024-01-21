@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -65,6 +66,9 @@ public class ActivitySetterController{
     
     public  MainController MC;
     
+    private LocalDate ld;
+    private PoliceStation pl;
+    
     private ArrayList<Text> actTexts = new ArrayList<>();
     private ArrayList<CheckBox> actBoxs = new ArrayList<>();
     void addAll() {
@@ -96,17 +100,20 @@ public class ActivitySetterController{
     }
     @FXML
     void getReservation(ActionEvent event) throws NoSuchUserException, SQLException {
-    	if (checkAll()) {
-    		ArrayList<Reservation> resList = new ArrayList<>();
-    		LocalDate ld = dateSelector.getValue();
+    	if (checkConfirm()) {
+    		List<Reservation> resList = new ArrayList<>();
+    		ld = dateSelector.getValue();
+    		pl = new PoliceStation(policeStationSelector.getValue());
         	for (int hour = 8; hour < 12 ; hour++) {
-        		Reservation R = new Reservation(ld.atTime(hour,0),new PoliceStation(policeStationSelector.getValue()));
+        		
+        		Reservation R = new Reservation(ld.atTime(hour,0),pl);
         		R = R.getCompleteReservation();
-        		System.out.println("add result: " + resList.add(R));
+        		resList.add(R);
+        		//System.out.println("add result: " + );
         	}
         	for (int slot = 0; slot < 4; slot++) {
         		Reservation.ReservationType rt = resList.get(slot).getType();
-        		String str = rt == null ? "Vuoto" : rt.toString();
+        		String str = rt == null ? "Vuoto" : rt.toDisplayString();
         		actTexts.get(slot).setText(str);
         	}
     	} else {
@@ -115,47 +122,81 @@ public class ActivitySetterController{
     	
     }
 
-    private boolean checkAll() {
+    private boolean checkConfirm() {
 		// TODO Auto-generated method stub
 		return checkDate() && checkPS();
 	}
 
 
 	private boolean checkPS() {
-		// TODO Auto-generated method stub
 		return !(policeStationSelector.getValue() == null) && !policeStationSelector.getValue().isBlank();
 	}
 
 
 	private boolean checkDate() {
-		// TODO Auto-generated method stub
 		return !(dateSelector.getValue() == null) && !dateSelector.getValue().toString().isBlank();
 	}
     
 
 
 	@FXML
-    void saveSelections(ActionEvent event) {
-
+    void saveSelections(ActionEvent event) throws SQLException {
+		int hour = 8;
+		Reservation tmp ;
+		if (checkAll()) {
+			for (int slot = 0; slot < 4; slot++) {
+				if (actBoxs.get(slot).isSelected()) {
+					actBoxs.get(slot).setSelected(false);
+					Reservation.ReservationType RT = null;
+					for (var rType : Reservation.ReservationType.values()) {
+						if (rType.toDisplayString().equals(activitySelector.getValue())) {
+							RT = rType;
+						}
+					}
+					if (!(!dateSelector.getValue().equals(ld) || !policeStationSelector.getValue().equals(pl))) {
+						tmp = new Reservation(RT,ld.atTime(hour+slot,0),pl);
+						tmp.insert();
+						errorText.setText("Inserimenti della prenotazione avvenuto con successo");
+					} else {
+						errorText.setText("Se vuoi cambiare questura e giorno premi conferma nuovamente");
+					}
+				}
+			}
+		} else {
+			errorText.setText("Seleziona il tipo di attivita da inserire nella questura e giorno selezionati precedentemente, altrimenti premi conferma nuovamente");
+		}
+		
     }
-    @FXML
+    private boolean checkAll() {
+		// TODO Auto-generated method stub
+		return checkConfirm() && checkType();
+	}
+
+
+	private boolean checkType() {
+		// TODO Auto-generated method stub
+		return !(activitySelector.getValue() == null);
+	}
+
+
+	@FXML
     void goBack(ActionEvent event) {
     	MC.switchToLogin();
     }
 
     @FXML
     void setActivity(ActionEvent event) {
-
+    	//need to remove not used
     }
 
     @FXML
     void setDate(ActionEvent event) {
-
+    	//need to remove not used
     }
 
     @FXML
     void setPoliceStation(ActionEvent event) {
-
+    	//need to remove not used
     }
 
 	public void setMC(MainController mainController) {

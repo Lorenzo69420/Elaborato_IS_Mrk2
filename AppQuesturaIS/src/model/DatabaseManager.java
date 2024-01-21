@@ -33,13 +33,13 @@ public class DatabaseManager {
 	private static final String POLICE_TABLE = "CREATE TABLE IF NOT EXISTS police_station("
 			+ "town TEXT PRIMARY KEY NOT NULL);";
 
-	private static final String RESERVATION_TABLE = "CREATE TABLE IF NOT EXISTS reservation(" + "passport_id BIGINT, "
+	private static final String RESERVATION_TABLE = "CREATE TABLE IF NOT EXISTS reservation(" + "passport_id BIGINT NOT NULL, "
 			+ "booked_by VARCHAR(16), " + "state TEXT NOT NULL, " + "type TEXT NOT NULL, " + "date TIMESTAMP NOT NULL, "
 			+ "place TEXT NOT NULL, "
 			+ "PRIMARY KEY(date, place), CONSTRAINT fk_booked_by FOREIGN KEY (booked_by) REFERENCES person(tax_id), "
 			+ "CONSTRAINT fk_place FOREIGN KEY (place) REFERENCES police_station(town));";
 
-	private static final String PASSPORT_REQUEST_TABLE = "CREATE TABLE IF NOT ESISTS passport_request(" 
+	private static final String PASSPORT_REQUEST_TABLE = "CREATE TABLE IF NOT EXISTS passport_request(" 
 			+ "tax_id VARCHAR(16) PRIMARY KEY, date DATE NOT NULL, "
 			+ "CONSTRAINT fk_tax_id FOREIGN KEY (tax_id) REFERENCES person(tax_id));";
 
@@ -302,11 +302,11 @@ public class DatabaseManager {
 		}
 
 		Passport passport = null;
-		if (result.getString("passport_id") != null) {
+		if (result.getInt("passport_id") != -1) {
 			passport = getPassport(result.getInt("passport_id"));
 		}
 
-		return new Reservation(ReservationType.valueOf("type"), result.getTimestamp("date").toLocalDateTime(), passport,
+		return new Reservation(ReservationType.valueOf(result.getString("type")), result.getTimestamp("date").toLocalDateTime(), passport,
 				person, new PoliceStation("place"), ReservationState.valueOf(result.getString("state")));
 	}
 

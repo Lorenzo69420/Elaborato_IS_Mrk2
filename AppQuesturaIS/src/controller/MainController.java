@@ -101,7 +101,7 @@ public class MainController {
 	}
 	private void getActivityList() {
 		for (var S : Reservation.ReservationType.values()) {
-			activityList.add(S.toString());
+			activityList.add(S.toDisplayString());
 		}
 	}
 	private void getPSList() throws SQLException{
