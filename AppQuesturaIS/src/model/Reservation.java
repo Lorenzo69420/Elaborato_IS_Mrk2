@@ -3,6 +3,9 @@ package model;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
+import model.Passport.PassportState;
+import model.Reservation.ReservationType;
+
 public class Reservation {
 	public enum ReservationState {
 		BOOKABLE,
@@ -65,7 +68,22 @@ public class Reservation {
 		DatabaseManager.insert(this);
 	}
 	
-	public void book(Person person) throws SQLException {
+	public void book(Person person) throws SQLException, notBookableException {
+		ReservationType type = this.getType();
+		
+		if(type == ReservationType.COLLECTION) {
+			//controlla che ci sia un passaporto in richiesto
+			
+		}else if(type == ReservationType.ISSUANCE_NEW) {
+			if(person.getLastPassport().getState() != null)
+				throw new notBookableException();
+			//e che non ce ne sia uno richiesto
+		}else {
+			if(person.getLastPassport().getState() != PassportState.VALID)
+			//contolla che abbia un passaporto valido
+			// e che non ce ne sia uno richiesto
+		}
+		
 		this.bookedBy = person;
 		this.state = ReservationState.BOOKED_UP;
 	}
