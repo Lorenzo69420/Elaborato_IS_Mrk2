@@ -273,7 +273,8 @@ public class DatabaseManager {
 		var query = connection.prepareStatement(
 				"UPDATE reservation SET passport_id = ?, booked_by = ?, state = ? WHERE date = ? AND place = ?");
 
-		query.setInt(1, reservation.getPassport().getPassID());
+		var passID = reservation.getPassport() == null ? -1 : reservation.getPassport().getPassID(); 
+		query.setInt(1, passID);
 		query.setString(2, reservation.getBookedBy().getTaxID());
 		query.setString(3, reservation.getState().toString());
 		query.setTimestamp(4, Timestamp.valueOf(reservation.getDate()));

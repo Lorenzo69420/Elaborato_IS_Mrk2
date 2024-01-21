@@ -62,7 +62,8 @@ public class Reservation {
 		DatabaseManager.insert(this);
 	}
 
-	public void book(Person person) throws SQLException {
+	//COLLECTION, ISSUANCE_NEW, ISSUANCE_DAMAGED, ISSUANCE_EXPIRED, ISSUANCE_LOST, ISSUANCE_STOLEN;
+	public void book(Person person) throws SQLException, NotBookableException {
 		switch (this.type) {
 		case COLLECTION:
 			var requestDate = DatabaseManager.getRequestDate(person);
@@ -75,14 +76,29 @@ public class Reservation {
 			}
 			break;
 		case ISSUANCE_NEW:
-			if (person.getLastPassport() != null || DatabaseManager.hasRequest(person)) {
-				throw new NotBookableException();
+			var lastPassport = person.getLastPassport();
+			if (lastPassport != null) {
+				throw new NotBookableException(Types.ALREDY_HAVE_PASSPORT);
 			}
 			break;
-		default:
-			if (person.getLastPassport().getState() != PassportState.VALID || DatabaseManager.hasRequest(person)) {
-				throw new NotBookableException();
+		case ISSUANCE_EXPIRED:
+			lastPassport = person.getLastPassport();
+			if (lastPassport == null) {
+				throw new NotBookableException(Types.MISSING_PASSPORT);
 			}
+			if (lastPassport.getExpiryDate().after(this.getDate())) {
+				throw new NotBookableException(Types.NOT_EXPIRED);
+			}
+			break;
+		case ISSUANCE_DAMAGED: 
+		case ISSUANCE_STOLEN:
+		case ISSUANCE_LOST:
+			lastPassport = person.getLastPassport();
+			if (lastPassport == null) {
+				throw new NotBookableException(Types.MISSING_PASSPORT);
+			}
+		default:
+			
 			break;
 		}
 
