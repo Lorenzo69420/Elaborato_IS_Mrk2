@@ -1,4 +1,4 @@
-package model;
+package src.model;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -10,9 +10,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import model.Passport.PassportState;
-import model.Reservation.ReservationState;
-import model.Reservation.ReservationType;
+import src.model.Passport.PassportState;
+import src.model.Reservation.ReservationState;
+import src.model.Reservation.ReservationType;
 
 public class DatabaseManager {
 	private static boolean initialized = false;
@@ -297,6 +297,18 @@ public class DatabaseManager {
 
 		return new Reservation(ReservationType.valueOf("type"), result.getTimestamp("date").toLocalDateTime(), passport,
 				person, new PoliceStation("place"), ReservationState.valueOf(result.getString("state")));
+	}
+	
+	public static Passport getLastPassport(Person person) throws SQLException{
+		var query = connection.prepareStatement("SELECT * FROM person WHERE tax_id = ? ORDER BY passport_id LIMIT 1");
+		query.setString(0, person.getTaxID());
+		
+		var result = query.executeQuery();
+		
+		if (!result.next())
+			return null;
+		
+		return getPassport(result.getInt("passport_id"));
 	}
 
 }
