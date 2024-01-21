@@ -39,9 +39,9 @@ public class DatabaseManager {
 			+ "place TEXT NOT NULL, "
 			+ "PRIMARY KEY(date, place), CONSTRAINT fk_booked_by FOREIGN KEY (booked_by) REFERENCES person(tax_id), "
 			+ "CONSTRAINT fk_place FOREIGN KEY (place) REFERENCES police_station(town));";
-	
+
 	private static final String PASSPORT_REQUEST_TABLE = "CREATE TABLE IF NOT ESISTS passport_request(" 
-			+ "tax_id VARCHAR(16) PRIMARY KEY, date DATE NOT NULL, type TEXT NOT NULL, "
+			+ "tax_id VARCHAR(16) PRIMARY KEY, date DATE NOT NULL, "
 			+ "CONSTRAINT fk_tax_id FOREIGN KEY (tax_id) REFERENCES person(tax_id));";
 
 	public static void init(String url, String username, String password, boolean debugMode) throws SQLException {
@@ -94,10 +94,10 @@ public class DatabaseManager {
 	public static void dropPassportRequestTable(boolean cascade) throws SQLException {
 		connection.prepareStatement("DROP TABLE IF EXISTS passport_request " + (cascade ? "CASCADE" : "") + ";").execute();
 	}
-	
+
 	public static void dropPoliceTable(boolean cascade) throws SQLException {
 		connection.prepareStatement("DROP TABLE IF EXISTS police_station " + (cascade ? "CASCADE" : "") + ";")
-				.execute();
+		.execute();
 	}
 
 	public static void dropReservationTable(boolean cascade) throws SQLException {
@@ -308,17 +308,30 @@ public class DatabaseManager {
 		return new Reservation(ReservationType.valueOf("type"), result.getTimestamp("date").toLocalDateTime(), passport,
 				person, new PoliceStation("place"), ReservationState.valueOf(result.getString("state")));
 	}
-	
+
 	public static Passport getLastPassport(Person person) throws SQLException{
-		var query = connection.prepareStatement("SELECT * FROM person WHERE tax_id = ? ORDER BY passport_id LIMIT 1");
-		query.setString(0, person.getTaxID());
-		
+		var query = connection.prepareStatement("SELECT passport_id FROM person WHERE tax_id = ? LIMIT 1");
+		query.setString(1, person.getTaxID());
+
 		var result = query.executeQuery();
-		
-		if (!result.next())
-			return null;
-		
+
+		if (!result.next()) {
+			return null;			
+		}
+
 		return getPassport(result.getInt("passport_id"));
 	}
 
+	public static Calendar getRequestDate(Person person) throws SQLException {
+		var query = connection.prepareStatement("SELECT date FROM passport_request WHERE tax_id = ? LIMIT 1");
+
+		query.setString(1, person.getTaxID());
+
+		var resultQuery = query.executeQuery();
+
+		var result = Calendar.getInstance();
+		result.setTime(resultQuery.getDate("date_birth"));
+		
+		return result;
+	}
 }

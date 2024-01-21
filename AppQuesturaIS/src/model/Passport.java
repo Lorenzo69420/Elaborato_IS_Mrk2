@@ -6,7 +6,6 @@ import java.util.Calendar;
 
 public class Passport {
 	public enum PassportState {
-		NOT_RELEASED,
 		VALID,
 		EXPIRED,
 		LOST,
