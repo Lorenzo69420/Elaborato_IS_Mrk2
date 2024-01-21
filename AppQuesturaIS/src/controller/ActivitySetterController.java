@@ -75,6 +75,7 @@ public class ActivitySetterController{
     		List<Reservation> resList = new ArrayList<>();
     		ld = dateSelector.getValue();
     		pl = new PoliceStation(policeStationSelector.getValue());
+    		errorText.setText("Stai visualizzando i turni della questura di " + pl.getTown() + " nel giorno " + ld.toString());
         	for (int hour = 8; hour < 12 ; hour++) {
         		
         		Reservation R = new Reservation(ld.atTime(hour,0),pl);
@@ -127,7 +128,7 @@ public class ActivitySetterController{
 							RT = rType;
 						}
 					}
-					if (!(!dateSelector.getValue().equals(ld) || !policeStationSelector.getValue().equals(pl))) {
+					if (!(!dateSelector.getValue().equals(ld) || !policeStationSelector.getValue().equals(pl.getTown()))) {
 						tmp = new Reservation(RT,ld.atTime(hour+slot,0),pl);
 						tmp.insert();
 						errorText.setText("Inserimenti della prenotazione avvenuto con successo");
