@@ -16,16 +16,16 @@ public class Reservation {
 	public enum ReservationType {
 		COLLECTION,
 		ISSUANCE_NEW,
-		ISSUANCE_DAMEGED,
+		ISSUANCE_DAMAGED,
 		ISSUANCE_EXPIRED,
 		ISSUANCE_LOST,
 		ISSUANCE_STOLEN;
 		
-		public String toString() {
+		public String toDisplayString() {
 			switch(this) {
 			case COLLECTION:
 				return "Ritiro";
-			case ISSUANCE_DAMEGED:
+			case ISSUANCE_DAMAGED:
 				return "Emissione per deterioramento";
 			case ISSUANCE_EXPIRED:
 				return "Emissione per scadenza";

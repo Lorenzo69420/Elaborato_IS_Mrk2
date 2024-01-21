@@ -8,7 +8,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import model.Passport.PassportState;
 import model.Reservation.ReservationState;
@@ -120,12 +119,12 @@ public class DatabaseManager {
 		statement.setBoolean(10, false);
 		statement.setBoolean(11, false);
 
-		statement.executeUpdate();
+		statement.execute();
 	}
 
 	public static void insert(Passport passport) throws SQLException {
 		var statement = connection.prepareStatement(
-				"INSERT INTO passport(tax_id, release_date, expiry_date, release_location, state) VALUES (?, ?, ?, ?, ?)");
+				"INSERT INTO passport(tax_id, release_date, expiry_date, release_location, state) VALUES (?, ?, ?, ?, ?) RETURNING passport_id");
 
 		statement.setString(1, passport.getTaxID());
 		statement.setDate(2, new Date(passport.getReleaseDate().getTime().getTime()));
@@ -133,18 +132,10 @@ public class DatabaseManager {
 		statement.setString(4, passport.getReleaseLocation().getTown());
 		statement.setString(5, passport.getState().toString());
 
-		statement.executeUpdate();
+		var result = statement.executeQuery();
 
-		var query = connection
-				.prepareStatement("SELECT passport_id FROM passport WHERE tax_id=? ORDER BY passport_id DESC LIMIT 1;");
-
-		query.setString(1, passport.getTaxID());
-
-		var result = query.executeQuery();
-		if (!result.next()) {
-			throw new NoSuchElementException("no passports are associated with the given tax code");
-		}
-
+		result.next();
+		
 		passport.setID(result.getInt("passport_id"));
 	}
 
@@ -153,7 +144,7 @@ public class DatabaseManager {
 
 		statement.setString(1, policeStation.getTown());
 
-		statement.executeUpdate();
+		statement.execute();
 	}
 
 	public static void insert(Reservation reservation) throws SQLException {
@@ -169,7 +160,16 @@ public class DatabaseManager {
 		statement.setTimestamp(5, Timestamp.valueOf(reservation.getDate()));
 		statement.setString(6, reservation.getPlace().getTown());
 
-		statement.executeUpdate();
+		statement.execute();
+	}
+	
+	public static void insertRequest(Reservation reservation) throws SQLException {
+		var statement = connection.prepareStatement("INSERT INTO passport_request VALUES (?, ?)");
+		
+		statement.setString(1, reservation.getBookedBy().getTaxID());
+		statement.setDate(2, Date.valueOf(reservation.getDate().toLocalDate()));
+		
+		statement.execute();
 	}
 
 	public static Person getPerson(String taxID) throws SQLException, NoSuchUserException {
@@ -262,6 +262,7 @@ public class DatabaseManager {
 		query.executeUpdate();
 	}
 
+	//TODO
 	public static void book(Reservation reservation) throws SQLException {
 		var query = connection.prepareStatement(
 				"UPDATE reservation SET passport_id = ?, booked_by = ?, state = ? WHERE date = ? AND place = ?");
@@ -328,6 +329,10 @@ public class DatabaseManager {
 		query.setString(1, person.getTaxID());
 
 		var resultQuery = query.executeQuery();
+		
+		if (!resultQuery.next()) {
+			return null;
+		}
 
 		var result = Calendar.getInstance();
 		result.setTime(resultQuery.getDate("date_birth"));
