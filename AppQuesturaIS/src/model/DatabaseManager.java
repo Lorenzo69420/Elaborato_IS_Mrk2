@@ -148,7 +148,8 @@ public class DatabaseManager {
 	}
 
 	public static void insert(Reservation reservation) throws SQLException {
-		var statement = connection.prepareStatement("INSERT INTO reservation VALUES (?, ?, ?, ?, ?, ?)");
+		var statement = connection.prepareStatement("INSERT INTO reservation VALUES (?, ?, ?, ?, ?, ?) " 
+				+ "ON CONFLICT ON CONSTRAINT reservation_pkey DO UPDATE SET type = ? WHERE reservation.state = ?");
 
 		String bookedBy = reservation.getBookedBy() == null ? null : reservation.getBookedBy().getTaxID();
 		int passportNum = reservation.getPassport() == null ? -1 : reservation.getPassport().getPassID();
@@ -160,6 +161,10 @@ public class DatabaseManager {
 		statement.setTimestamp(5, Timestamp.valueOf(reservation.getDate()));
 		statement.setString(6, reservation.getPlace().getTown());
 
+		statement.setString(7, reservation.getType().toString());
+		statement.setString(8, ReservationState.BOOKABLE.toString());
+		System.out.println(statement);
+		
 		statement.execute();
 	}
 	
@@ -171,6 +176,7 @@ public class DatabaseManager {
 		
 		statement.execute();
 	}
+	
 
 	public static Person getPerson(String taxID) throws SQLException, NoSuchUserException {
 		var query = connection.prepareStatement("SELECT * FROM person WHERE tax_id = ?");

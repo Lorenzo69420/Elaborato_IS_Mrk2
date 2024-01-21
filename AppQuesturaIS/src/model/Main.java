@@ -42,8 +42,15 @@ public class Main {
 
 		Reservation res = new Reservation(ReservationType.COLLECTION, LocalDateTime.now(), pass, sbatachiones, ps, ReservationState.BOOKABLE);
 		res.insert();
-		Reservation res2 = new Reservation(ReservationType.ISSUANCE_LOST,LocalDateTime.of(2023, Month.JANUARY, 1, 9, 0),new PoliceStation("Verona"));
-
+		res = new Reservation(ReservationType.ISSUANCE_LOST,LocalDateTime.of(2023, Month.JANUARY, 1, 9, 0),new PoliceStation("Verona"));
+		res.insert();
+		res = new Reservation(ReservationType.ISSUANCE_NEW,LocalDateTime.of(2023, Month.JANUARY, 1, 9, 0),new PoliceStation("Verona"));
+		res.insert();
+		res = new Reservation(ReservationType.COLLECTION, LocalDateTime.of(2023, Month.JANUARY, 1, 10, 0), pass, sbatachiones, ps, ReservationState.BOOKED_UP);
+		res.insert();
+		res = new Reservation(ReservationType.ISSUANCE_EXPIRED, LocalDateTime.of(2023, Month.JANUARY, 1, 10, 0), pass, sbatachiones, ps, ReservationState.BOOKED_UP);
+		res.insert();
+		
 		Person sbat = new Person("TIA3", "Mattias", "Giambirtones", "Terronia",
 				new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build());
 		sbat.exists();

@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class PoliceStation {
-	public final String town;
+	private final String town;
 	
 	public PoliceStation(String town) {
 		this.town = town;
