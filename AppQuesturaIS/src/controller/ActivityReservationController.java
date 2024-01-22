@@ -11,6 +11,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import model.NoSuchUserException;
+import model.NotBookableException;
+import model.Passport;
 import model.Person;
 import model.PoliceStation;
 import model.Reservation;
@@ -69,7 +71,7 @@ public class ActivityReservationController {
     private CheckBox[] selectBoxs = {select1,select2,select3,select4};
     private Text[] texts = {text1,text2,text3,text4};
     @FXML
-    void confirm(ActionEvent event) throws NoSuchUserException, SQLException {
+    void confirm() throws NoSuchUserException, SQLException {
     	if (checkAll()) {
     		
     		// This section adds the reservations to the slots in the interface only if it has the same activity type
@@ -78,7 +80,8 @@ public class ActivityReservationController {
     		ld = dateSelector.getValue();
     		activity = activitySelector.getValue();
     		Reservation.ReservationType RT = null ;
-    		
+    		Passport currPassport = currentPerson.getLastPassport();
+    		    		
     		//Searching the right activity
     		
     		for (var T : Reservation.ReservationType.values()) {
@@ -86,6 +89,7 @@ public class ActivityReservationController {
     				RT = T;
     			}
     		}
+    		
     		
     		//Setting the slots
     		
@@ -104,23 +108,21 @@ public class ActivityReservationController {
     	}
     }
 
+	
+
     private boolean checkAll() {
-		// TODO Auto-generated method stub
 		return checkAct() && checkPS() && checkDate();
 	}
 
 	private boolean checkDate() {
-		// TODO Auto-generated method stub
 		return !(dateSelector.getValue() == null);
 	}
 
 	private boolean checkPS() {
-		// TODO Auto-generated method stub
 		return !(policeStationSelector.getValue() == null);
 	}
 
 	private boolean checkAct() {
-		// TODO Auto-generated method stub
 		return !(activitySelector.getValue() == null);
 	}
 
@@ -130,22 +132,94 @@ public class ActivityReservationController {
     }
 
     @FXML
-    void reserve(ActionEvent event) {
-
+    void reserve(ActionEvent event)  {
+    	if (checkAll() && checkIntegrity()) {
+    		for (int slot = 0; slot < 4; slot++) {
+    			if(selectBoxs[slot].isSelected()) {
+    				selectBoxs[slot].setSelected(false);
+    				Reservation res = new Reservation(ld.atTime(8+slot,0), ps);
+    				
+    				try {
+    					res.getCompleteReservation();
+    				} catch (NoSuchUserException e) {
+    					// gestisciti tu le tue eccezioni di merda <3 per edi
+    				} catch (SQLException e ) {
+    					
+    				}
+    				
+    				try {
+    					res.book(currentPerson);
+    					errorText.setText("Prenotazione andata a buon fine");
+    					confirm();
+    				} catch (NotBookableException e) {
+    					switch (e.getType()) {
+						case ALREDY_BOOKED:
+							// devi settare errorText con una scritta giusta lmao <3
+							break;
+						case ALREDY_HAVE_PASSPORT:
+							break;
+						case EXPIRED:
+							break;
+						case MISSING_PASSPORT:
+							break;
+						case NOT_EXPIRED:
+							break;
+						case NO_PREVIOUS_REQ:
+							break;
+						case UNDER_MONTH_REQ:
+							break;
+						default:
+							break;
+    					}
+    				} catch (SQLException e) {
+    					
+    				} catch (NoSuchUserException e) {
+    					// una volta gestita fino alla ultima cazzo di eccezine di merda fai dei test
+    				}
+    			}
+    		}
+    	} else {
+    		errorText.setText("Per cambiare attività, questura e giorno premi 'Conferma' nuovamente");
+    	}
     }
 
+	private boolean checkIntegrity() {
+		
+		return checkPSIntegrity() && checkDateIntegrity() && checkActIntegrity();
+	}
+
+
+
+	private boolean checkActIntegrity() {
+		return activity.equals(activitySelector.getValue());
+	}
+
+
+
+	private boolean checkDateIntegrity() {
+		return ld.equals(dateSelector.getValue());
+	}
+
+
+
+	private boolean checkPSIntegrity() {
+		return ps.getTown().equals(policeStationSelector.getValue());
+	}
+
+
+
 	public void setMC(MainController mainController) {
-		// TODO Auto-generated method stub
+		
 		MC = mainController;
 	}
 
 	public ComboBox<String> getActSelector() {
-		// TODO Auto-generated method stub
+	
 		return activitySelector;
 	}
 
 	public ComboBox<String> getPSSelector() {
-		// TODO Auto-generated method stub
+		//edigay
 		return policeStationSelector;
 	}
 
