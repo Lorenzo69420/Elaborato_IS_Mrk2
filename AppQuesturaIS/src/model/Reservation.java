@@ -65,7 +65,6 @@ public class Reservation {
 		DatabaseManager.insert(this);
 	}
 
-	// TODO: da rivedere con lore
 	public void book(Person person) throws SQLException, NotBookableException {
 		Calendar requestDate = DatabaseManager.getRequestDate(person);
 		switch (this.type) {
@@ -100,6 +99,9 @@ public class Reservation {
 			if (lastPassport == null) {
 				throw new NotBookableException(Types.MISSING_PASSPORT);
 			}
+			if (lastPassport.getExpiryDate().before(this.getDate())) {
+				throw new NotBookableException(Types.EXPIRED);
+			}
 			break;
 		default:
 			break;
@@ -115,7 +117,9 @@ public class Reservation {
 		this.state = ReservationState.BOOKED_UP;
 		DatabaseManager.book(this);
 	}
-
+	
+	
+	// TODO LORE SISTEMA STA ROBA, GRZ
 	public void setState(ReservationState newState) throws Exception {
 		if (newState == ReservationState.BOOKED_UP) {
 			System.err.println("wrong function\n");

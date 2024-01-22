@@ -284,7 +284,6 @@ public class DatabaseManager {
 		query.executeUpdate();
 	}
 
-	//TODO
 	public static void book(Reservation reservation) throws SQLException {
 		var query = connection.prepareStatement(
 				"UPDATE reservation SET passport_id = ?, booked_by = ?, state = ? WHERE date = ? AND place = ?");
