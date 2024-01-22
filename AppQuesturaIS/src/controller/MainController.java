@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.DatabaseManager;
+import model.Person;
 import model.Reservation;
 
 public class MainController {
@@ -42,6 +43,9 @@ public class MainController {
 	private ActivitySetterController actSetController;
 	private Scene actSetScene;
 	
+	//Person from login operations
+	private Person currentPerson;
+	
 	public MainController () throws IOException, SQLException {
 		DatabaseManager.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password",false);
 		
@@ -67,6 +71,7 @@ public class MainController {
 		actController = actLoader.getController();
 		actController.setMC(this);
 		actScene = new Scene(actPane);
+		populateActivityReservation();
 		// Activity Setter setup
 		actSetLoader = new FXMLLoader(getClass().getResource("../view/ActivitySetter.fxml"));
 		actSetPane = actSetLoader.load();
@@ -87,7 +92,9 @@ public class MainController {
 		mainStage.setScene(regScene);
 		start();
 	}
-	public void switchToActivitySelector() {
+	public void switchToActivityReservation() {
+		currentPerson = logController.getLogPerson();
+		actController.setPerson(currentPerson);
 		mainStage.setScene(actScene);
 		start();
 	}
@@ -98,6 +105,10 @@ public class MainController {
 	private void populateActivitySetter() {
 		actSetController.getActSelector().getItems().addAll(activityList);
 		actSetController.getPSSelector().getItems().addAll(policeStationList);
+	}
+	private void populateActivityReservation() {
+		actController.getActSelector().getItems().addAll(activityList);
+		actController.getPSSelector().getItems().addAll(policeStationList);
 	}
 	private void getActivityList() {
 		for (var S : Reservation.ReservationType.values()) {

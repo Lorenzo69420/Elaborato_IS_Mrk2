@@ -58,7 +58,7 @@ public class LoginController {
     void logReq(ActionEvent event) {
     	try {
     		this.logPerson = Person.get(IDField.getText());
-    		MC.switchToActivitySelector();
+    		MC.switchToActivityReservation();
     	} catch (NoSuchUserException e ) {
     		IDLabel.setText("Utente non trovato");
     	} catch (SQLException E ) {
@@ -85,6 +85,10 @@ public class LoginController {
     
 	public void setMC(MainController mC) {
 		MC = mC;
+	}
+
+	public Person getLogPerson() {
+		return logPerson;
 	}
 
 }
