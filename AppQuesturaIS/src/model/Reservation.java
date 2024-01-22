@@ -1,8 +1,11 @@
 package model;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Calendar;
+import java.util.Date;
 
 import model.NotBookableException.Types;
 import model.Passport.PassportState;
@@ -62,16 +65,16 @@ public class Reservation {
 		DatabaseManager.insert(this);
 	}
 
-	//COLLECTION, ISSUANCE_NEW, ISSUANCE_DAMAGED, ISSUANCE_EXPIRED, ISSUANCE_LOST, ISSUANCE_STOLEN;
+	// TODO: da rivedere con lore
 	public void book(Person person) throws SQLException, NotBookableException {
 		switch (this.type) {
 		case COLLECTION:
-			var requestDate = DatabaseManager.getRequestDate(person);
+			Calendar requestDate = DatabaseManager.getRequestDate(person);
 			if (requestDate == null) {
 				throw new NotBookableException(Types.NO_PREVIOUS_REQ);
 			}
 			requestDate.add(Calendar.MONTH, 1);
-			if (requestDate.after(this.date)) {
+			if (requestDate.getTime().after(Date.from(this.date.atZone(ZoneId.systemDefault()).toInstant()))) {
 				throw new NotBookableException(Types.UNDER_MONTH_REQ);
 			}
 			break;
@@ -89,6 +92,7 @@ public class Reservation {
 			if (lastPassport.getExpiryDate().after(this.getDate())) {
 				throw new NotBookableException(Types.NOT_EXPIRED);
 			}
+			DatabaseManager.insertRequest(this);
 			break;
 		case ISSUANCE_DAMAGED: 
 		case ISSUANCE_STOLEN:
@@ -97,6 +101,7 @@ public class Reservation {
 			if (lastPassport == null) {
 				throw new NotBookableException(Types.MISSING_PASSPORT);
 			}
+			DatabaseManager.insertRequest(this);
 		default:
 			
 			break;
@@ -131,6 +136,10 @@ public class Reservation {
 	public Passport getPassport() {
 		return passport;
 	}
+	
+	public void setPassport(Passport passport) {
+		this.passport = passport;
+	}
 
 	public LocalDateTime getDate() {
 		return date;
@@ -138,6 +147,10 @@ public class Reservation {
 
 	public Person getBookedBy() {
 		return bookedBy;
+	}
+	
+	public void setBookedBy(Person person) {
+		bookedBy = person;
 	}
 
 	public PoliceStation getPlace() {

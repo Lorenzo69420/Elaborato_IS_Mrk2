@@ -163,7 +163,6 @@ public class DatabaseManager {
 
 		statement.setString(7, reservation.getType().toString());
 		statement.setString(8, ReservationState.BOOKABLE.toString());
-		System.out.println(statement);
 		
 		statement.execute();
 	}
@@ -177,7 +176,6 @@ public class DatabaseManager {
 		statement.execute();
 	}
 	
-
 	public static Person getPerson(String taxID) throws SQLException, NoSuchUserException {
 		var query = connection.prepareStatement("SELECT * FROM person WHERE tax_id = ?");
 
@@ -318,7 +316,7 @@ public class DatabaseManager {
 	}
 
 	public static Passport getLastPassport(Person person) throws SQLException{
-		var query = connection.prepareStatement("SELECT passport_id FROM person WHERE tax_id = ? LIMIT 1");
+		var query = connection.prepareStatement("SELECT passport_id FROM passport WHERE tax_id = ? ORDER BY passport_id DESC LIMIT 1");
 		query.setString(1, person.getTaxID());
 
 		var result = query.executeQuery();
@@ -342,7 +340,7 @@ public class DatabaseManager {
 		}
 
 		var result = Calendar.getInstance();
-		result.setTime(resultQuery.getDate("date_birth"));
+		result.setTime(resultQuery.getDate("date"));
 		
 		return result;
 	}
