@@ -3,6 +3,7 @@ package model;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -195,7 +196,7 @@ public class DatabaseManager {
 	}
 
 	public static Passport getPassport(int passportID) throws SQLException {
-		var query = connection.prepareStatement("SELECT * FROM passport WHERE passport_id = ?");
+		var query = connection.prepareStatement("SELECT * FROM passport WHERE passport_id = ? ORDER BY passport_id LIMIT 1");
 
 		query.setInt(1, passportID);
 
@@ -204,11 +205,28 @@ public class DatabaseManager {
 			throw new SQLException();
 		}
 
-		var calendar = Calendar.getInstance();
-		calendar.setTime(result.getDate("release_date"));
+		return resultQueryToPassport(result);
+	}
+	
+	public static Passport getLastPassport(Person person) throws SQLException{
+		var query = connection.prepareStatement("SELECT * FROM passport WHERE tax_id = ? ORDER BY passport_id DESC LIMIT 1");
+		query.setString(1, person.getTaxID());
 
-		return new Passport(result.getString("tax_id"), calendar, PassportState.valueOf(result.getString("state")),
-				new PoliceStation(result.getString("release_location")));
+		var result = query.executeQuery();
+
+		if (!result.next()) {
+			return null;			
+		}
+
+		return resultQueryToPassport(result);
+	}
+	
+	private static Passport resultQueryToPassport(ResultSet resultQuery) throws SQLException {
+		var calendar = Calendar.getInstance();
+		calendar.setTime(resultQuery.getDate("release_date"));
+
+		return new Passport(resultQuery.getString("tax_id"), calendar, PassportState.valueOf(resultQuery.getString("state")),
+				new PoliceStation(resultQuery.getString("release_location")));
 	}
 
 	public static List<String> getPoliceStation() throws SQLException {
@@ -313,19 +331,6 @@ public class DatabaseManager {
 
 		return new Reservation(ReservationType.valueOf(result.getString("type")), result.getTimestamp("date").toLocalDateTime(), passport,
 				person, new PoliceStation("place"), ReservationState.valueOf(result.getString("state")));
-	}
-
-	public static Passport getLastPassport(Person person) throws SQLException{
-		var query = connection.prepareStatement("SELECT passport_id FROM passport WHERE tax_id = ? ORDER BY passport_id DESC LIMIT 1");
-		query.setString(1, person.getTaxID());
-
-		var result = query.executeQuery();
-
-		if (!result.next()) {
-			return null;			
-		}
-
-		return getPassport(result.getInt("passport_id"));
 	}
 
 	public static Calendar getRequestDate(Person person) throws SQLException {

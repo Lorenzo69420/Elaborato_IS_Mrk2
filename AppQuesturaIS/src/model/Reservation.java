@@ -67,9 +67,9 @@ public class Reservation {
 
 	// TODO: da rivedere con lore
 	public void book(Person person) throws SQLException, NotBookableException {
+		Calendar requestDate = DatabaseManager.getRequestDate(person);
 		switch (this.type) {
 		case COLLECTION:
-			Calendar requestDate = DatabaseManager.getRequestDate(person);
 			if (requestDate == null) {
 				throw new NotBookableException(Types.NO_PREVIOUS_REQ);
 			}
@@ -92,19 +92,23 @@ public class Reservation {
 			if (lastPassport.getExpiryDate().after(this.getDate())) {
 				throw new NotBookableException(Types.NOT_EXPIRED);
 			}
-			DatabaseManager.insertRequest(this);
 			break;
-		case ISSUANCE_DAMAGED: 
+		case ISSUANCE_DAMAGED:
 		case ISSUANCE_STOLEN:
 		case ISSUANCE_LOST:
 			lastPassport = person.getLastPassport();
 			if (lastPassport == null) {
 				throw new NotBookableException(Types.MISSING_PASSPORT);
 			}
-			DatabaseManager.insertRequest(this);
-		default:
-			
 			break;
+		default:
+			break;
+		}
+
+		if (this.type != ReservationType.COLLECTION && requestDate != null) {
+			throw new NotBookableException(Types.ALREDY_BOOKED);
+		} else {
+			DatabaseManager.insertRequest(this);
 		}
 
 		this.bookedBy = person;
@@ -112,7 +116,7 @@ public class Reservation {
 		DatabaseManager.book(this);
 	}
 
-	public void changeState(ReservationState newState) throws Exception {
+	public void setState(ReservationState newState) throws Exception {
 		if (newState == ReservationState.BOOKED_UP) {
 			System.err.println("wrong function\n");
 			throw new Exception();
@@ -136,7 +140,7 @@ public class Reservation {
 	public Passport getPassport() {
 		return passport;
 	}
-	
+
 	public void setPassport(Passport passport) {
 		this.passport = passport;
 	}
@@ -148,7 +152,7 @@ public class Reservation {
 	public Person getBookedBy() {
 		return bookedBy;
 	}
-	
+
 	public void setBookedBy(Person person) {
 		bookedBy = person;
 	}
