@@ -70,6 +70,7 @@ public class MainController {
 		actPane = actLoader.load();
 		actController = actLoader.getController();
 		actController.setMC(this);
+		actController.addAll();
 		actScene = new Scene(actPane);
 		populateActivityReservation();
 		// Activity Setter setup
