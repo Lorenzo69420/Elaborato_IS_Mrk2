@@ -146,71 +146,72 @@ public class ActivityReservationController {
 
 	@FXML
 	void reserve(ActionEvent event) throws SQLException {
-		if (checkAll() && checkIntegrity()) {
-			for (int slot = 0; slot < 4; slot++) {
-				if (selectBoxs[slot].isSelected()) {
-					selectBoxs[slot].setSelected(false);
-					Reservation res = new Reservation(ld.atTime(8 + slot, 0), ps);
-
-					try {
-						res = res.getCompleteReservation();
-						res.setBookedBy(currentPerson);
-					} catch (NoSuchUserException e) {
-						// gestisciti tu le tue eccezioni di merda <3 per edi
-					} catch (SQLException e) {
-
-					}
-
-					try {
-						res.book(currentPerson);
-						errorText.setText("Prenotazione andata a buon fine");
-						confirm();
-					} catch (NotBookableException e) {
-						String str = "Errore non definito ops";
-						switch (e.getType()) {
-						case ALREDY_BOOKED:
-							// devi settare errorText con una scritta giusta lmao <3
-							str = "La prenotazione per il ritiro del suo passaporto è gia stata confermata per il giorno "
-									+ currentPerson.getLastPassport().getReleaseDate().toString()
-									+ " nella questura di " + currentPerson.getLastPassport().getReleaseLocation();
-							break;
-						case ALREDY_HAVE_PASSPORT:
-							str = "Nel sistema è gia presente un suo passaporto ( "
-									+ currentPerson.getLastPassport().getPassID()
-									+ " ) se lo ha perso, oppure le è stato rubato o invece è scaduto selezioni l'attività opportuna";
-							break;
-						case EXPIRED:
-							str = "Il tuo passaporto risulta scaduto in data "
-									+ currentPerson.getLastPassport().getExpiryDate()
-									+ " Seleziona Emissione per scadenza per rinnovarlo";
-							break;
-						case MISSING_PASSPORT:
-							str = "Non risulta che lei abbia gia creato un passaporto, selezioni 'Nuova emissione' per crearne uno";
-							break;
-						case NOT_EXPIRED:
-							str = "Il suo passaporto non risulta essere scaduto. La data di scadenza è "
-									+ currentPerson.getLastPassport().getExpiryDate().toString();
-							break;
-						case NO_PREVIOUS_REQ:
-							str = "Non è presente nessun passaporto da emettere, richiedi prima un emissione";	
-							break;
-						case UNDER_MONTH_REQ:
-							Calendar tmpCal = DatabaseManager.getRequestDate(currentPerson);
-							tmpCal.add(Calendar.MONTH, 1); 
-							str = "La data di emissione del suo passaporto sarà disponibile dal giorno " + tmpCal.toString() + " in poi";
-							break;
-						default:
-							break;
-						}
-					} catch (SQLException e) {
-
-					} catch (NoSuchUserException e) {
-						// una volta gestita fino alla ultima cazzo di eccezine di merda fai dei test
-					}
-				}
-			}
-		} else {
+		if (!checkAll() || !checkIntegrity()) {
 			errorText.setText("Per cambiare attività, questura e giorno premi 'Conferma' nuovamente");
+			return;
+		}
+		for (int slot = 0; slot < 4; slot++) {
+			if (!selectBoxs[slot].isSelected()) {
+				continue;
+			}
+			selectBoxs[slot].setSelected(false);
+			Reservation res = new Reservation(ld.atTime(8 + slot, 0), ps);
+			
+			try {
+				res = res.getCompleteReservation();
+				res.setBookedBy(currentPerson);
+			} catch (NoSuchUserException e) {
+				// gestisciti tu le tue eccezioni di merda <3 per edi
+			} catch (SQLException e) {
+				
+			}
+			
+			try {
+				res.book(currentPerson);
+				errorText.setText("Prenotazione andata a buon fine");
+				confirm();
+			} catch (NotBookableException e) {
+				String str = "Errore non definito ops";
+				switch (e.getType()) {
+				case ALREDY_BOOKED:
+					// devi settare errorText con una scritta giusta lmao <3
+					str = "La prenotazione per il ritiro del suo passaporto è gia stata confermata per il giorno "
+							+ currentPerson.getLastPassport().getReleaseDate().toString()
+							+ " nella questura di " + currentPerson.getLastPassport().getReleaseLocation();
+					break;
+				case ALREDY_HAVE_PASSPORT:
+					str = "Nel sistema è gia presente un suo passaporto ( "
+							+ currentPerson.getLastPassport().getPassID()
+							+ " ) se lo ha perso, oppure le è stato rubato o invece è scaduto selezioni l'attività opportuna";
+					break;
+				case EXPIRED:
+					str = "Il tuo passaporto risulta scaduto in data "
+							+ currentPerson.getLastPassport().getExpiryDate()
+							+ " Seleziona Emissione per scadenza per rinnovarlo";
+					break;
+				case MISSING_PASSPORT:
+					str = "Non risulta che lei abbia gia creato un passaporto, selezioni 'Nuova emissione' per crearne uno";
+					break;
+				case NOT_EXPIRED:
+					str = "Il suo passaporto non risulta essere scaduto. La data di scadenza è "
+							+ currentPerson.getLastPassport().getExpiryDate().toString();
+					break;
+				case NO_PREVIOUS_REQ:
+					str = "Non è presente nessun passaporto da emettere, richiedi prima un emissione";	
+					break;
+				case UNDER_MONTH_REQ:
+					Calendar tmpCal = DatabaseManager.getRequestDate(currentPerson);
+					tmpCal.add(Calendar.MONTH, 1); 
+					str = "La data di emissione del suo passaporto sarà disponibile dal giorno " + tmpCal.toString() + " in poi";
+					break;
+				default:
+					break;
+				}
+			} catch (SQLException e) {
+				
+			} catch (NoSuchUserException e) {
+				// una volta gestita fino alla ultima cazzo di eccezine di merda fai dei test
+			}
 		}
 	}
 
