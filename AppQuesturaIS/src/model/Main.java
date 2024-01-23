@@ -12,64 +12,66 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		try {
-			
-		
-		DatabaseManager.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password", true);
+			DatabaseManager.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password", true);
 
-		DatabaseManager.createTable();
+			DatabaseManager.createTable();
 
-		Person sbatachiones = new Person("TIA", "Mattias", "Giambirtones", 't', "Terronia",
-				new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build(), "Africa", 69420);
-		sbatachiones.insert();
-		//sbatachiones.register();
-		
-		Person IlKingNeto = new Person("CHAD", "Neto", "Whites", '$', "vostri muri",
-				new Calendar.Builder().setDate(2002, Calendar.SEPTEMBER, 14).build(), "Supremo", 9001);
-		IlKingNeto.insert();
-		IlKingNeto.makeAdmin();
-		sbatachiones.addTutor(IlKingNeto);
-		
-		PoliceStation ps = new PoliceStation("Verona");
-		ps.insert();
-		ps = new PoliceStation("Vicenza");
-		ps.insert();
-		ps = new PoliceStation("Padova");
-		ps.insert();
-		ps = new PoliceStation("Belluno");
-		ps.insert();
+			Person sbatachiones = new Person("TIA", "Mattias", "Giambirtones", 't', "Terronia",
+					new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build(), "Africa", 69420);
+			sbatachiones.insert();
+			// sbatachiones.register();
 
-		System.out.println(DatabaseManager.getPoliceStation());
+			Person IlKingNeto = new Person("CHAD", "Neto", "Whites", '$', "vostri muri",
+					new Calendar.Builder().setDate(2002, Calendar.SEPTEMBER, 14).build(), "Supremo", 9001);
+			IlKingNeto.insert();
+			IlKingNeto.makeAdmin();
+			sbatachiones.addTutor(IlKingNeto);
 
-		Passport pass = new Passport("TIA", new Calendar.Builder().setDate(2013, Calendar.JANUARY, 23).build(), PassportState.VALID, ps);
-		pass.insert();
-		System.out.println(sbatachiones.getLastPassport().getPassID());
-		
-		
+			PoliceStation ps = new PoliceStation("Verona");
+			ps.insert();
+			ps = new PoliceStation("Vicenza");
+			ps.insert();
+			ps = new PoliceStation("Padova");
+			ps.insert();
+			ps = new PoliceStation("Belluno");
+			ps.insert();
 
-		Reservation res = new Reservation(ReservationType.COLLECTION, LocalDateTime.now(), pass, sbatachiones, ps, ReservationState.BOOKABLE);
-		res.insert();
-		res = new Reservation(ReservationType.ISSUANCE_LOST,LocalDateTime.of(2023, Month.JANUARY, 1, 9, 0),new PoliceStation("Verona"));
-		res.insert();
-		res = new Reservation(ReservationType.ISSUANCE_NEW,LocalDateTime.of(2023, Month.JANUARY, 1, 9, 0),new PoliceStation("Verona"));
-		res.insert();
-		res = new Reservation(ReservationType.ISSUANCE_EXPIRED, LocalDateTime.of(2023, Month.JANUARY, 22, 10, 0), null, sbatachiones, ps, ReservationState.BOOKED_UP);
-		res.book(sbatachiones);
-		res = new Reservation(ReservationType.COLLECTION , LocalDateTime.of(2024, Month.FEBRUARY, 2, 10, 0), ps);
-		res.book(sbatachiones);
-		res = new Reservation(ReservationType.COLLECTION, LocalDateTime.of(2023, Month.JANUARY, 1, 10, 0), pass, sbatachiones, ps, ReservationState.BOOKED_UP);
-		res.insert();
-		
-		Person sbat = new Person("TIA", "Mattias", "Giambirtones", "Terronia",
-				new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build());
-		sbat.exists();
-		DatabaseManager.close();
+			System.out.println(DatabaseManager.getPoliceStation());
+
+			Passport pass = new Passport("TIA", new Calendar.Builder().setDate(2013, Calendar.JANUARY, 23).build(),
+					PassportState.VALID, ps);
+			pass.insert();
+			System.out.println(sbatachiones.getLastPassport().getPassID());
+
+			Reservation res = new Reservation(ReservationType.COLLECTION, LocalDateTime.now(), pass, sbatachiones, ps,
+					ReservationState.BOOKABLE);
+			res.insert();
+			res = new Reservation(ReservationType.ISSUANCE_LOST, LocalDateTime.of(2023, Month.JANUARY, 1, 9, 0),
+					new PoliceStation("Verona"));
+			res.insert();
+			res = new Reservation(ReservationType.ISSUANCE_NEW, LocalDateTime.of(2023, Month.JANUARY, 1, 9, 0),
+					new PoliceStation("Verona"));
+			res.insert();
+			res = new Reservation(ReservationType.ISSUANCE_EXPIRED, LocalDateTime.of(2023, Month.JANUARY, 22, 10, 0),
+					null, sbatachiones, ps, ReservationState.BOOKED_UP);
+			res.book(sbatachiones);
+			res = new Reservation(ReservationType.COLLECTION, LocalDateTime.of(2024, Month.FEBRUARY, 2, 10, 0), ps);
+			res.book(sbatachiones);
+			res = new Reservation(ReservationType.COLLECTION, LocalDateTime.of(2023, Month.JANUARY, 1, 10, 0), pass,
+					sbatachiones, ps, ReservationState.BOOKED_UP);
+			res.insert();
+
+			Person sbat = new Person("TIA", "Mattias", "Giambirtones", "Terronia",
+					new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build());
+			sbat.exists();
+			DatabaseManager.close();
 		} catch (NotBookableException e) {
 			System.out.println(e.getType());
 			throw e;
 		} catch (Exception e) {
 			throw e;
 		}
-		
+
 	}
 
 }

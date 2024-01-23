@@ -21,12 +21,17 @@ public class Passport {
 	private int passportID;
 	
 	public Passport(String taxID, Calendar releaseDate, PassportState state, PoliceStation releaseLocation) {
+		this(taxID, releaseDate, state, releaseLocation, -1);
+	}
+	
+	public Passport(String taxID, Calendar releaseDate, PassportState state, PoliceStation releaseLocation, int passportID) {
 		this.taxID = taxID;
 		this.releaseDate = releaseDate;
 		this.expiryDate = (Calendar) releaseDate.clone();
 		expiryDate.add(Calendar.YEAR, 10);
 		this.state = state;
 		this.releaseLocation = releaseLocation;
+		this.passportID = passportID;
 	}
 	
 	@Override
