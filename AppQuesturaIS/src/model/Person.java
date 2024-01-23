@@ -107,6 +107,11 @@ public class Person {
 	}
 	
 	public void register() throws SQLException {
+		try {
+			this.exists();
+		} catch (Exception e) {
+			System.out.println("Impossibile aggiungere Registrazione, l'utente non rientra nel database");
+		}
 		DatabaseManager.register(this);
 	}
 
@@ -116,5 +121,9 @@ public class Person {
 
 	public Passport getLastPassport() throws SQLException {
 		return DatabaseManager.getLastPassport(this);
+	}
+
+	public static Person getUser(String taxID) throws SQLException, NoSuchUserException {
+		return DatabaseManager.getUser(taxID);
 	}
 }

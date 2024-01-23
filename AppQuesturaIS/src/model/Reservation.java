@@ -1,14 +1,12 @@
 package model;
 
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 
 import model.NotBookableException.Types;
-import model.Passport.PassportState;
 
 public class Reservation {
 	public enum ReservationState {
@@ -72,10 +70,12 @@ public class Reservation {
 			if (requestDate == null) {
 				throw new NotBookableException(Types.NO_PREVIOUS_REQ);
 			}
+
 			requestDate.add(Calendar.MONTH, 1);
-			if (requestDate.getTime().after(Date.from(this.date.atZone(ZoneId.systemDefault()).toInstant()))) {
+			if (requestDate.after(this.getCalendarDate())) {
 				throw new NotBookableException(Types.UNDER_MONTH_REQ);
 			}
+			DatabaseManager.deleteRequest(person);
 			break;
 		case ISSUANCE_NEW:
 			var lastPassport = person.getLastPassport();
@@ -88,7 +88,10 @@ public class Reservation {
 			if (lastPassport == null) {
 				throw new NotBookableException(Types.MISSING_PASSPORT);
 			}
-			if (lastPassport.getExpiryDate().after(this.getDate())) {
+
+			Calendar bookableExpired = (Calendar) lastPassport.getExpiryDate().clone();
+			bookableExpired.add(Calendar.MONTH, -6);
+			if (bookableExpired.after(this.getCalendarDate())) {
 				throw new NotBookableException(Types.NOT_EXPIRED);
 			}
 			break;
@@ -99,7 +102,8 @@ public class Reservation {
 			if (lastPassport == null) {
 				throw new NotBookableException(Types.MISSING_PASSPORT);
 			}
-			if (lastPassport.getExpiryDate().before(this.getDate())) {
+
+			if (lastPassport.getExpiryDate().before(this.getCalendarDate())) {
 				throw new NotBookableException(Types.EXPIRED);
 			}
 			break;
@@ -107,9 +111,11 @@ public class Reservation {
 			break;
 		}
 
-		if (this.type != ReservationType.COLLECTION && requestDate != null) {
-			throw new NotBookableException(Types.ALREDY_BOOKED);
-		} else {
+		if (this.type != ReservationType.COLLECTION) {
+			if (requestDate != null) {
+				throw new NotBookableException(Types.ALREDY_BOOKED);
+			}
+			this.bookedBy = person;
 			DatabaseManager.insertRequest(this);
 		}
 
@@ -117,8 +123,7 @@ public class Reservation {
 		this.state = ReservationState.BOOKED_UP;
 		DatabaseManager.book(this);
 	}
-	
-	
+
 	// TODO LORE SISTEMA STA ROBA, GRZ
 	public void setState(ReservationState newState) throws Exception {
 		if (newState == ReservationState.BOOKED_UP) {
@@ -163,5 +168,11 @@ public class Reservation {
 
 	public PoliceStation getPlace() {
 		return place;
+	}
+
+	public Calendar getCalendarDate() {
+		Calendar result = Calendar.getInstance();
+		result.setTime(Date.from(this.getDate().atZone(ZoneId.systemDefault()).toInstant()));
+		return result;
 	}
 }

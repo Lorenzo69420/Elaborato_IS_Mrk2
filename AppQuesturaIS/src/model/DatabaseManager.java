@@ -22,7 +22,7 @@ public class DatabaseManager {
 			+ "tax_id VARCHAR(16) PRIMARY KEY NOT NULL, " + "name TEXT NOT NULL, " + "surname TEXT NOT NULL, "
 			+ "date_birth DATE NOT NULL, " + "place_birth TEXT NOT NULL, " + "health_card_num BIGINT, "
 			+ "belonging_category TEXT, " + "tutor_id VARCHAR(16), " + "sex CHAR NOT NULL, "
-			+ "registerd BOOLEAN NOT NULL, " + "admin BOOLEAN NOT NULL, "
+			+ "registered BOOLEAN NOT NULL, " + "admin BOOLEAN NOT NULL, "
 			+ "CONSTRAINT fk_tutor_id FOREIGN KEY (tutor_id) REFERENCES person(tax_id));";
 
 	private static final String PASSPORT_TABLE = "CREATE TABLE IF NOT EXISTS passport("
@@ -194,6 +194,20 @@ public class DatabaseManager {
 				result.getString("sex").charAt(0), result.getString("place_birth"), calendar,
 				result.getString("belonging_category"), result.getInt("health_card_num"));
 	}
+	
+	public static Person getUser(String taxID) throws SQLException, NoSuchUserException {
+		var query = connection.prepareStatement("SELECT * FROM person WHERE tax_id = ? AND registered = TRUE");
+		
+		query.setString(1, taxID);
+
+		var result = query.executeQuery();
+		if (!result.next()) {
+			throw new NoSuchUserException();
+		}
+		
+		return getPerson(taxID);
+	}
+
 
 	public static Passport getPassport(int passportID) throws SQLException {
 		var query = connection.prepareStatement("SELECT * FROM passport WHERE passport_id = ? ORDER BY passport_id LIMIT 1");
@@ -348,4 +362,13 @@ public class DatabaseManager {
 		
 		return result;
 	}
+
+	public static void deleteRequest(Person person) throws SQLException {
+		var statement = connection.prepareStatement("DELETE FROM passport_request WHERE tax_id = ?");
+		
+		statement.setString(1, person.getTaxID());
+	
+		statement.executeUpdate();
+	}
+
 }

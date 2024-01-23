@@ -21,6 +21,7 @@ public class Main {
 		Person sbatachiones = new Person("TIA3", "Mattias", "Giambirtones", 't', "Terronia",
 				new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build(), "Africa", 69420);
 		sbatachiones.insert();
+		//sbatachiones.register();
 		
 		Person IlKingNeto = new Person("CH4D", "Neto", "Whites", '$', "vostri muri",
 				new Calendar.Builder().setDate(2002, Calendar.SEPTEMBER, 14).build(), "Supremo", 9001);
@@ -28,7 +29,6 @@ public class Main {
 		IlKingNeto.makeAdmin();
 		sbatachiones.addTutor(IlKingNeto);
 		
-
 		PoliceStation ps = new PoliceStation("Verona");
 		ps.insert();
 		ps = new PoliceStation("Vicenza");
@@ -40,7 +40,7 @@ public class Main {
 
 		System.out.println(DatabaseManager.getPoliceStation());
 
-		Passport pass = new Passport("TIA3", Calendar.getInstance(), PassportState.VALID, ps);
+		Passport pass = new Passport("TIA3", new Calendar.Builder().setDate(2013, Calendar.JANUARY, 23).build(), PassportState.VALID, ps);
 		pass.insert();
 
 		Reservation res = new Reservation(ReservationType.COLLECTION, LocalDateTime.now(), pass, sbatachiones, ps, ReservationState.BOOKABLE);
@@ -49,9 +49,9 @@ public class Main {
 		res.insert();
 		res = new Reservation(ReservationType.ISSUANCE_NEW,LocalDateTime.of(2023, Month.JANUARY, 1, 9, 0),new PoliceStation("Verona"));
 		res.insert();
-		res = new Reservation(ReservationType.ISSUANCE_EXPIRED, LocalDateTime.of(2023, Month.JANUARY, 1, 10, 0), null, sbatachiones, ps, ReservationState.BOOKED_UP);
+		res = new Reservation(ReservationType.ISSUANCE_EXPIRED, LocalDateTime.of(2023, Month.JANUARY, 22, 10, 0), null, sbatachiones, ps, ReservationState.BOOKED_UP);
 		res.book(sbatachiones);
-		res = new Reservation(ReservationType.COLLECTION , LocalDateTime.of(2023, Month.FEBRUARY, 2, 10, 0), ps);
+		res = new Reservation(ReservationType.COLLECTION , LocalDateTime.of(2024, Month.FEBRUARY, 2, 10, 0), ps);
 		res.book(sbatachiones);
 		res = new Reservation(ReservationType.COLLECTION, LocalDateTime.of(2023, Month.JANUARY, 1, 10, 0), pass, sbatachiones, ps, ReservationState.BOOKED_UP);
 		res.insert();
@@ -66,6 +66,8 @@ public class Main {
 		} catch (Exception e) {
 			throw e;
 		}
+		
+		System.out.println(ReservationType.valueOf(null));
 	}
 
 }
