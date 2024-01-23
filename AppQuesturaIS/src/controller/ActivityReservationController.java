@@ -3,6 +3,7 @@ package controller;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -79,6 +80,10 @@ public class ActivityReservationController {
 		Text[] texts = { text1, text2, text3, text4 };
 		this.selectBoxs = selectBoxs;
 		this.texts = texts;
+		disableAll();
+	}
+	private void disableAll() {
+		Arrays.asList(selectBoxs).forEach(e -> e.setDisable(true));
 	}
 	@FXML
 	void confirm() throws NoSuchUserException, SQLException {
@@ -157,7 +162,7 @@ public class ActivityReservationController {
 			try {
 				res = res.getCompleteReservation();
 			} catch (NoSuchUserException e) {
-				// gestisciti tu le tue eccezioni di merda <3 per edi
+				
 			} catch (SQLException e) {
 				
 			}
@@ -166,6 +171,7 @@ public class ActivityReservationController {
 				errorText.setText("Sono state modificate le disponibilità, ecco quelle aggiornate");
 				try {
 					confirm();
+					disableAll();
 				} catch (Exception e) {
 					System.out.println("Virus getting over us!!!!!");
 				}
@@ -182,7 +188,7 @@ public class ActivityReservationController {
 				
 				switch (e.getType()) {
 				case ALREDY_BOOKED:
-					// devi settare errorText con una scritta giusta lmao <3
+					
 					Reservation request = currentPerson.getRequest();
 					str = "La prenotazione per il ritiro del suo passaporto è gia stata confermata per il giorno "
 							+ dateFormatter.format(request.getCalendarDate().getTime())
@@ -221,7 +227,7 @@ public class ActivityReservationController {
 			} catch (SQLException e) {
 				
 			} catch (NoSuchUserException e) {
-				// una volta gestita fino alla ultima cazzo di eccezine di merda fai dei test
+				
 			}
 		}
 	}
@@ -249,12 +255,10 @@ public class ActivityReservationController {
 	}
 
 	public ComboBox<String> getActSelector() {
-
 		return activitySelector;
 	}
 
 	public ComboBox<String> getPSSelector() {
-		// edigay
 		return policeStationSelector;
 	}
 

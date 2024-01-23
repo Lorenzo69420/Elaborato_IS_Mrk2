@@ -71,8 +71,9 @@ public class Reservation {
 				throw new NotBookableException(Types.NO_PREVIOUS_REQ);
 			}
 
-			request.getCalendarDate().add(Calendar.MONTH, 1);
-			if (request.getCalendarDate().after(this.getCalendarDate())) {
+			var calendar = request.getCalendarDate();
+			calendar.add(Calendar.MONTH, 1);
+			if (calendar.after(this.getCalendarDate())) {
 				throw new NotBookableException(Types.UNDER_MONTH_REQ);
 			}
 			DatabaseManager.deleteRequest(person);
