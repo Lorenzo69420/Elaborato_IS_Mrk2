@@ -18,12 +18,12 @@ public class Main {
 
 		DatabaseManager.createTable();
 
-		Person sbatachiones = new Person("TIA3", "Mattias", "Giambirtones", 't', "Terronia",
+		Person sbatachiones = new Person("TIA", "Mattias", "Giambirtones", 't', "Terronia",
 				new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build(), "Africa", 69420);
 		sbatachiones.insert();
 		//sbatachiones.register();
 		
-		Person IlKingNeto = new Person("CH4D", "Neto", "Whites", '$', "vostri muri",
+		Person IlKingNeto = new Person("CHAD", "Neto", "Whites", '$', "vostri muri",
 				new Calendar.Builder().setDate(2002, Calendar.SEPTEMBER, 14).build(), "Supremo", 9001);
 		IlKingNeto.insert();
 		IlKingNeto.makeAdmin();
@@ -40,8 +40,11 @@ public class Main {
 
 		System.out.println(DatabaseManager.getPoliceStation());
 
-		Passport pass = new Passport("TIA3", new Calendar.Builder().setDate(2013, Calendar.JANUARY, 23).build(), PassportState.VALID, ps);
+		Passport pass = new Passport("TIA", new Calendar.Builder().setDate(2013, Calendar.JANUARY, 23).build(), PassportState.VALID, ps);
 		pass.insert();
+		System.out.println(sbatachiones.getLastPassport().getPassID());
+		
+		
 
 		Reservation res = new Reservation(ReservationType.COLLECTION, LocalDateTime.now(), pass, sbatachiones, ps, ReservationState.BOOKABLE);
 		res.insert();
@@ -56,7 +59,7 @@ public class Main {
 		res = new Reservation(ReservationType.COLLECTION, LocalDateTime.of(2023, Month.JANUARY, 1, 10, 0), pass, sbatachiones, ps, ReservationState.BOOKED_UP);
 		res.insert();
 		
-		Person sbat = new Person("TIA3", "Mattias", "Giambirtones", "Terronia",
+		Person sbat = new Person("TIA", "Mattias", "Giambirtones", "Terronia",
 				new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build());
 		sbat.exists();
 		DatabaseManager.close();
@@ -67,7 +70,6 @@ public class Main {
 			throw e;
 		}
 		
-		System.out.println(ReservationType.valueOf(null));
 	}
 
 }

@@ -41,8 +41,9 @@ public class DatabaseManager {
 			+ "CONSTRAINT fk_place FOREIGN KEY (place) REFERENCES police_station(town));";
 
 	private static final String PASSPORT_REQUEST_TABLE = "CREATE TABLE IF NOT EXISTS passport_request(" 
-			+ "tax_id VARCHAR(16) PRIMARY KEY, date DATE NOT NULL, "
-			+ "CONSTRAINT fk_tax_id FOREIGN KEY (tax_id) REFERENCES person(tax_id));";
+			+ "tax_id VARCHAR(16) PRIMARY KEY, date TIMESTAMP NOT NULL, place TEXT NOT NULL, "
+			+ "CONSTRAINT fk_tax_id FOREIGN KEY (tax_id) REFERENCES person(tax_id), "
+			+ "CONSTRAINT fk_place FOREIGN KEY (place) REFERENCES police_station(town));";
 
 	public static void init(String url, String username, String password, boolean debugMode) throws SQLException {
 		if (initialized) {
@@ -71,6 +72,7 @@ public class DatabaseManager {
 		connection.prepareStatement(PERSON_TABLE).execute();
 		connection.prepareStatement(POLICE_TABLE).execute();
 		connection.prepareStatement(PASSPORT_TABLE).execute();
+		
 		connection.prepareStatement(PASSPORT_REQUEST_TABLE).execute();
 		connection.prepareStatement(RESERVATION_TABLE).execute();
 	}
@@ -169,10 +171,11 @@ public class DatabaseManager {
 	}
 	
 	public static void insertRequest(Reservation reservation) throws SQLException {
-		var statement = connection.prepareStatement("INSERT INTO passport_request VALUES (?, ?)");
+		var statement = connection.prepareStatement("INSERT INTO passport_request VALUES (?, ?, ?)");
 		
 		statement.setString(1, reservation.getBookedBy().getTaxID());
-		statement.setDate(2, Date.valueOf(reservation.getDate().toLocalDate()));
+		statement.setTimestamp(2, Timestamp.valueOf(reservation.getDate()));
+		statement.setString(3, reservation.getPlace().getTown());
 		
 		statement.execute();
 	}
@@ -238,9 +241,12 @@ public class DatabaseManager {
 	private static Passport resultQueryToPassport(ResultSet resultQuery) throws SQLException {
 		var calendar = Calendar.getInstance();
 		calendar.setTime(resultQuery.getDate("release_date"));
-
-		return new Passport(resultQuery.getString("tax_id"), calendar, PassportState.valueOf(resultQuery.getString("state")),
+		
+		Passport result = new Passport(resultQuery.getString("tax_id"), calendar, PassportState.valueOf(resultQuery.getString("state")),
 				new PoliceStation(resultQuery.getString("release_location")));
+		result.setID(resultQuery.getInt("passport_id"));
+		
+		return result;
 	}
 
 	public static List<String> getPoliceStation() throws SQLException {
@@ -301,6 +307,7 @@ public class DatabaseManager {
 	public static void book(Reservation reservation) throws SQLException {
 		var query = connection.prepareStatement(
 				"UPDATE reservation SET passport_id = ?, booked_by = ?, state = ? WHERE date = ? AND place = ?");
+		
 
 		var passID = reservation.getPassport() == null ? -1 : reservation.getPassport().getPassID(); 
 		query.setInt(1, passID);
@@ -343,11 +350,11 @@ public class DatabaseManager {
 		}
 
 		return new Reservation(ReservationType.valueOf(result.getString("type")), result.getTimestamp("date").toLocalDateTime(), passport,
-				person, new PoliceStation("place"), ReservationState.valueOf(result.getString("state")));
+				person, new PoliceStation(result.getString("place")), ReservationState.valueOf(result.getString("state")));
 	}
 
-	public static Calendar getRequestDate(Person person) throws SQLException {
-		var query = connection.prepareStatement("SELECT date FROM passport_request WHERE tax_id = ? LIMIT 1");
+	public static Reservation getRequest(Person person) throws SQLException {
+		var query = connection.prepareStatement("SELECT * FROM passport_request WHERE tax_id = ? LIMIT 1");
 
 		query.setString(1, person.getTaxID());
 
@@ -356,11 +363,8 @@ public class DatabaseManager {
 		if (!resultQuery.next()) {
 			return null;
 		}
-
-		var result = Calendar.getInstance();
-		result.setTime(resultQuery.getDate("date"));
 		
-		return result;
+		return new Reservation(resultQuery.getTimestamp("date").toLocalDateTime(), new PoliceStation(resultQuery.getString("place")));
 	}
 
 	public static void deleteRequest(Person person) throws SQLException {
@@ -370,5 +374,4 @@ public class DatabaseManager {
 	
 		statement.executeUpdate();
 	}
-
 }

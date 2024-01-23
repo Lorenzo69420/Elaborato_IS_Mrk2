@@ -1,8 +1,10 @@
 package controller;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -80,6 +82,7 @@ public class ActivityReservationController {
 	}
 	@FXML
 	void confirm() throws NoSuchUserException, SQLException {
+		errorText.setText("");
 		if (checkAll()) {
 
 			// This section adds the reservations to the slots in the interface only if it
@@ -88,16 +91,8 @@ public class ActivityReservationController {
 			ps = new PoliceStation(policeStationSelector.getValue());
 			ld = dateSelector.getValue();
 			activity = activitySelector.getValue();
-			Reservation.ReservationType RT = null;
+			Reservation.ReservationType RT = getResType(activity);
 			Passport currPassport = currentPerson.getLastPassport();
-
-			// Searching the right activity
-
-			for (var T : Reservation.ReservationType.values()) {
-				if (T.toDisplayString().equals(activity)) {
-					RT = T;
-				}
-			}
 
 			// Setting the slots
 
@@ -105,9 +100,11 @@ public class ActivityReservationController {
 				Reservation R = new Reservation(ld.atTime(8 + slot, 0), ps);
 				R = R.getCompleteReservation();
 				if (R.getType() != null) {
-					selectBoxs[slot].setDisable(R.getState().equals(Reservation.ReservationState.BOOKED_UP));
-					selectBoxs[slot].setDisable(!R.getType().toDisplayString().equals(activity));
-					texts[slot].setText(R.getType().toDisplayString().equals(activity) ? activity : "");
+					boolean difActivity = !R.getType().toDisplayString().equals(activity);
+					boolean notBookable = R.getState().equals(Reservation.ReservationState.BOOKED_UP);
+					selectBoxs[slot].setDisable(difActivity || notBookable);
+					
+					texts[slot].setText(R.getType().toDisplayString().equals(activity) ? activity : R.getType().toDisplayString());
 				
 				} else {
 					selectBoxs[slot].setDisable(true);
@@ -141,7 +138,7 @@ public class ActivityReservationController {
 
 	@FXML
 	void exit(ActionEvent event) {
-		MC.close();
+		MC.switchToLogin();
 	}
 
 	@FXML
@@ -159,11 +156,20 @@ public class ActivityReservationController {
 			
 			try {
 				res = res.getCompleteReservation();
-				res.setBookedBy(currentPerson);
 			} catch (NoSuchUserException e) {
 				// gestisciti tu le tue eccezioni di merda <3 per edi
 			} catch (SQLException e) {
 				
+			}
+			
+			if (!res.getType().equals(getResType(activity))) {
+				errorText.setText("Sono state modificate le disponibilità, ecco quelle aggiornate");
+				try {
+					confirm();
+				} catch (Exception e) {
+					System.out.println("Virus getting over us!!!!!");
+				}
+				return;
 			}
 			
 			try {
@@ -172,17 +178,20 @@ public class ActivityReservationController {
 				confirm();
 			} catch (NotBookableException e) {
 				String str = "Errore non definito ops";
+				SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+				
 				switch (e.getType()) {
 				case ALREDY_BOOKED:
 					// devi settare errorText con una scritta giusta lmao <3
+					Reservation request = currentPerson.getRequest();
 					str = "La prenotazione per il ritiro del suo passaporto è gia stata confermata per il giorno "
-							+ currentPerson.getLastPassport().getReleaseDate().toString()
-							+ " nella questura di " + currentPerson.getLastPassport().getReleaseLocation();
+							+ dateFormatter.format(request.getCalendarDate().getTime())
+							+ " nella questura di " + request.getPlace().getTown();
 					break;
 				case ALREDY_HAVE_PASSPORT:
-					str = "Nel sistema è gia presente un suo passaporto ( "
+					str = "Nel sistema è gia presente un suo passaporto ("
 							+ currentPerson.getLastPassport().getPassID()
-							+ " ) se lo ha perso, oppure le è stato rubato o invece è scaduto selezioni l'attività opportuna";
+							+ ") se lo ha perso, oppure le è stato rubato o invece è scaduto selezioni l'attività opportuna";
 					break;
 				case EXPIRED:
 					str = "Il tuo passaporto risulta scaduto in data "
@@ -193,20 +202,22 @@ public class ActivityReservationController {
 					str = "Non risulta che lei abbia gia creato un passaporto, selezioni 'Nuova emissione' per crearne uno";
 					break;
 				case NOT_EXPIRED:
+					Date expiryDate = currentPerson.getLastPassport().getExpiryDate().getTime();
 					str = "Il suo passaporto non risulta essere scaduto. La data di scadenza è "
-							+ currentPerson.getLastPassport().getExpiryDate().toString();
+							+ dateFormatter.format(expiryDate);
 					break;
 				case NO_PREVIOUS_REQ:
 					str = "Non è presente nessun passaporto da emettere, richiedi prima un emissione";	
 					break;
 				case UNDER_MONTH_REQ:
-					Calendar tmpCal = DatabaseManager.getRequestDate(currentPerson);
+					Calendar tmpCal = currentPerson.getRequest().getCalendarDate();
 					tmpCal.add(Calendar.MONTH, 1); 
-					str = "La data di emissione del suo passaporto sarà disponibile dal giorno " + tmpCal.toString() + " in poi";
+					str = "La data di emissione del suo passaporto sarà disponibile dal giorno " + dateFormatter.format(tmpCal.getTime()) + " in poi";
 					break;
 				default:
 					break;
 				}
+				errorText.setText(str);
 			} catch (SQLException e) {
 				
 			} catch (NoSuchUserException e) {
@@ -251,4 +262,12 @@ public class ActivityReservationController {
 		this.currentPerson = currentPerson;
 	}
 
+	private Reservation.ReservationType getResType(String type) {
+		for (var result: Reservation.ReservationType.values()) {
+			if (result.toDisplayString().equals(type)) {
+				return result;
+			}
+		}
+		return null;
+	}
 }

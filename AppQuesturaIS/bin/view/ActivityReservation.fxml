@@ -1,80 +1,304 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ActivityReservationController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="739.0" style="-fx-background-color: #0a6769;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ActivityReservationController">
    <top>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
+      <StackPane prefHeight="133.0" prefWidth="560.0" BorderPane.alignment="CENTER">
          <children>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
+            <VBox alignment="TOP_CENTER" prefHeight="106.0" prefWidth="600.0" spacing="20.0">
                <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #000000; -fx-background-radius: 5;">
                      <children>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                        <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" style="-fx-background-color: #21cccf;">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona l'Attività" />
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <ImageView fitHeight="66.0" fitWidth="88.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/LogoStato.jpeg" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto nel sistema di prenotazione per l'emissione e il ritiro dei passaporti" textAlignment="CENTER" wrappingWidth="157.693359375" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Text fx:id="errorText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="134.13671875" />
+                                 </children>
+                              </StackPane>
                            </children>
-                        </StackPane>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
-                           <children>
-                              <ComboBox fx:id="activitySelector" onAction="#setActivity" prefWidth="150.0" />
-                           </children>
-                        </StackPane>
+                           <StackPane.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </StackPane.margin>
+                        </HBox>
                      </children>
-                  </VBox>
-               </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
-               <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  </StackPane>
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                        <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona la Questura" />
+                              <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #000000; -fx-background-radius: 5;">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" style="-fx-background-color: #21cccf;">
+                                       <children>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona l'Attività">
+                                                   <StackPane.margin>
+                                                      <Insets />
+                                                   </StackPane.margin>
+                                                </Text>
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets top="5.0" />
+                                             </VBox.margin>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <ComboBox fx:id="activitySelector" prefWidth="150.0" style="-fx-background-radius: 10;" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" />
+                                             </VBox.margin>
+                                          </StackPane>
+                                       </children>
+                                       <StackPane.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </StackPane.margin>
+                                    </VBox>
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #000000; -fx-background-radius: 5;">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" style="-fx-background-color: #21cccf;">
+                                       <children>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona la Questura" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets top="5.0" />
+                                             </VBox.margin>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <ComboBox fx:id="policeStationSelector" prefWidth="150.0" style="-fx-background-radius: 10;" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" />
+                                             </VBox.margin>
+                                          </StackPane>
+                                       </children>
+                                       <StackPane.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </StackPane.margin>
+                                    </VBox>
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #000000; -fx-background-radius: 5;">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" style="-fx-background-color: #21cccf;">
+                                       <children>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona il giorno" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets top="5.0" />
+                                             </VBox.margin>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <DatePicker fx:id="dateSelector" />
+                                             </children>
+                                             <VBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" />
+                                             </VBox.margin>
+                                          </StackPane>
+                                       </children>
+                                       <StackPane.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </StackPane.margin>
+                                    </VBox>
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#confirm" style="-fx-background-radius: 10;" text="Conferma" />
+                                 </children>
+                              </StackPane>
                            </children>
-                        </StackPane>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
-                           <children>
-                              <ComboBox fx:id="policeStationSelector" onAction="#setPoliceSrtation" prefWidth="150.0" />
-                           </children>
-                        </StackPane>
+                        </HBox>
                      </children>
-                  </VBox>
+                  </StackPane>
                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
-               <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seleziona il giorno" />
-                           </children>
-                        </StackPane>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
-                           <children>
-                              <DatePicker fx:id="dateSelector" onAction="#setDate" />
-                           </children>
-                        </StackPane>
-                     </children>
-                  </VBox>
-               </children>
-            </StackPane>
+               <StackPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </StackPane.margin>
+            </VBox>
          </children>
          <BorderPane.margin>
-            <Insets bottom="20.0" left="20.0" right="20.0" />
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </BorderPane.margin>
-      </HBox>
+      </StackPane>
    </top>
    <center>
-      <HBox fx:id="slotBox" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <StackPane prefHeight="198.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox fx:id="slotBox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <StackPane prefHeight="271.0" prefWidth="464.0">
+                     <children>
+                        <HBox prefHeight="271.0" prefWidth="231.0" spacing="10.0">
+                           <children>
+                              <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #000000; -fx-background-radius: 5;">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #21cccf;">
+                                       <StackPane.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </StackPane.margin>
+                                       <children>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="8:00/9:00" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text fx:id="text1" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="87.13671875" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <CheckBox fx:id="select1" mnemonicParsing="false" text="Seleziona" />
+                                             </children>
+                                          </StackPane>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #000000; -fx-background-radius: 5;">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #21cccf;">
+                                       <StackPane.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </StackPane.margin>
+                                       <children>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="9:00/10:00" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text fx:id="text2" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="90.13671875" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <CheckBox fx:id="select2" mnemonicParsing="false" text="Seleziona" />
+                                             </children>
+                                          </StackPane>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #000000; -fx-background-radius: 5;">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #21cccf;">
+                                       <StackPane.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </StackPane.margin>
+                                       <children>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="10:00/11:00" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text fx:id="text3" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="89.13671875" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <CheckBox fx:id="select3" mnemonicParsing="false" text="Seleziona" />
+                                             </children>
+                                          </StackPane>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #000000; -fx-background-radius: 5;">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #21cccf;">
+                                       <StackPane.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </StackPane.margin>
+                                       <children>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="11:00/12:00" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text fx:id="text4" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="93.13671875" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <CheckBox fx:id="select4" mnemonicParsing="false" text="Seleziona" />
+                                             </children>
+                                          </StackPane>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </HBox>
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="231.0" prefWidth="116.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#reserve" style="-fx-background-radius: 10;" text="Prenota" />
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#exit" style="-fx-background-radius: 10;" text="Esci" />
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </StackPane>
+               </children>
+               <StackPane.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </StackPane.margin>
+            </HBox>
+         </children>
+      </StackPane>
    </center>
 </BorderPane>

@@ -64,15 +64,15 @@ public class Reservation {
 	}
 
 	public void book(Person person) throws SQLException, NotBookableException {
-		Calendar requestDate = DatabaseManager.getRequestDate(person);
+		Reservation request = person.getRequest();
 		switch (this.type) {
 		case COLLECTION:
-			if (requestDate == null) {
+			if (request == null) {
 				throw new NotBookableException(Types.NO_PREVIOUS_REQ);
 			}
 
-			requestDate.add(Calendar.MONTH, 1);
-			if (requestDate.after(this.getCalendarDate())) {
+			request.getCalendarDate().add(Calendar.MONTH, 1);
+			if (request.getCalendarDate().after(this.getCalendarDate())) {
 				throw new NotBookableException(Types.UNDER_MONTH_REQ);
 			}
 			DatabaseManager.deleteRequest(person);
@@ -112,7 +112,7 @@ public class Reservation {
 		}
 
 		if (this.type != ReservationType.COLLECTION) {
-			if (requestDate != null) {
+			if (request != null) {
 				throw new NotBookableException(Types.ALREDY_BOOKED);
 			}
 			this.bookedBy = person;

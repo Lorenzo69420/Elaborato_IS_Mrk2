@@ -58,17 +58,17 @@
                                        <children>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
-                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="10:00 / 11:00" />
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" 9:00 / 10:00" />
                                              </children>
                                           </StackPane>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
-                                                <Text fx:id="text3" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" />
+                                                <Text fx:id="text2" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" />
                                              </children>
                                           </StackPane>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
-                                                <CheckBox fx:id="select3" mnemonicParsing="false" text="Seleziona" />
+                                                <CheckBox fx:id="select2" mnemonicParsing="false" text="Seleziona" />
                                              </children>
                                           </StackPane>
                                        </children>
@@ -87,17 +87,17 @@
                                        <children>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
-                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" 9:00 / 10:00" />
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="10:00 / 11:00" />
                                              </children>
                                           </StackPane>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
-                                                <Text fx:id="text2" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" />
+                                                <Text fx:id="text3" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" />
                                              </children>
                                           </StackPane>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
-                                                <CheckBox fx:id="select2" mnemonicParsing="false" text="Seleziona" />
+                                                <CheckBox fx:id="select3" mnemonicParsing="false" text="Seleziona" />
                                              </children>
                                           </StackPane>
                                        </children>

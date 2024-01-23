@@ -126,4 +126,8 @@ public class Person {
 	public static Person getUser(String taxID) throws SQLException, NoSuchUserException {
 		return DatabaseManager.getUser(taxID);
 	}
+	
+	public Reservation getRequest() throws SQLException {
+		return DatabaseManager.getRequest(this);
+	}
 }
