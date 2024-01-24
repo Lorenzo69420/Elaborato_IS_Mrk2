@@ -19,8 +19,8 @@ public class Main {
 			Person sbatachiones = new Person("TIA", "Mattias", "Giambirtones", 't', "Terronia",
 					new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build(), "Africa", 69420);
 			sbatachiones.insert();
-			// sbatachiones.register();
-
+			sbatachiones.register();			
+			
 			Person IlKingNeto = new Person("CHAD", "Neto", "Whites", '$', "vostri muri",
 					new Calendar.Builder().setDate(2002, Calendar.SEPTEMBER, 14).build(), "Supremo", 9001);
 			IlKingNeto.insert();
@@ -36,12 +36,9 @@ public class Main {
 			ps = new PoliceStation("Belluno");
 			ps.insert();
 
-			System.out.println(DatabaseManager.getPoliceStation());
-
 			Passport pass = new Passport("TIA", new Calendar.Builder().setDate(2013, Calendar.JANUARY, 23).build(),
 					PassportState.VALID, ps);
 			pass.insert();
-			System.out.println(sbatachiones.getLastPassport().getPassID());
 
 			Reservation res = new Reservation(ReservationType.COLLECTION, LocalDateTime.now(), pass, sbatachiones, ps,
 					ReservationState.BOOKABLE);

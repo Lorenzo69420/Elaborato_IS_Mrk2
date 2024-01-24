@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,44 +15,44 @@ import model.Person;
 import model.Reservation;
 
 public class MainController {
-	
+
 	private Stage mainStage = new Stage();
 	private ObservableList<String> activityList = FXCollections.observableArrayList();
 	private ObservableList<String> policeStationList = FXCollections.observableArrayList();
-	
-	//Login page
-	private FXMLLoader logLoader; 
+
+	// Login page
+	private FXMLLoader logLoader;
 	private BorderPane logPane;
 	private LoginController logController;
 	private Scene logScene;
-	
-	//Register page
-	private FXMLLoader regLoader; 
+
+	// Register page
+	private FXMLLoader regLoader;
 	private BorderPane regPane;
 	private RegisterController regController;
 	private Scene regScene;
-	
-	//ActivitySelector page
-	private FXMLLoader actLoader; 
+
+	// ActivitySelector page
+	private FXMLLoader actLoader;
 	private BorderPane actPane;
 	private ActivityReservationController actController;
 	private Scene actScene;
-	
-	//ActivitySetter page
-	private FXMLLoader actSetLoader; 
+
+	// ActivitySetter page
+	private FXMLLoader actSetLoader;
 	private BorderPane actSetPane;
 	private ActivitySetterController actSetController;
 	private Scene actSetScene;
-	
-	//Person from login operations
+
+	// Person from login operations
 	private Person currentPerson;
-	
-	public MainController () throws IOException, SQLException {
-		DatabaseManager.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password",false);
-		
+
+	public MainController() throws IOException, SQLException {
+		DatabaseManager.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password", false);
+
 		getActivityList();
 		getPSList();
-		
+
 		// Login setup
 		logLoader = new FXMLLoader(getClass().getResource("../view/Login.fxml"));
 		logPane = logLoader.load();
@@ -82,45 +83,52 @@ public class MainController {
 		actSetScene = new Scene(actSetPane);
 		populateActivitySetter();
 	}
+
 	public void start() {
 		mainStage.show();
 	}
+
 	public void switchToLogin() {
 		mainStage.setScene(logScene);
 		start();
 	}
+
 	public void switchToRegister() {
 		mainStage.setScene(regScene);
 		start();
 	}
+
 	public void switchToActivityReservation() {
 		currentPerson = logController.getLogPerson();
 		actController.setPerson(currentPerson);
 		mainStage.setScene(actScene);
 		start();
 	}
+
 	public void switchToActivitySetter() {
 		mainStage.setScene(actSetScene);
 		start();
 	}
+
 	private void populateActivitySetter() {
 		actSetController.getActSelector().getItems().addAll(activityList);
 		actSetController.getPSSelector().getItems().addAll(policeStationList);
 	}
+
 	private void populateActivityReservation() {
 		actController.getActSelector().getItems().addAll(activityList);
 		actController.getPSSelector().getItems().addAll(policeStationList);
 	}
+
 	private void getActivityList() {
-		for (var S : Reservation.ReservationType.values()) {
-			activityList.add(S.toDisplayString());
-		}
+		Arrays.asList(Reservation.ReservationType.values()).forEach(type -> activityList.add(type.toDisplayString()));
 	}
-	private void getPSList() throws SQLException{
+
+	private void getPSList() throws SQLException {
 		policeStationList.addAll(DatabaseManager.getPoliceStation());
 	}
+
 	public void close() {
 		mainStage.close();
 	}
-	
 }

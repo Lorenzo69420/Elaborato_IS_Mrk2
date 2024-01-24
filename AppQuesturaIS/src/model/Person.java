@@ -130,4 +130,12 @@ public class Person {
 	public Reservation getRequest() throws SQLException {
 		return DatabaseManager.getRequest(this);
 	}
+
+	public boolean isAdmin() throws SQLException {
+		return DatabaseManager.isAdmin(this);
+	}
+	
+	public boolean isRegister() throws SQLException {
+		return DatabaseManager.isRegister(this);
+	}
 }

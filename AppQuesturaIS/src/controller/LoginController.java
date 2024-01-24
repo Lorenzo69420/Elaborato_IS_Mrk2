@@ -34,16 +34,20 @@ public class LoginController {
     
     private String ID;
     private Person logPerson;
-    private MainController MC;
+    private MainController mainController;
     
     @FXML
     void adminLogReq(ActionEvent event) {
     	try {
     		this.logPerson = DatabaseManager.getPerson(IDField.getText());
-    		if (true) {}
-    		MC.switchToActivitySetter();
+    		
+    		if (logPerson.isAdmin()) {
+    			mainController.switchToActivitySetter();
+    		} else {
+    			IDLabel.setText("L'utente selezionato non è admin");    			
+    		}
     	} catch (NoSuchUserException e ) {
-    		IDLabel.setText("User not found");
+    		IDLabel.setText("Utente non trovato");
     	} catch (SQLException E ) {
 			System.out.println("Database compro-fjDSVIAM...Database compromised");
 		}
@@ -51,19 +55,23 @@ public class LoginController {
 
     @FXML
     void exitApp(ActionEvent event) {
-    	MC.close();
+    	mainController.close();
     }
 
     @FXML
     void logReq(ActionEvent event) {
     	try {
     		this.logPerson = Person.get(IDField.getText());
-    		MC.switchToActivityReservation();
+  
+    		if (logPerson.isRegister()) {
+    			mainController.switchToActivityReservation();
+    		} else {
+    			IDLabel.setText("L'utente selezionato non è registrato");    			
+    		}
     	} catch (NoSuchUserException e ) {
     		IDLabel.setText("Utente non trovato");
     	} catch (SQLException E ) {
 			System.out.println("Database compro-fjDSVIAM...Database compromised");
-
 		}
 
 	} 
@@ -80,11 +88,11 @@ public class LoginController {
 
     @FXML
     void switchReg(ActionEvent event) {
-    	MC.switchToRegister();
+    	mainController.switchToRegister();
     }
     
 	public void setMC(MainController mC) {
-		MC = mC;
+		mainController = mC;
 	}
 
 	public Person getLogPerson() {

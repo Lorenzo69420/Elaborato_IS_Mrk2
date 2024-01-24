@@ -272,6 +272,10 @@ public class DatabaseManager {
 
 		query.executeUpdate();
 	}
+	
+	public static boolean isRegister(Person person) throws SQLException {
+		return permissionQuery(person, "registered");
+	}
 
 	public static void makeAdmin(Person person) throws SQLException {
 		var query = connection.prepareStatement("UPDATE person SET admin = TRUE WHERE tax_id = ?");
@@ -279,6 +283,20 @@ public class DatabaseManager {
 		query.setString(1, person.getTaxID());
 
 		query.executeUpdate();
+	}
+	
+	public static boolean isAdmin(Person person) throws SQLException {
+		return permissionQuery(person, "admin");
+	}
+	
+	private static boolean permissionQuery(Person person, String request) throws SQLException {
+		var query = connection.prepareStatement("SELECT 1 FROM person WHERE tax_id = ? AND " + request + " = TRUE");
+		
+		query.setString(1, person.getTaxID());
+		
+		var result = query.executeQuery();
+		
+		return result.next();
 	}
 
 	public static void changeState(Passport passport) throws SQLException {
