@@ -134,7 +134,7 @@ public class Reservation {
 		this.state = newState;
 	}
 
-	public Reservation getCompleteReservation() throws NoSuchUserException, SQLException {
+	public Reservation getCompleteReservation() throws SQLException {
 		var result = DatabaseManager.getReservation(this);
 		return result != null ? result : this;
 	}
