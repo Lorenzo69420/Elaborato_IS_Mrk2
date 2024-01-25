@@ -146,7 +146,7 @@ public class RegisterController {
 		mainController.switchToLogin();
 	}
 
-	public void setMC(MainController mC) {
+	public void setMainController(MainController mC) {
 		mainController = mC;
 	}
 

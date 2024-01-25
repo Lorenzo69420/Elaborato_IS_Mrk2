@@ -127,7 +127,7 @@ public class ActivityReservationController {
 	}
 
 	private boolean checkDate() {
-		return !(dateSelector.getValue() == null);
+		return dateSelector.getValue() != null;
 	}
 
 	private boolean checkPS() {
@@ -199,7 +199,7 @@ public class ActivityReservationController {
 		return policeStation.getTown().equals(policeStationSelector.getValue());
 	}
 
-	public void setMC(MainController mainController) {
+	public void setMainController(MainController mainController) {
 		this.mainController = mainController;
 	}
 

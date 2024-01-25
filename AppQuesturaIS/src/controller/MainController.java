@@ -12,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.DatabaseManager;
 import model.Person;
+import model.PoliceStation;
 import model.Reservation;
 
 public class MainController {
@@ -57,20 +58,20 @@ public class MainController {
 		logLoader = new FXMLLoader(getClass().getResource("../view/Login.fxml"));
 		logPane = logLoader.load();
 		logController = logLoader.getController();
-		logController.setMC(this);
+		logController.setMainController(this);
 		logScene = new Scene(logPane);
 		mainStage.setScene(logScene);
 		// Register setup
 		regLoader = new FXMLLoader(getClass().getResource("../view/Register.fxml"));
 		regPane = regLoader.load();
 		regController = regLoader.getController();
-		regController.setMC(this);
+		regController.setMainController(this);
 		regScene = new Scene(regPane);
 		// Activity Selector setup
 		actLoader = new FXMLLoader(getClass().getResource("../view/ActivityReservation.fxml"));
 		actPane = actLoader.load();
 		actController = actLoader.getController();
-		actController.setMC(this);
+		actController.setMainController(this);
 		actController.addAll();
 		actScene = new Scene(actPane);
 		populateActivityReservation();
@@ -78,7 +79,7 @@ public class MainController {
 		actSetLoader = new FXMLLoader(getClass().getResource("../view/ActivitySetter.fxml"));
 		actSetPane = actSetLoader.load();
 		actSetController = actSetLoader.getController();
-		actSetController.setMC(this);
+		actSetController.setMainController(this);
 		actSetController.addAll();
 		actSetScene = new Scene(actSetPane);
 		populateActivitySetter();
@@ -125,7 +126,7 @@ public class MainController {
 	}
 
 	private void getPSList() throws SQLException {
-		policeStationList.addAll(DatabaseManager.getPoliceStation());
+		policeStationList.addAll(PoliceStation.getStations());
 	}
 
 	public void close() {

@@ -18,7 +18,7 @@ public class PoliceStation {
 		return town;
 	}
 	
-	public static List<String> get() throws SQLException {
+	public static List<String> getStations() throws SQLException {
 		return DatabaseManager.getPoliceStation();
 	}
 }

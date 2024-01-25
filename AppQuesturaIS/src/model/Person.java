@@ -122,10 +122,6 @@ public class Person {
 	public Passport getLastPassport() throws SQLException {
 		return DatabaseManager.getLastPassport(this);
 	}
-
-	public static Person getUser(String taxID) throws SQLException, NoSuchUserException {
-		return DatabaseManager.getUser(taxID);
-	}
 	
 	public Reservation getRequest() throws SQLException {
 		return DatabaseManager.getRequest(this);

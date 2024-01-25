@@ -18,12 +18,14 @@ import model.PoliceStation;
 import model.Reservation;
 
 public class ActivitySetterController {
-
+	
 	@FXML
 	private ComboBox<String> activitySelector;
-
+	
 	@FXML
 	private DatePicker dateSelector;
+	@FXML
+	private Text errorText;
 
 	@FXML
 	private ComboBox<String> policeStationSelector;
@@ -52,8 +54,6 @@ public class ActivitySetterController {
 	@FXML
 	private Text text4;
 
-	@FXML
-	private Text errorText;
 
 	public MainController mainController;
 	private LocalDate date;
@@ -84,7 +84,6 @@ public class ActivitySetterController {
 			return;
 		}
 
-		List<Reservation> resList = new ArrayList<>();
 		date = dateSelector.getValue();
 		policeStation = new PoliceStation(policeStationSelector.getValue());
 		errorText.setText(
@@ -93,8 +92,6 @@ public class ActivitySetterController {
 		for (int slot = 0; slot < 4; slot++) {
 			Reservation reservation = new Reservation(date.atTime(8 + slot, 0), policeStation);
 			reservation = reservation.getCompleteReservation();
-			resList.add(reservation);
-			reservation = resList.get(slot);
 			Reservation.ReservationType reservationType = reservation.getType();
 			boolean notBookable = reservation.getState().equals(Reservation.ReservationState.BOOKED_UP);
 			actBoxs.get(slot).setDisable(notBookable);
@@ -163,11 +160,11 @@ public class ActivitySetterController {
 	}
 
 	@FXML
-	void goBack(ActionEvent event) {
+	void exit(ActionEvent event) {
 		mainController.switchToLogin();
 	}
 
-	public void setMC(MainController mainController) {
+	public void setMainController(MainController mainController) {
 		this.mainController = mainController;
 	}
 

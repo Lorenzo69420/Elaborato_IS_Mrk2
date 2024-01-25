@@ -157,7 +157,7 @@
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#goBack" style="-fx-background-radius: 10;" text="Esci" />
+                                    <Button mnemonicParsing="false" onAction="#exit" style="-fx-background-radius: 10;" text="Esci" />
                                  </children>
                               </StackPane>
                            </children>

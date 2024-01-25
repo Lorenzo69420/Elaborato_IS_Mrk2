@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -19,15 +20,15 @@ public class DatabaseManager {
 	private static Connection connection = null;
 
 	private static final String PERSON_TABLE = "CREATE TABLE IF NOT EXISTS person("
-			+ "tax_id VARCHAR(16) PRIMARY KEY NOT NULL, " + "name TEXT NOT NULL, " + "surname TEXT NOT NULL, "
-			+ "date_birth DATE NOT NULL, " + "place_birth TEXT NOT NULL, " + "health_card_num BIGINT, "
-			+ "belonging_category TEXT, " + "tutor_id VARCHAR(16), " + "sex CHAR NOT NULL, "
-			+ "registered BOOLEAN NOT NULL, " + "admin BOOLEAN NOT NULL, "
+			+ "tax_id VARCHAR(16) PRIMARY KEY NOT NULL, name TEXT NOT NULL, surname TEXT NOT NULL, "
+			+ "date_birth DATE NOT NULL, place_birth TEXT NOT NULL, health_card_num BIGINT, "
+			+ "belonging_category TEXT, tutor_id VARCHAR(16), sex CHAR NOT NULL, "
+			+ "registered BOOLEAN NOT NULL, admin BOOLEAN NOT NULL, "
 			+ "CONSTRAINT fk_tutor_id FOREIGN KEY (tutor_id) REFERENCES person(tax_id));";
 
 	private static final String PASSPORT_TABLE = "CREATE TABLE IF NOT EXISTS passport("
-			+ "passport_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, " + "tax_id VARCHAR(16) NOT NULL, "
-			+ "release_date DATE NOT NULL, " + "expiry_date DATE NOT NULL, " + "release_location TEXT NOT NULL, "
+			+ "passport_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, tax_id VARCHAR(16) NOT NULL, "
+			+ "release_date DATE NOT NULL, expiry_date DATE NOT NULL, release_location TEXT NOT NULL, "
 			+ "state TEXT NOT NULL, CONSTRAINT fk_release_location FOREIGN KEY (release_location) REFERENCES police_station(town), "
 			+ "CONSTRAINT fk_person_id FOREIGN KEY (tax_id) REFERENCES person(tax_id));";
 
@@ -127,8 +128,9 @@ public class DatabaseManager {
 	}
 
 	public static void insert(Passport passport) throws SQLException {
-		var statement = connection.prepareStatement(
-				"INSERT INTO passport(tax_id, release_date, expiry_date, release_location, state) VALUES (?, ?, ?, ?, ?) RETURNING passport_id");
+		var statement = connection
+				.prepareStatement("INSERT INTO passport(tax_id, release_date, expiry_date, release_location, state) "
+						+ "VALUES (?, ?, ?, ?, ?) RETURNING passport_id");
 
 		statement.setString(1, passport.getTaxID());
 		statement.setDate(2, new Date(passport.getReleaseDate().getTime().getTime()));
@@ -194,19 +196,6 @@ public class DatabaseManager {
 		return resultQueryToPerson(result);
 	}
 
-	public static Person getUser(String taxID) throws SQLException, NoSuchUserException {
-		var query = connection.prepareStatement("SELECT * FROM person WHERE tax_id = ? AND registered = TRUE");
-
-		query.setString(1, taxID);
-
-		var result = query.executeQuery();
-		if (!result.next()) {
-			throw new NoSuchUserException();
-		}
-
-		return resultQueryToPerson(result);
-	}
-
 	public static Passport getPassport(int passportID) throws SQLException {
 		var query = connection
 				.prepareStatement("SELECT * FROM passport WHERE passport_id = ? ORDER BY passport_id LIMIT 1");
@@ -249,8 +238,8 @@ public class DatabaseManager {
 	}
 
 	public static void existsPerson(Person person) throws SQLException, NoSuchUserException {
-		var query = connection.prepareStatement(
-				"SELECT 1 FROM person WHERE tax_id = ? AND name = ? AND surname = ? AND place_birth = ? AND date_birth = ? LIMIT 1");
+		var query = connection.prepareStatement("SELECT 1 FROM person WHERE tax_id = ? AND "
+				+ "name = ? AND surname = ? AND place_birth = ? AND date_birth = ? LIMIT 1");
 
 		query.setString(1, person.getTaxID());
 		query.setString(2, person.getName());
@@ -272,7 +261,7 @@ public class DatabaseManager {
 
 		query.executeUpdate();
 	}
-	
+
 	public static boolean isRegister(Person person) throws SQLException {
 		return permissionQuery(person, "registered");
 	}
@@ -284,18 +273,18 @@ public class DatabaseManager {
 
 		query.executeUpdate();
 	}
-	
+
 	public static boolean isAdmin(Person person) throws SQLException {
 		return permissionQuery(person, "admin");
 	}
-	
+
 	private static boolean permissionQuery(Person person, String request) throws SQLException {
 		var query = connection.prepareStatement("SELECT 1 FROM person WHERE tax_id = ? AND " + request + " = TRUE");
-		
+
 		query.setString(1, person.getTaxID());
-		
+
 		var result = query.executeQuery();
-		
+
 		return result.next();
 	}
 
@@ -331,7 +320,7 @@ public class DatabaseManager {
 		query.executeUpdate();
 	}
 
-	public static Reservation getReservation(Reservation reservation) throws NoSuchUserException, SQLException {
+	public static Reservation getReservation(Reservation reservation) throws SQLException {
 		var query = connection.prepareStatement("SELECT * FROM reservation WHERE date = ? AND place = ? LIMIT 1");
 
 		query.setTimestamp(1, Timestamp.valueOf(reservation.getDate()));
@@ -369,39 +358,48 @@ public class DatabaseManager {
 	}
 
 	private static Passport resultQueryToPassport(ResultSet resultQuery) throws SQLException {
+		var taxID = resultQuery.getString("tax_id");
 		var calendar = Calendar.getInstance();
 		calendar.setTime(resultQuery.getDate("release_date"));
+		var passportState = PassportState.valueOf(resultQuery.getString("state"));
+		var policeStation = new PoliceStation(resultQuery.getString("release_location"));
+		var passportID = resultQuery.getInt("passport_id");
 
-		return new Passport(resultQuery.getString("tax_id"), calendar,
-				PassportState.valueOf(resultQuery.getString("state")),
-				new PoliceStation(resultQuery.getString("release_location")), resultQuery.getInt("passport_id"));
+		return new Passport(taxID, calendar, passportState, policeStation, passportID);
 	}
 
 	private static Person resultQueryToPerson(ResultSet resultQuery) throws SQLException {
+		var taxID = resultQuery.getString("tax_id");
+		var name = resultQuery.getString("name");
+		var surname = resultQuery.getString("surname");
+		var sex = resultQuery.getString("sex").charAt(0);
+		var placeBirth = resultQuery.getString("place_birth");
 		var calendar = Calendar.getInstance();
 		calendar.setTime(resultQuery.getDate("date_birth"));
+		var belongingCategory = resultQuery.getString("belonging_category");
+		var healthCardNumber = resultQuery.getInt("health_card_num");
 
-		return new Person(resultQuery.getString("tax_id"), resultQuery.getString("name"),
-				resultQuery.getString("surname"), resultQuery.getString("sex").charAt(0),
-				resultQuery.getString("place_birth"), calendar, resultQuery.getString("belonging_category"),
-				resultQuery.getInt("health_card_num"));
+		return new Person(taxID, name, surname, sex, placeBirth, calendar, belongingCategory, healthCardNumber);
 	}
-	
-	private static Reservation resultQueryToReservation(ResultSet resultQuery)
-			throws SQLException, NoSuchUserException {
-		Person person = null;
-		if (resultQuery.getString("booked_by") != null) {
-			person = getPerson(resultQuery.getString("booked_by"));
-		}
 
+	private static Reservation resultQueryToReservation(ResultSet resultQuery) throws SQLException {
+		var reservationType = ReservationType.valueOf(resultQuery.getString("type"));
+		var date = resultQuery.getTimestamp("date").toLocalDateTime();
 		Passport passport = null;
 		if (resultQuery.getInt("passport_id") != -1) {
 			passport = getPassport(resultQuery.getInt("passport_id"));
 		}
+		Person person = null;
+		if (resultQuery.getString("booked_by") != null) {
+			try {
+				person = getPerson(resultQuery.getString("booked_by"));
+			} catch (NoSuchUserException e) {
+				System.err.println("ERRORE: l'utente prenotato non è presente nel database");
+			}
+		}
+		var policeStation = new PoliceStation(resultQuery.getString("place"));
+		var reservationState = ReservationState.valueOf(resultQuery.getString("state"));
 
-		return new Reservation(ReservationType.valueOf(resultQuery.getString("type")),
-				resultQuery.getTimestamp("date").toLocalDateTime(), passport, person,
-				new PoliceStation(resultQuery.getString("place")),
-				ReservationState.valueOf(resultQuery.getString("state")));
+		return new Reservation(reservationType, date, passport, person, policeStation, reservationState);
 	}
 }
