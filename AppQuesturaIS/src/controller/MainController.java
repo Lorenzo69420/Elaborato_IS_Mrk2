@@ -112,13 +112,15 @@ public class MainController {
 	}
 
 	private void populateActivitySetter() {
-		actSetController.getActSelector().getItems().addAll(activityList);
-		actSetController.getPSSelector().getItems().addAll(policeStationList);
+		//actSetController.getActSelector().getItems().addAll(activityList);
+		//actSetController.getPSSelector().getItems().addAll(policeStationList);
+		actSetController.populateSelector(activityList, policeStationList);
 	}
 
 	private void populateActivityReservation() {
-		actController.getActSelector().getItems().addAll(activityList);
-		actController.getPSSelector().getItems().addAll(policeStationList);
+		//actController.getActSelector().getItems().addAll(activityList);
+		//actController.getPSSelector().getItems().addAll(policeStationList);
+		actController.populateSelector(activityList, policeStationList);
 	}
 
 	private void getActivityList() {

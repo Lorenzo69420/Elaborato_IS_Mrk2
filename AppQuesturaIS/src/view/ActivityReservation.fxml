@@ -125,7 +125,7 @@
                                           </StackPane>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
-                                                <DatePicker fx:id="dateSelector" />
+                                                <DatePicker fx:id="datePicker" />
                                              </children>
                                              <VBox.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" />
@@ -140,7 +140,7 @@
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#confirm" style="-fx-background-radius: 10;" text="Conferma" />
+                                    <Button mnemonicParsing="false" onAction="#updateWindow" style="-fx-background-radius: 10;" text="Conferma" />
                                  </children>
                               </StackPane>
                            </children>
@@ -281,7 +281,7 @@
                            <children>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#reserve" style="-fx-background-radius: 10;" text="Prenota" />
+                                    <Button mnemonicParsing="false" onAction="#saveReservation" style="-fx-background-radius: 10;" text="Prenota" />
                                  </children>
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
