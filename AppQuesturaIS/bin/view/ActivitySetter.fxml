@@ -157,7 +157,7 @@
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#goBack" style="-fx-background-radius: 10;" text="Esci" />
+                                    <Button mnemonicParsing="false" onAction="#exit" style="-fx-background-radius: 10;" text="Esci" />
                                  </children>
                               </StackPane>
                            </children>
@@ -294,7 +294,7 @@
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#getReservation" style="-fx-border-color: #000000; -fx-border-radius: 20; -fx-background-radius: 20;" text="Conferma" />
+                              <Button mnemonicParsing="false" onAction="#confirm" style="-fx-border-color: #000000; -fx-border-radius: 20; -fx-background-radius: 20;" text="Conferma" />
                            </children>
                         </StackPane>
                      </children>
