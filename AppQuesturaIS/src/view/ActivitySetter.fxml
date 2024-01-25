@@ -152,7 +152,7 @@
                            <children>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#saveSelections" style="-fx-background-radius: 10;" text="Inserisci" />
+                                    <Button mnemonicParsing="false" onAction="#saveReservation" style="-fx-background-radius: 10;" text="Inserisci" />
                                  </children>
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
@@ -279,7 +279,7 @@
                                     </StackPane>
                                     <StackPane prefHeight="150.0" prefWidth="200.0">
                                        <children>
-                                          <DatePicker fx:id="dateSelector" editable="false">
+                                          <DatePicker fx:id="datePicker" editable="false">
                                              <StackPane.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" />
                                              </StackPane.margin></DatePicker>
@@ -294,7 +294,7 @@
                         </StackPane>
                         <StackPane prefHeight="150.0" prefWidth="200.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#confirm" style="-fx-border-color: #000000; -fx-border-radius: 20; -fx-background-radius: 20;" text="Conferma" />
+                              <Button mnemonicParsing="false" onAction="#updateWindow" style="-fx-border-color: #000000; -fx-border-radius: 20; -fx-background-radius: 20;" text="Conferma" />
                            </children>
                         </StackPane>
                      </children>
