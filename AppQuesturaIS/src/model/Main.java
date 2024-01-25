@@ -19,7 +19,7 @@ public class Main {
 			sbatachiones.insert();
 			sbatachiones.register();			
 			
-			Person IlKingNeto = new Person("CHAD", "Neto", "Whites", '$', "vostri muri",
+			Person IlKingNeto = new Person("CH4D", "Neto", "Whites", '$', "vostri muri",
 					new Calendar.Builder().setDate(2002, Calendar.SEPTEMBER, 14).build(), "Supremo", 9001);
 			IlKingNeto.insert();
 			IlKingNeto.makeAdmin();
