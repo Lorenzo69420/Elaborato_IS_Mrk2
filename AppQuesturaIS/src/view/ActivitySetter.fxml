@@ -13,19 +13,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="743.0" style="-fx-background-color: #0a6769;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ActivitySetterController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="578.0" prefWidth="743.0" style="-fx-background-color: #0a6769;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ActivitySetterController">
    <center>
-      <StackPane prefHeight="281.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+      <StackPane alignment="TOP_CENTER" prefHeight="298.0" prefWidth="743.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="TOP_CENTER" prefHeight="284.0" prefWidth="791.0" spacing="20.0">
+            <HBox alignment="TOP_CENTER" fillHeight="false" prefHeight="284.0" prefWidth="791.0" spacing="20.0">
                <children>
-                  <StackPane prefHeight="284.0" prefWidth="615.0">
+                  <StackPane alignment="TOP_CENTER" prefHeight="224.0" prefWidth="588.0">
                      <children>
-                        <HBox prefHeight="284.0" prefWidth="539.0" spacing="30.0">
+                        <HBox alignment="TOP_CENTER" prefHeight="169.0" prefWidth="591.0" spacing="30.0">
                            <children>
                               <StackPane prefHeight="284.0" prefWidth="250.0" style="-fx-background-color: #000000; -fx-background-radius: 5;">
                                  <children>
-                                    <VBox prefHeight="284.0" prefWidth="116.0" style="-fx-background-color: #21cccf;">
+                                    <VBox prefHeight="184.0" prefWidth="115.0" style="-fx-background-color: #21cccf;">
                                        <children>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
@@ -146,11 +146,11 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </StackPane>
-                  <StackPane prefHeight="284.0" prefWidth="90.0">
+                  <StackPane alignment="TOP_CENTER" prefHeight="228.0" prefWidth="95.0">
                      <children>
                         <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
                            <children>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane prefHeight="176.0" prefWidth="90.0">
                                  <children>
                                     <Button mnemonicParsing="false" onAction="#saveReservation" style="-fx-background-radius: 10;" text="Inserisci" />
                                  </children>
@@ -165,6 +165,9 @@
                      </children>
                   </StackPane>
                </children>
+               <StackPane.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </StackPane.margin>
             </HBox>
          </children>
          <BorderPane.margin>
@@ -179,15 +182,15 @@
                <children>
                   <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" style="-fx-background-color: #21cccf;">
                      <children>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                        <StackPane alignment="TOP_LEFT" prefHeight="102.0" prefWidth="205.0">
                            <children>
-                              <ImageView fitHeight="78.0" fitWidth="83.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="102.0" fitWidth="181.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@img/LogoStato.jpeg" />
                                  </image>
                               </ImageView>
                            </children></StackPane>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                        <StackPane alignment="CENTER_LEFT" prefHeight="102.0" prefWidth="450.0">
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto nel sistema di inserimento degli appuntamenti da prendere in questura" wrappingWidth="220.5791015625">
                                  <StackPane.margin>
@@ -195,7 +198,7 @@
                                  </StackPane.margin>
                               </Text>
                            </children></StackPane>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
+                        <StackPane prefHeight="102.0" prefWidth="301.0">
                            <children>
                               <Text fx:id="errorText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="261.0" />
                            </children>

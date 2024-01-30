@@ -7,7 +7,6 @@ import java.util.Date;
 
 import model.NotBookableException;
 import model.Person;
-import model.PoliceStation;
 import model.Reservation;
 
 public class ActivityReservationController extends ActivityController {

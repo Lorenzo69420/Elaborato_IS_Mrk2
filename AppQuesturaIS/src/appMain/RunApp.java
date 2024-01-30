@@ -1,9 +1,9 @@
-package frontEnd;
+package appMain;
 
 import controller.MainController;
 import javafx.application.Application;
 import javafx.stage.Stage;
-public class Maintest extends Application {
+public class RunApp extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
