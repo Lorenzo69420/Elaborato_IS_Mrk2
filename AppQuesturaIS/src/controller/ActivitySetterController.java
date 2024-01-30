@@ -1,21 +1,7 @@
 package controller;
 
 import java.sql.SQLException;
-<<<<<<< HEAD
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.text.Text;
-import model.NoSuchUserException;
-=======
-
->>>>>>> 747f2d5c9f3c0ca003b2a42188c1791b46b6bcec
 import model.PoliceStation;
 import model.Reservation;
 
@@ -23,17 +9,7 @@ public class ActivitySetterController extends ActivityController {
 	private static String UPDATE_ERROR_STRING = "Uno o più campi sono vuoti. Inserisci correttamente la questura e "
 			+ "la data che desideri";
 	private static String SAVE_ERROR_STRING = "Informazioni disallineate, prima di inserire la disponibilità premi "
-			+ "\"Conferma\" nuovamente";
-
-	@Override
-	protected boolean checkBeforeUpdate() {
-		return checkPoliceStationSelector() && checkDatePicker();
-	}
-
-	@Override
-	protected boolean checkBeforeSave() {
-		return checkPoliceStationSelector() && checkDatePicker() && checkActivitySelector();
-	}
+			+ "\"Conferma\" nuovamente";		
 
 	@Override
 	protected String getUpdateErrorString() {
@@ -43,17 +19,6 @@ public class ActivitySetterController extends ActivityController {
 	@Override
 	protected String getSaveErrorString() {
 		return SAVE_ERROR_STRING;
-	}
-
-	@Override
-	protected void getSelectorValues() {
-		setDate(getDatePicker().getValue());
-		setPoliceStation(new PoliceStation(getPoliceStationSelector().getValue()));
-	}
-
-	@Override
-	protected boolean disableButton(Reservation reservation) {
-		return reservation.getState().equals(Reservation.ReservationState.BOOKED_UP);
 	}
 
 	@Override
@@ -68,8 +33,6 @@ public class ActivitySetterController extends ActivityController {
 		try {
 			reservation.insert();
 			getErrorText().setText("Inserimento andato a buon fine");
-			updateWindow();
-			disableActivityBoxs();
 		} catch (SQLException e) {
 			System.err.println("C'è stato un errore nell'inserimento della prenotazione: " + e.getMessage());
 		}

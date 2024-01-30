@@ -49,20 +49,29 @@ public abstract class ActivityController {
 	private ArrayList<Text> activityTexts;
 	private ArrayList<CheckBox> activityBoxs;
 
-	protected abstract boolean checkBeforeUpdate();
-
-	protected abstract boolean checkBeforeSave();
-
 	protected abstract String getUpdateErrorString();
 
 	protected abstract String getSaveErrorString();
 
-	protected abstract void getSelectorValues();
-
-	protected abstract boolean disableButton(Reservation reservation);
-
 	protected abstract void insertReservation(int hour);
+	
+	protected boolean checkBeforeUpdate() {
+		return checkPoliceStationSelector() && checkDatePicker();
+	}
+	
+	protected final boolean checkBeforeSave() {
+		return checkPoliceStationSelector() && checkDatePicker() && checkActivitySelector();
+	}
+	
+	protected void getSelectorValues() {
+		setDate(getDatePicker().getValue());
+		setPoliceStation(new PoliceStation(getPoliceStationSelector().getValue()));
+	}
 
+	protected boolean disableButton(Reservation reservation) {
+		return reservation.getState().equals(Reservation.ReservationState.BOOKED_UP);
+	}
+	
 	@FXML
 	final void updateWindow() throws SQLException {
 		disableActivityBoxs();
@@ -98,9 +107,11 @@ public abstract class ActivityController {
 				continue;
 			}
 			activityBoxs.get(slot).setSelected(false);
-
 			insertReservation(8 + slot);
 		}
+		try {
+			updateWindow();			
+		} catch(SQLException e) {}
 	}
 
 	@FXML

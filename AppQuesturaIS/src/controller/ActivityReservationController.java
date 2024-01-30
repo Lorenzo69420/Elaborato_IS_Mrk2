@@ -5,17 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-<<<<<<< HEAD
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
-import model.NoSuchUserException;
-=======
->>>>>>> 747f2d5c9f3c0ca003b2a42188c1791b46b6bcec
 import model.NotBookableException;
 import model.Person;
 import model.PoliceStation;
@@ -30,12 +19,7 @@ public class ActivityReservationController extends ActivityController {
 
 	@Override
 	protected boolean checkBeforeUpdate() {
-		return checkActivitySelector() && checkPoliceStationSelector() && checkDatePicker();
-	}
-
-	@Override
-	protected boolean checkBeforeSave() {
-		return checkBeforeUpdate() && checkIntegrity();
+		return super.checkBeforeUpdate() && checkActivitySelector();
 	}
 
 	@Override
@@ -50,14 +34,13 @@ public class ActivityReservationController extends ActivityController {
 
 	@Override
 	protected void getSelectorValues() {
+		super.getSelectorValues();
 		activity = getActivitySelector().getValue();
-		setDate(getDatePicker().getValue());
-		setPoliceStation(new PoliceStation(getPoliceStationSelector().getValue()));
 	}
 
 	@Override
 	protected boolean disableButton(Reservation reservation) {
-		return reservation.getState().equals(Reservation.ReservationState.BOOKED_UP) || reservation.getType() == null
+		return super.disableButton(reservation) || reservation.getType() == null
 				|| !reservation.getType().toDisplayString().equals(activity);
 	}
 
