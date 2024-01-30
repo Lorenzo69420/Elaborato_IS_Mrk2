@@ -11,7 +11,7 @@ public class PoliceStation {
 	}
 	
 	public void insert() throws SQLException {
-		DatabaseManager.insert(this);
+		Database.insert(this);
 	}
 	
 	public String getTown() {
@@ -19,6 +19,6 @@ public class PoliceStation {
 	}
 	
 	public static List<String> getStations() throws SQLException {
-		return DatabaseManager.getPoliceStation();
+		return Database.getPoliceStation();
 	}
 }

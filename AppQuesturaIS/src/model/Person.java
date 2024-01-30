@@ -32,7 +32,7 @@ public class Person {
 	}
 
 	public void exists() throws SQLException, NoSuchUserException {
-		DatabaseManager.existsPerson(this);
+		Database.existsPerson(this);
 	}
 
 	public void asignTutor(Person tutor) {
@@ -59,15 +59,15 @@ public class Person {
 	public void addTutor(Person tutor) throws SQLException {
 		this.tutor = tutor;
 		
-		DatabaseManager.updateTutor(this);
+		Database.updateTutor(this);
 	}
 
 	public void insert() throws SQLException {
-		DatabaseManager.insert(this);
+		Database.insert(this);
 	}
 
 	public static Person get(String taxID) throws SQLException, NoSuchUserException {
-		return DatabaseManager.getPerson(taxID);
+		return Database.getPerson(taxID);
 	}
 
 	public String getTaxID() {
@@ -112,26 +112,26 @@ public class Person {
 		} catch (Exception e) {
 			System.out.println("Impossibile aggiungere Registrazione, l'utente non rientra nel database");
 		}
-		DatabaseManager.register(this);
+		Database.register(this);
 	}
 
 	public void makeAdmin() throws SQLException {
-		DatabaseManager.makeAdmin(this);
+		Database.makeAdmin(this);
 	}
 
 	public Passport getLastPassport() throws SQLException {
-		return DatabaseManager.getLastPassport(this);
+		return Database.getLastPassport(this);
 	}
 	
 	public Reservation getRequest() throws SQLException {
-		return DatabaseManager.getRequest(this);
+		return Database.getRequest(this);
 	}
 
 	public boolean isAdmin() throws SQLException {
-		return DatabaseManager.isAdmin(this);
+		return Database.isAdmin(this);
 	}
 	
 	public boolean isRegister() throws SQLException {
-		return DatabaseManager.isRegister(this);
+		return Database.isRegister(this);
 	}
 }

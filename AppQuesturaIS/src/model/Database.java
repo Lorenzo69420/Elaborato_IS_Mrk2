@@ -14,7 +14,7 @@ import model.Passport.PassportState;
 import model.Reservation.ReservationState;
 import model.Reservation.ReservationType;
 
-public class DatabaseManager {
+public class Database {
 	private static boolean initialized = false;
 	private static Connection connection = null;
 
@@ -61,7 +61,7 @@ public class DatabaseManager {
 
 	public static void close() throws SQLException {
 		if (!initialized) {
-			throw new RuntimeException("The database manager is not inizialized, use DatabaseManager.init()");
+			throw new RuntimeException("The database manager is not inizialized, use Database.init()");
 		}
 
 		connection.close();

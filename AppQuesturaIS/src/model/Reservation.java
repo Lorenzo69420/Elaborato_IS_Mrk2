@@ -60,7 +60,7 @@ public class Reservation {
 	}
 
 	public void insert() throws SQLException {
-		DatabaseManager.insert(this);
+		Database.insert(this);
 	}
 
 	public void book(Person person) throws SQLException, NotBookableException {
@@ -76,7 +76,7 @@ public class Reservation {
 			if (calendar.after(this.getCalendarDate())) {
 				throw new NotBookableException(Types.UNDER_MONTH_REQ);
 			}
-			DatabaseManager.deleteRequest(person);
+			Database.deleteRequest(person);
 			break;
 		case ISSUANCE_NEW:
 			var lastPassport = person.getLastPassport();
@@ -117,12 +117,12 @@ public class Reservation {
 				throw new NotBookableException(Types.ALREDY_BOOKED);
 			}
 			this.bookedBy = person;
-			DatabaseManager.insertRequest(this);
+			Database.insertRequest(this);
 		}
 
 		this.bookedBy = person;
 		this.state = ReservationState.BOOKED_UP;
-		DatabaseManager.book(this);
+		Database.book(this);
 	}
 
 	// TODO LORE SISTEMA STA ROBA, GRZ
@@ -135,7 +135,7 @@ public class Reservation {
 	}
 
 	public Reservation getCompleteReservation() throws SQLException {
-		var result = DatabaseManager.getReservation(this);
+		var result = Database.getReservation(this);
 		return result != null ? result : this;
 	}
 

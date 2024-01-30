@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import model.DatabaseManager;
+import model.Database;
 import model.NoSuchUserException;
 import model.Person;
 
@@ -38,7 +38,7 @@ public class LoginController {
     @FXML
     void adminLogReq(ActionEvent event) {
     	try {
-    		this.logPerson = DatabaseManager.getPerson(IDField.getText());
+    		this.logPerson = Database.getPerson(IDField.getText());
     		
     		if (logPerson.isAdmin()) {
     			mainController.switchToActivitySetter();

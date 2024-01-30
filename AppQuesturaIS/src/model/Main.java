@@ -12,7 +12,7 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		try {
-			DatabaseManager.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password", true);
+			Database.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password", true);
 
 			Person sbatachiones = new Person("TIA", "Mattias", "Giambirtones", 't', "Terronia",
 					new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build(), "Africa", 69420);
@@ -59,7 +59,7 @@ public class Main {
 			Person sbat = new Person("TIA", "Mattias", "Giambirtones", "Terronia",
 					new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build());
 			sbat.exists();
-			DatabaseManager.close();
+			Database.close();
 		} catch (NotBookableException e) {
 			System.out.println(e.getType());
 			throw e;

@@ -42,7 +42,7 @@ public class Passport {
 	}
 	
 	public void insert() throws SQLException {
-		DatabaseManager.insert(this);
+		Database.insert(this);
 	}
 	
 	public void setID(int passportID) {
@@ -75,6 +75,6 @@ public class Passport {
 	
 	public void changeState(PassportState state) throws SQLException {
 		this.state = state;
-		DatabaseManager.changeState(this);
+		Database.changeState(this);
 	}
 }

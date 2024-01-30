@@ -10,7 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.DatabaseManager;
+import model.Database;
 import model.Person;
 import model.PoliceStation;
 import model.Reservation;
@@ -49,7 +49,7 @@ public class MainController {
 	private Person currentPerson;
 
 	public MainController() throws IOException, SQLException {
-		DatabaseManager.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password", false);
+		Database.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password", false);
 
 		getActivityList();
 		getPSList();
