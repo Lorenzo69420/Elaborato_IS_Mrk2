@@ -186,7 +186,7 @@ public abstract class ActivityController {
 	protected final DatePicker getDatePicker() {
 		return datePicker;
 	}
-	
+
 	protected final Text getErrorText() {
 		return errorText;
 	}

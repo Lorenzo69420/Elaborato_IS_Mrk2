@@ -12,8 +12,7 @@ import model.NoSuchUserException;
 import model.Person;
 
 public class LoginController {
-	
-	
+
     @FXML
     private TextField IDField;
 
