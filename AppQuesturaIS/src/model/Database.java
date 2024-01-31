@@ -266,7 +266,7 @@ public class Database {
 	}
 
 	public static void makeAdmin(Person person) throws SQLException {
-		var query = connection.prepareStatement("UPDATE person SET admin = TRUE AND registered = TRUE WHERE tax_id = ?");
+		var query = connection.prepareStatement("UPDATE person SET admin = TRUE, registered = TRUE WHERE tax_id = ?");
 
 		query.setString(1, person.getTaxID());
 
