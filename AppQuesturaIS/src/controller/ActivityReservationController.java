@@ -53,7 +53,7 @@ public class ActivityReservationController extends ActivityController {
 		}
 
 		if (!reservation.getType().equals(getReservationType(activity))) {
-			getErrorText().setText("Sono state modificate le disponibilità, ecco quelle aggiornate");
+			getMC().showMessagePrompt("Sono state modificate le disponibilità, ecco quelle aggiornate", getMC().getCloseHandler());
 			try {
 				updateWindow();
 				disableActivityBoxs();
@@ -65,10 +65,10 @@ public class ActivityReservationController extends ActivityController {
 
 		try {
 			reservation.book(currentPerson);
-			getErrorText().setText("Prenotazione andata a buon fine");
+			getMC().showMessagePrompt("Prenotazione andata a buon fine", getMC().getCloseHandler());
 			updateWindow();
 		} catch (NotBookableException e) {
-			getErrorText().setText(getDisplayError(e.getType()));
+			getMC().showMessagePrompt(getDisplayError(e.getType()), getMC().getCloseHandler());
 		} catch (Exception e) {
 		}
 	}

@@ -43,10 +43,10 @@ public class LoginController {
     		if (logPerson.isAdmin()) {
     			mainController.switchToActivitySetter();
     		} else {
-    			IDLabel.setText("L'utente selezionato non è admin");    			
+    			getMC().showMessagePrompt("L'utente selezionato non è admin", getMC().getCloseHandler()); 			
     		}
     	} catch (NoSuchUserException e ) {
-    		IDLabel.setText("Utente non trovato");
+    		getMC().showMessagePrompt("Utente non trovato", getMC().getCloseHandler());
     	} catch (SQLException E ) {
 			System.out.println("Database compro-fjDSVIAM...Database compromised");
 		}
@@ -65,10 +65,10 @@ public class LoginController {
     		if (logPerson.isRegister()) {
     			mainController.switchToActivityReservation();
     		} else {
-    			IDLabel.setText("L'utente selezionato non è registrato");    			
+    			getMC().showMessagePrompt("L'utente selezionato non è registrato", getMC().getCloseHandler());	
     		}
     	} catch (NoSuchUserException e ) {
-    		IDLabel.setText("Utente non trovato");
+    		getMC().showMessagePrompt("Utente non trovato", getMC().getCloseHandler());
     	} catch (SQLException E ) {
 			System.out.println("Database compro-fjDSVIAM...Database compromised");
 		}
@@ -78,9 +78,8 @@ public class LoginController {
     @FXML
     void setName(ActionEvent event) {
     	if (IDField.getText().equals("")) {
-    		IDLabel.setText("Inserisci un ID valido");
+    		getMC().showMessagePrompt("Inserisci un ID valido", getMC().getCloseHandler());
     	} else {
-    		IDLabel.setText("");
     		this.ID = IDField.getText();
     	}
     }
@@ -98,4 +97,7 @@ public class LoginController {
 		return logPerson;
 	}
 
+	public MainController getMC() {
+		return mainController;
+	}
 }

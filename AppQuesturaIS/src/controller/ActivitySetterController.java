@@ -10,7 +10,7 @@ public class ActivitySetterController extends ActivityController {
 	private static String UPDATE_ERROR_STRING = "Uno o più campi sono vuoti. Inserisci correttamente la questura e "
 			+ "la data che desideri";
 	private static String SAVE_ERROR_STRING = "Informazioni disallineate, prima di inserire la disponibilità premi "
-			+ "\"Conferma\" nuovamente";		
+			+ "\"Conferma\" nuovamente";
 
 	@Override
 	protected String getUpdateErrorString() {
@@ -25,7 +25,8 @@ public class ActivitySetterController extends ActivityController {
 	@Override
 	protected void insertReservation(int hour) {
 		if (!checkIntegrity()) {
-			getErrorText().setText("Se vuoi cambiare questura o data, premi \"Conferma\" nuovamente");
+			getMC().showMessagePrompt("Se vuoi cambiare questura o data, premi \"Conferma\" nuovamente",
+					getMC().getCloseHandler());
 			return;
 		}
 
@@ -33,17 +34,8 @@ public class ActivitySetterController extends ActivityController {
 				getDate().atTime(hour, 0), getPoliceStation());
 		try {
 			reservation.insert();
-			getErrorText().setText("Inserimento andato a buon fine");
 			// using new message prompt : test 1
-			getMC().showMessagePrompt("Inserimento andato a buon fine", new EventHandler<ActionEvent>() {
-
-				@Override
-				public void handle(ActionEvent arg0) {
-					getMC().getPromptController().getStage().close();
-					
-				}
-				
-			});
+			getMC().showMessagePrompt("Inserimento andato a buon fine", getMC().getCloseHandler());
 		} catch (SQLException e) {
 			System.err.println("C'è stato un errore nell'inserimento della prenotazione: " + e.getMessage());
 		}

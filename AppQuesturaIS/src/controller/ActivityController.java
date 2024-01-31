@@ -76,7 +76,7 @@ public abstract class ActivityController {
 	final void updateWindow() throws SQLException {
 		disableActivityBoxs();
 		if (!checkBeforeUpdate()) {
-			errorText.setText(getUpdateErrorString());
+			getMC().showMessagePrompt(getUpdateErrorString(), getMC().getCloseHandler());
 			return;
 		}
 
@@ -98,7 +98,7 @@ public abstract class ActivityController {
 	@FXML
 	final void saveReservation(ActionEvent event) {
 		if (!checkBeforeSave()) {
-			errorText.setText(getSaveErrorString());
+			getMC().showMessagePrompt(getSaveErrorString(), getMC().getCloseHandler());
 			return;
 		}
 

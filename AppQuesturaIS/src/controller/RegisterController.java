@@ -74,7 +74,8 @@ public class RegisterController {
 	@FXML
 	void getPerson(ActionEvent event) {
 		if (!checkAll()) {
-			errorText.setText("Uno o più campi inseriti sono vuoti,\n inserisci tutti i campi in modo corretto");
+			getMC().showMessagePrompt("Uno o più campi inseriti sono vuoti,\n inserisci tutti i campi in modo corretto",
+					getMC().getCloseHandler());
 			return;
 		}
 
@@ -91,9 +92,10 @@ public class RegisterController {
 			mainController.close();
 		} catch (NoSuchUserException e) {
 			// setting all label to error message
-			errorText.setText(
+			getMC().showMessagePrompt(
 					"Le credenziali indicate non corrispondono a nessuna persona nell'agrafica, "
-					+ "per ulteriori chiarementi contattare la mail aiuto@questura.anagrafica.it");
+							+ "per ulteriori chiarementi contattare la mail aiuto@questura.anagrafica.it",
+					getMC().getCloseHandler());
 		}
 	}
 
@@ -173,5 +175,9 @@ public class RegisterController {
 
 	private boolean checkName() {
 		return !nameField.getText().isBlank();
+	}
+
+	public MainController getMC() {
+		return mainController;
 	}
 }

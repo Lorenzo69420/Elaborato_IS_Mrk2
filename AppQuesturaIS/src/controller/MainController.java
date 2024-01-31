@@ -46,7 +46,7 @@ public class MainController {
 	private BorderPane actSetPane;
 	private ActivitySetterController actSetController;
 	private Scene actSetScene;
-	
+
 	// MessagePrompt page
 	private FXMLLoader msgPromptLoader;
 	private BorderPane msgPromptPane;
@@ -55,6 +55,15 @@ public class MainController {
 
 	// Person from login operations
 	private Person currentPerson;
+
+	public EventHandler<ActionEvent> getCloseHandler() {
+		return new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				getPromptController().getStage().close();
+			}
+		};
+	}
 
 	public MainController() throws IOException, SQLException {
 		Database.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password", false);
@@ -96,7 +105,7 @@ public class MainController {
 		msgPromptPane = msgPromptLoader.load();
 		msgPromptController = msgPromptLoader.getController();
 		msgPromptScene = new Scene(msgPromptPane);
-		msgPromptController.setScene( msgPromptScene);
+		msgPromptController.setScene(msgPromptScene);
 		msgPromptController.setMC(this);
 	}
 
@@ -120,11 +129,11 @@ public class MainController {
 		mainStage.setScene(actScene);
 		start();
 	}
-	
+
 	public void showMessagePrompt(String message, EventHandler<ActionEvent> event) {
 		msgPromptController.setup(message, event);
 	}
-	
+
 	public MessagePromptController getPromptController() {
 		return msgPromptController;
 	}
@@ -135,14 +144,14 @@ public class MainController {
 	}
 
 	private void populateActivitySetter() {
-		//actSetController.getActSelector().getItems().addAll(activityList);
-		//actSetController.getPSSelector().getItems().addAll(policeStationList);
+		// actSetController.getActSelector().getItems().addAll(activityList);
+		// actSetController.getPSSelector().getItems().addAll(policeStationList);
 		actSetController.populateSelector(activityList, policeStationList);
 	}
 
 	private void populateActivityReservation() {
-		//actController.getActSelector().getItems().addAll(activityList);
-		//actController.getPSSelector().getItems().addAll(policeStationList);
+		// actController.getActSelector().getItems().addAll(activityList);
+		// actController.getPSSelector().getItems().addAll(policeStationList);
 		actController.populateSelector(activityList, policeStationList);
 	}
 
