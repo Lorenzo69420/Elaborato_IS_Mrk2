@@ -95,8 +95,8 @@ public class MainController {
 		msgPromptLoader = new FXMLLoader(getClass().getResource("../view/MessagePrompt.fxml"));
 		msgPromptPane = msgPromptLoader.load();
 		msgPromptController = msgPromptLoader.getController();
-		msgPromptScene = msgPromptPane.getScene();
-		msgPromptController.setStageAndScene(new Stage(), msgPromptScene);
+		msgPromptScene = new Scene(msgPromptPane);
+		msgPromptController.setScene( msgPromptScene);
 		msgPromptController.setMC(this);
 	}
 

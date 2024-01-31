@@ -15,7 +15,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="578.0" prefWidth="743.0" style="-fx-background-color: #0a6769;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ActivitySetterController">
    <center>
-      <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" style="-fx-background-color: #21cccf; -fx-background-radius: 15; -fx-border-color: #000000; -fx-border-radius: 10; -fx-border-width: 5;" BorderPane.alignment="TOP_CENTER">
+      <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="750.0" style="-fx-background-color: #21cccf; -fx-background-radius: 15; -fx-border-color: #000000; -fx-border-radius: 10; -fx-border-width: 5;" BorderPane.alignment="TOP_CENTER">
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
@@ -141,7 +141,7 @@
                                                       </StackPane>
                                                       <StackPane prefHeight="150.0" prefWidth="200.0">
                                                          <children>
-                                                            <Text fx:id="text1" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" />
+                                                            <Text fx:id="text1" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" textAlignment="CENTER" wrappingWidth="106.40283203125" />
                                                          </children>
                                                       </StackPane>
                                                       <StackPane prefHeight="150.0" prefWidth="200.0">
@@ -170,7 +170,7 @@
                                                       </StackPane>
                                                       <StackPane prefHeight="150.0" prefWidth="200.0">
                                                          <children>
-                                                            <Text fx:id="text2" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" />
+                                                            <Text fx:id="text2" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" textAlignment="CENTER" wrappingWidth="103.40283203125" />
                                                          </children>
                                                       </StackPane>
                                                       <StackPane prefHeight="150.0" prefWidth="200.0">
@@ -199,7 +199,7 @@
                                                       </StackPane>
                                                       <StackPane prefHeight="150.0" prefWidth="200.0">
                                                          <children>
-                                                            <Text fx:id="text3" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" />
+                                                            <Text fx:id="text3" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" textAlignment="CENTER" wrappingWidth="108.40283203125" />
                                                          </children>
                                                       </StackPane>
                                                       <StackPane prefHeight="150.0" prefWidth="200.0">
@@ -228,7 +228,7 @@
                                                       </StackPane>
                                                       <StackPane prefHeight="150.0" prefWidth="200.0">
                                                          <children>
-                                                            <Text fx:id="text4" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" />
+                                                            <Text fx:id="text4" strokeType="OUTSIDE" strokeWidth="0.0" text="Libero" textAlignment="CENTER" wrappingWidth="106.40283203125" />
                                                          </children>
                                                       </StackPane>
                                                       <StackPane prefHeight="150.0" prefWidth="200.0">
@@ -290,7 +290,7 @@
       </StackPane>
    </center>
    <top>
-      <StackPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="111.0" prefWidth="600.0" style="-fx-background-color: #000000; -fx-background-radius: 5;" BorderPane.alignment="TOP_CENTER">
+      <StackPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="600.0" style="-fx-background-color: #000000; -fx-background-radius: 5;" BorderPane.alignment="TOP_CENTER">
          <children>
             <HBox alignment="CENTER" prefHeight="102.0" prefWidth="599.0" spacing="20.0" style="-fx-background-color: #21cccf;">
                <children>

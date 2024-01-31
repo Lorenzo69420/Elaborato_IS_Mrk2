@@ -11,8 +11,8 @@ import javafx.stage.Stage;
 public class MessagePromptController {
 	
 	private MainController MC;
-	private Stage promptStage;
-	private Scene pomptScene;
+	private Stage promptStage = new Stage();
+	private Scene promptScene;
 
     @FXML
     private Text messageText;
@@ -20,11 +20,6 @@ public class MessagePromptController {
     @FXML
     private Button procedeButton;
 
-    @FXML
-    private void exitApp() {
-    	promptStage.close();
-    }
-    
     public void setup(String message, EventHandler<ActionEvent> event) {
     	messageText.setText(message);
     	procedeButton.setOnAction(event);
@@ -34,13 +29,12 @@ public class MessagePromptController {
     
 
 	public void setMC(MainController mC) {
-		MC = mC;
+		this.MC = mC;
 	}
 
-	public void setStageAndScene(Stage promptStage, Scene pomptScene) {
-		this.promptStage = promptStage;
-		this.pomptScene = pomptScene;
-		this.promptStage.setScene(pomptScene);
+	public void setScene(Scene promptScene) {
+		this.promptScene = promptScene;
+		this.promptStage.setScene(this.promptScene);
 	}
 	
 	public Stage getStage() {

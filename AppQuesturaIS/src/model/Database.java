@@ -266,14 +266,10 @@ public class Database {
 	}
 
 	public static void makeAdmin(Person person) throws SQLException {
-<<<<<<< Updated upstream
+
 		var query = connection.prepareStatement("UPDATE person SET admin = TRUE, registered = TRUE WHERE tax_id = ?");
 
-=======
-		var query = connection.prepareStatement("UPDATE person SET admin = TRUE AND registered = TRUE WHERE tax_id = ?");
->>>>>>> Stashed changes
 		query.setString(1, person.getTaxID());
-		System.out.println(query);
 
 		query.executeUpdate();
 	}
