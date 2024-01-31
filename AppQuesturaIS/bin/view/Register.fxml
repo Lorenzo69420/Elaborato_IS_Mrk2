@@ -14,201 +14,243 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="registerPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" snapToPixel="false" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterController">
-   <bottom>
-      <HBox alignment="CENTER" prefHeight="105.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
-               <children>
-                  <Button fx:id="regButton" mnemonicParsing="false" onAction="#getPerson" text="Registrati" />
-               </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
-               <children>
-                  <Button fx:id="logButton" mnemonicParsing="false" onAction="#switchToLogin" text="Accedi" />
-               </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
-               <children>
-                  <Button fx:id="exitButton" mnemonicParsing="false" onAction="#appExit" text="Esci" />
-               </children>
-            </StackPane>
-         </children>
-         <BorderPane.margin>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </BorderPane.margin>
-      </HBox>
-   </bottom>
+<BorderPane fx:id="registerPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="641.0" prefWidth="937.0" snapToPixel="false" style="-fx-background-color: #0a6769;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterController">
    <top>
-      <HBox alignment="CENTER" prefHeight="78.0" prefWidth="560.0" spacing="20.0" BorderPane.alignment="CENTER">
+      <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="150.0" prefWidth="600.0" style="-fx-background-color: #21cccf; -fx-border-color: #000000; -fx-border-radius: 10; -fx-border-width: 5; -fx-background-radius: 15;" BorderPane.alignment="BOTTOM_CENTER">
          <children>
-            <StackPane prefHeight="67.0" prefWidth="170.0">
+            <HBox alignment="CENTER" prefHeight="78.0" prefWidth="560.0" spacing="20.0">
                <children>
-                  <ImageView fitHeight="91.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@img/LogoStato.jpeg" />
-                     </image>
-                  </ImageView>
-               </children>
-            </StackPane>
-            <StackPane prefHeight="117.0" prefWidth="200.0">
-               <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <StackPane prefHeight="67.0" prefWidth="170.0">
                      <children>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto nel Sistema di Registrazione per le questure Italiane " textAlignment="CENTER" wrappingWidth="215.81494140625" />
-                           </children>
-                        </StackPane>
-                        <StackPane prefHeight="150.0" prefWidth="200.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci qui sotto i tuoi dati Anagrafici" textAlignment="CENTER" wrappingWidth="218.4638671875" />
-                           </children>
-                        </StackPane>
+                        <ImageView fitHeight="91.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@img/LogoStato.jpeg" />
+                           </image>
+                        </ImageView>
                      </children>
-                  </VBox>
-               </children>
-            </StackPane>
-            <StackPane prefHeight="91.0" prefWidth="167.0">
-               <children>
-                  <Text fx:id="errorText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="113.0" />
-               </children></StackPane>
-         </children>
-         <BorderPane.margin>
-            <Insets bottom="40.0" left="20.0" right="20.0" top="20.0" />
-         </BorderPane.margin>
-      </HBox>
-   </top>
-   <center>
-      <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
-               <children>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                  </StackPane>
+                  <StackPane prefHeight="117.0" prefWidth="200.0">
                      <children>
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Codice Fiscale" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto nel Sistema di Registrazione per le questure Italiane " textAlignment="CENTER" wrappingWidth="215.81494140625" />
                                  </children>
                               </StackPane>
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nome" />
-                                 </children>
-                              </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cognome" />
-                                 </children>
-                              </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Data di Nascita" />
-                                 </children>
-                              </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Luogo di Nascita" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci qui sotto i tuoi dati Anagrafici" textAlignment="CENTER" wrappingWidth="218.4638671875" />
                                  </children>
                               </StackPane>
                            </children>
                         </VBox>
                      </children>
                   </StackPane>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                  <StackPane prefHeight="91.0" prefWidth="167.0">
                      <children>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <TextField fx:id="IDField" alignment="TOP_CENTER" onAction="#setID" />
-                                 </children>
-                              </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <TextField fx:id="nameField" alignment="TOP_CENTER" onAction="#setName" />
-                                 </children>
-                              </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <TextField fx:id="surField" alignment="TOP_CENTER" onAction="#setSurname" />
-                                 </children>
-                              </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <DatePicker fx:id="dateField" editable="false" onAction="#setBirhdate" />
-                                 </children>
-                              </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <TextField fx:id="placeField" alignment="TOP_CENTER" onAction="#setPlace" />
-                                 </children>
-                              </StackPane>
-                           </children>
-                        </VBox>
-                     </children>
-                  </StackPane>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <VBox alignment="CENTER" prefHeight="170.0" prefWidth="149.0" spacing="20.0">
-                           <children>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <Label fx:id="IDLabel">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <Label fx:id="nameLabel">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <Label fx:id="surLabel">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <Label fx:id="dateLabel">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </StackPane>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
-                                 <children>
-                                    <Label fx:id="placeLabel">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </StackPane>
-                           </children>
-                        </VBox>
+                        <Text fx:id="errorText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="113.0" />
                      </children>
                   </StackPane>
                </children>
-               <StackPane.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </StackPane.margin>
             </HBox>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </StackPane>
+   </top>
+   <center>
+      <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="362.0" prefWidth="693.0" BorderPane.alignment="TOP_CENTER">
+         <children>
+            <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="362.0" prefWidth="651.0">
+               <children>
+                  <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="163.0" prefWidth="600.0" style="-fx-background-color: #21cccf; -fx-background-radius: 15; -fx-border-color: #000000; -fx-border-radius: 10; -fx-border-width: 5;">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                           <children>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Codice Fiscale" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nome" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cognome" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Data di Nascita" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Luogo di Nascita" />
+                                             </children>
+                                          </StackPane>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <TextField fx:id="IDField" alignment="TOP_CENTER" onAction="#setID" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <TextField fx:id="nameField" alignment="TOP_CENTER" onAction="#setName" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <TextField fx:id="surField" alignment="TOP_CENTER" onAction="#setSurname" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <DatePicker fx:id="dateField" editable="false" onAction="#setBirhdate" />
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <TextField fx:id="placeField" alignment="TOP_CENTER" onAction="#setPlace" />
+                                             </children>
+                                          </StackPane>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox alignment="CENTER" prefHeight="170.0" prefWidth="149.0" spacing="20.0">
+                                       <children>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Label fx:id="IDLabel">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Label fx:id="nameLabel">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Label fx:id="surLabel">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Label fx:id="dateLabel">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </StackPane>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0">
+                                             <children>
+                                                <Label fx:id="placeLabel">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </StackPane>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </StackPane>
+                           </children>
+                           <StackPane.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </StackPane.margin>
+                        </HBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </StackPane>
+                  <StackPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="100.0" prefWidth="600.0" style="-fx-background-color: #21cccf; -fx-background-radius: 15; -fx-border-color: #000000; -fx-border-radius: 10; -fx-border-width: 5;">
+                     <children>
+                        <HBox alignment="TOP_CENTER" fillHeight="false" prefHeight="80.0" prefWidth="600.0">
+                           <children>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Button fx:id="logButton" mnemonicParsing="false" onAction="#switchToLogin" text="Indietro" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Button fx:id="regButton" mnemonicParsing="false" onAction="#getPerson" text="Registrati" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <Button fx:id="exitButton" mnemonicParsing="false" onAction="#appExit" text="Esci" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                              </StackPane>
+                           </children>
+                           <StackPane.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </StackPane.margin>
+                        </HBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </StackPane>
+               </children>
+            </VBox>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
       </StackPane>
    </center>
 </BorderPane>

@@ -6,6 +6,8 @@ import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -44,6 +46,12 @@ public class MainController {
 	private BorderPane actSetPane;
 	private ActivitySetterController actSetController;
 	private Scene actSetScene;
+	
+	// MessagePrompt page
+	private FXMLLoader msgPromptLoader;
+	private BorderPane msgPromptPane;
+	private MessagePromptController msgPromptController;
+	private Scene msgPromptScene;
 
 	// Person from login operations
 	private Person currentPerson;
@@ -83,6 +91,13 @@ public class MainController {
 		actSetController.addAll();
 		actSetScene = new Scene(actSetPane);
 		populateActivitySetter();
+		// MessagePrompt setup
+		msgPromptLoader = new FXMLLoader(getClass().getResource("../view/MessagePrompt.fxml"));
+		msgPromptPane = msgPromptLoader.load();
+		msgPromptController = msgPromptLoader.getController();
+		msgPromptScene = msgPromptPane.getScene();
+		msgPromptController.setStageAndScene(new Stage(), msgPromptScene);
+		msgPromptController.setMC(this);
 	}
 
 	public void start() {
@@ -104,6 +119,14 @@ public class MainController {
 		actController.setPerson(currentPerson);
 		mainStage.setScene(actScene);
 		start();
+	}
+	
+	public void showMessagePrompt(String message, EventHandler<ActionEvent> event) {
+		msgPromptController.setup(message, event);
+	}
+	
+	public MessagePromptController getPromptController() {
+		return msgPromptController;
 	}
 
 	public void switchToActivitySetter() {

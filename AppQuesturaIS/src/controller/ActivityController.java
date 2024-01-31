@@ -194,4 +194,7 @@ public abstract class ActivityController {
 	protected boolean checkIntegrity() {
 		return datePicker.getValue().equals(date) && policeStationSelector.getValue().equals(policeStation.getTown());
 	}
+	protected MainController getMC() {
+		return mainController;
+	}
 }

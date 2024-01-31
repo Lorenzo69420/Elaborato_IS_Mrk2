@@ -2,7 +2,8 @@ package controller;
 
 import java.sql.SQLException;
 
-import model.PoliceStation;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import model.Reservation;
 
 public class ActivitySetterController extends ActivityController {
@@ -33,6 +34,16 @@ public class ActivitySetterController extends ActivityController {
 		try {
 			reservation.insert();
 			getErrorText().setText("Inserimento andato a buon fine");
+			// using new message prompt : test 1
+			getMC().showMessagePrompt("Inserimento andato a buon fine", new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent arg0) {
+					getMC().getPromptController().getStage().close();
+					
+				}
+				
+			});
 		} catch (SQLException e) {
 			System.err.println("C'è stato un errore nell'inserimento della prenotazione: " + e.getMessage());
 		}
