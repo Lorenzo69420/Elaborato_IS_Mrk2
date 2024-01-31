@@ -81,9 +81,10 @@ public class RegisterController {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(Date.from(dateField.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()));
 		person = new Person(IDField.getText(), nameField.getText(), surField.getText(), placeField.getText(), calendar);
-		// TODO da rivedere
+
 		try {
 			person.exists();
+			person.register();
 			person = null; // :,)
 			mainController.switchToLogin();
 		} catch (SQLException e) {
@@ -91,7 +92,8 @@ public class RegisterController {
 		} catch (NoSuchUserException e) {
 			// setting all label to error message
 			errorText.setText(
-					"Uno o più campi sono errati, non è stato possibile trovare la persona nell'anagrafica corrente, se ");
+					"Le credenziali indicate non corrispondono a nessuna persona nell'agrafica, "
+					+ "per ulteriori chiarementi contattare la mail aiuto@questura.anagrafica.it");
 		}
 	}
 
@@ -158,7 +160,7 @@ public class RegisterController {
 	}
 
 	private boolean checkDate() {
-		return !(dateField.getValue() == null) && !dateField.getValue().toString().isBlank();
+		return dateField.getValue() != null && !dateField.getValue().toString().isBlank();
 	}
 
 	private boolean checkID() {

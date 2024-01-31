@@ -17,8 +17,8 @@ public class Main {
 			Person sbatachiones = new Person("TIA", "Mattias", "Giambirtones", 't', "Terronia",
 					new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build(), "Africa", 69420);
 			sbatachiones.insert();
-			sbatachiones.register();			
-			
+			sbatachiones.register();
+
 			Person IlKingNeto = new Person("CH4D", "Neto", "Whites", '$', "vostri muri",
 					new Calendar.Builder().setDate(2002, Calendar.SEPTEMBER, 14).build(), "Supremo", 9001);
 			IlKingNeto.insert();
@@ -59,6 +59,11 @@ public class Main {
 			Person sbat = new Person("TIA", "Mattias", "Giambirtones", "Terronia",
 					new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build());
 			sbat.exists();
+
+			Person fethe = new Person("FETHER", "Federico", "Buchi", "Buco di culo di Illasi",
+					new Calendar.Builder().setDate(2001, Calendar.DECEMBER, 29).build());
+			fethe.insert();
+			
 			Database.close();
 		} catch (NotBookableException e) {
 			System.out.println(e.getType());
