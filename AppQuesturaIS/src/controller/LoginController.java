@@ -47,7 +47,7 @@ public class LoginController {
 			}
 		} catch (NoSuchUserException e) {
 			getMC().showMessagePrompt(
-					"Le codice fiscale inserito non corrisponde a nessuna persona nell'anagrafica, "
+					"Il codice fiscale inserito non corrisponde a nessuna persona nell'anagrafica, "
 							+ "per ulteriori chiarementi contattare la mail aiuto@questura.anagrafica.it",
 					getMC().getCloseHandler());
 		} catch (SQLException E) {
@@ -72,7 +72,7 @@ public class LoginController {
 			}
 		} catch (NoSuchUserException e) {
 			getMC().showMessagePrompt(
-					"Le codice fiscale inserito non corrisponde a nessuna persona nell'anagrafica, "
+					"Il codice fiscale inserito non corrisponde a nessuna persona nell'anagrafica, "
 							+ "per ulteriori chiarementi contattare la mail aiuto@questura.anagrafica.it",
 					getMC().getCloseHandler());
 		} catch (SQLException E) {
