@@ -122,12 +122,14 @@ public class MainController {
 	}
 
 	public void switchToRegister() {
+		regController.emptySelector();
 		mainStage.setScene(regScene);
 		mainStage.setTitle("Registrazione");
 		start();
 	}
 
 	public void switchToActivityReservation() {
+		actResController.emptySelector();
 		currentPerson = logController.getLogPerson();
 		actResController.setPerson(currentPerson);
 		mainStage.setScene(actResScene);
@@ -144,6 +146,7 @@ public class MainController {
 	}
 
 	public void switchToActivitySetter() {
+		actSetController.emptySelector();
 		mainStage.setScene(actSetScene);
 		mainStage.setTitle("Disponibilità");
 		start();

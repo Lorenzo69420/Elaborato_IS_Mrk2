@@ -198,4 +198,10 @@ public abstract class ActivityController {
 	protected MainController getMC() {
 		return mainController;
 	}
+	
+	protected void emptySelector() {
+		activitySelector.setValue(null);
+		policeStationSelector.setValue(null);
+		datePicker.getEditor().clear();
+	}
 }

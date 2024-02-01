@@ -180,4 +180,12 @@ public class RegisterController {
 	public MainController getMC() {
 		return mainController;
 	}
+
+	public void emptySelector() {
+		IDField.setText(null);
+		nameField.setText(null);
+		surField.setText(null);
+		dateField.getEditor().clear();
+		placeField.setText(null);
+	}
 }
