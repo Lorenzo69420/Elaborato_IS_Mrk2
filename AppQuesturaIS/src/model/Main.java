@@ -23,7 +23,10 @@ public class Main {
 					new Calendar.Builder().setDate(2002, Calendar.SEPTEMBER, 14).build(), "Supremo", 9001);
 			IlKingNeto.insert();
 			IlKingNeto.makeAdmin();
+			IlKingNeto.register();
 			sbatachiones.addTutor(IlKingNeto);
+			
+			
 
 			PoliceStation ps = new PoliceStation("Verona");
 			ps.insert();

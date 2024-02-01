@@ -2,8 +2,6 @@ package controller;
 
 import java.sql.SQLException;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import model.Reservation;
 
 public class ActivitySetterController extends ActivityController {
