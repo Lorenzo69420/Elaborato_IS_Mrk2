@@ -169,7 +169,7 @@
                                        <children>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
-                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Se non hai un acocount registrati qui" wrappingWidth="121.7158203125" />
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Se non hai un account registrati qui" wrappingWidth="121.7158203125" />
                                              </children>
                                           </StackPane>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
