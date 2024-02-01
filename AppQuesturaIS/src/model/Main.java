@@ -67,6 +67,8 @@ public class Main {
 					new Calendar.Builder().setDate(2001, Calendar.DECEMBER, 29).build());
 			fethe.insert();
 			
+			fethe.register();
+			
 			Database.close();
 		} catch (NotBookableException e) {
 			System.out.println(e.getType());
