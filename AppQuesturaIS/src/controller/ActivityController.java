@@ -48,10 +48,11 @@ public abstract class ActivityController {
 	private PoliceStation policeStation;
 	private ArrayList<Text> activityTexts;
 	private ArrayList<CheckBox> activityBoxs;
+	
+	private static String SAVE_ERROR_STRING = "Informazioni disallineate, prima di inserire la disponibilità premi "
+			+ "\"Conferma\" nuovamente";
 
 	protected abstract String getUpdateErrorString();
-
-	protected abstract String getSaveErrorString();
 
 	protected abstract void insertReservation(int hour);
 	
@@ -92,13 +93,13 @@ public abstract class ActivityController {
 	}
 
 	private final String toTypeText(ReservationType reservationType) {
-		return reservationType == null ? "Vuoto" : reservationType.toDisplayString();
+		return reservationType == null ? "Libero" : reservationType.toDisplayString();
 	}
 
 	@FXML
 	final void saveReservation(ActionEvent event) {
 		if (!checkBeforeSave()) {
-			getMC().showMessagePrompt(getSaveErrorString(), getMC().getCloseHandler());
+			getMC().showMessagePrompt(SAVE_ERROR_STRING, getMC().getCloseHandler());
 			return;
 		}
 
@@ -115,7 +116,7 @@ public abstract class ActivityController {
 	}
 
 	@FXML
-	final void exit(ActionEvent event) {
+	final void back(ActionEvent event) {
 		mainController.switchToLogin();
 	}
 

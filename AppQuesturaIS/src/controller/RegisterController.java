@@ -93,7 +93,7 @@ public class RegisterController {
 		} catch (NoSuchUserException e) {
 			// setting all label to error message
 			getMC().showMessagePrompt(
-					"Le credenziali indicate non corrispondono a nessuna persona nell'agrafica, "
+					"Le credenziali indicate non corrispondono a nessuna persona nell'anagrafica, "
 							+ "per ulteriori chiarementi contattare la mail aiuto@questura.anagrafica.it",
 					getMC().getCloseHandler());
 		}
@@ -102,7 +102,7 @@ public class RegisterController {
 	@FXML
 	void setBirhdate(ActionEvent event) {
 		if (dateField.getValue().isAfter(LocalDate.now()) || dateField.getValue().toString().equals("")) {
-			dateLabel.setText("Put a valid Date");
+			dateLabel.setText("Inserisci una data valida");
 		} else {
 			dateLabel.setText("");
 		}

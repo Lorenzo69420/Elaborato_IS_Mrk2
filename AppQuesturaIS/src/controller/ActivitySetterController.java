@@ -7,17 +7,10 @@ import model.Reservation;
 public class ActivitySetterController extends ActivityController {
 	private static String UPDATE_ERROR_STRING = "Uno o più campi sono vuoti. Inserisci correttamente la questura e "
 			+ "la data che desideri";
-	private static String SAVE_ERROR_STRING = "Informazioni disallineate, prima di inserire la disponibilità premi "
-			+ "\"Conferma\" nuovamente";
 
 	@Override
 	protected String getUpdateErrorString() {
 		return UPDATE_ERROR_STRING;
-	}
-
-	@Override
-	protected String getSaveErrorString() {
-		return SAVE_ERROR_STRING;
 	}
 
 	@Override

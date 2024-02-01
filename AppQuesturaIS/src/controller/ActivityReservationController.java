@@ -12,8 +12,8 @@ import model.Reservation;
 public class ActivityReservationController extends ActivityController {
 	private String activity;
 	private Person currentPerson;
-	private static String UPDATE_ERROR_STRING = "Inserisci tutti e tre i campi richiesti prima di premere \"Conferma\"";
-	private static String SAVE_ERROR_STRING = "Informazioni disallineate, prima di inserire la disponibilità premi "
+	private static String UPDATE_ERROR_STRING = "Riempi tutti e tre i campi richiesti prima di premere \"Conferma\"";
+	private static String SAVE_ERROR_STRING = "Informazioni disallineate, prima di inserire le disponibilità premi "
 			+ "\"Conferma\" nuovamente";
 
 	@Override
@@ -24,11 +24,6 @@ public class ActivityReservationController extends ActivityController {
 	@Override
 	protected String getUpdateErrorString() {
 		return UPDATE_ERROR_STRING;
-	}
-
-	@Override
-	protected String getSaveErrorString() {
-		return SAVE_ERROR_STRING;
 	}
 
 	@Override

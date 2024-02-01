@@ -28,7 +28,7 @@
                   </StackPane>
                   <StackPane prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="procedeButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="116.0" style="-fx-background-radius: 10;" text="Procedi" />
+                        <Button fx:id="procedeButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="116.0" style="-fx-background-radius: 10;" text="Ok" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="15.0" />

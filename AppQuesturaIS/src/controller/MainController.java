@@ -36,10 +36,10 @@ public class MainController {
 	private Scene regScene;
 
 	// ActivitySelector page
-	private FXMLLoader actLoader;
-	private BorderPane actPane;
-	private ActivityReservationController actController;
-	private Scene actScene;
+	private FXMLLoader actResLoader;
+	private BorderPane actResPane;
+	private ActivityReservationController actResController;
+	private Scene actResScene;
 
 	// ActivitySetter page
 	private FXMLLoader actSetLoader;
@@ -78,6 +78,8 @@ public class MainController {
 		logController.setMainController(this);
 		logScene = new Scene(logPane);
 		mainStage.setScene(logScene);
+		mainStage.setTitle("Login");
+		
 		// Register setup
 		regLoader = new FXMLLoader(getClass().getResource("../view/Register.fxml"));
 		regPane = regLoader.load();
@@ -85,12 +87,12 @@ public class MainController {
 		regController.setMainController(this);
 		regScene = new Scene(regPane);
 		// Activity Selector setup
-		actLoader = new FXMLLoader(getClass().getResource("../view/ActivityReservation.fxml"));
-		actPane = actLoader.load();
-		actController = actLoader.getController();
-		actController.setMainController(this);
-		actController.addAll();
-		actScene = new Scene(actPane);
+		actResLoader = new FXMLLoader(getClass().getResource("../view/ActivityReservation.fxml"));
+		actResPane = actResLoader.load();
+		actResController = actResLoader.getController();
+		actResController.setMainController(this);
+		actResController.addAll();
+		actResScene = new Scene(actResPane);
 		populateActivityReservation();
 		// Activity Setter setup
 		actSetLoader = new FXMLLoader(getClass().getResource("../view/ActivitySetter.fxml"));
@@ -115,18 +117,21 @@ public class MainController {
 
 	public void switchToLogin() {
 		mainStage.setScene(logScene);
+		mainStage.setTitle("Login");
 		start();
 	}
 
 	public void switchToRegister() {
 		mainStage.setScene(regScene);
+		mainStage.setTitle("Registrazione");
 		start();
 	}
 
 	public void switchToActivityReservation() {
 		currentPerson = logController.getLogPerson();
-		actController.setPerson(currentPerson);
-		mainStage.setScene(actScene);
+		actResController.setPerson(currentPerson);
+		mainStage.setScene(actResScene);
+		mainStage.setTitle("Prenotazione");
 		start();
 	}
 
@@ -140,19 +145,16 @@ public class MainController {
 
 	public void switchToActivitySetter() {
 		mainStage.setScene(actSetScene);
+		mainStage.setTitle("Disponibilità");
 		start();
 	}
 
 	private void populateActivitySetter() {
-		// actSetController.getActSelector().getItems().addAll(activityList);
-		// actSetController.getPSSelector().getItems().addAll(policeStationList);
 		actSetController.populateSelector(activityList, policeStationList);
 	}
 
 	private void populateActivityReservation() {
-		// actController.getActSelector().getItems().addAll(activityList);
-		// actController.getPSSelector().getItems().addAll(policeStationList);
-		actController.populateSelector(activityList, policeStationList);
+		actResController.populateSelector(activityList, policeStationList);
 	}
 
 	private void getActivityList() {

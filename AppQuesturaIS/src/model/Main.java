@@ -66,10 +66,13 @@ public class Main {
 			Person fethe = new Person("FETHER", "Federico", "Buchi", "Buco di culo di Illasi",
 					new Calendar.Builder().setDate(2001, Calendar.DECEMBER, 29).build());
 			fethe.insert();
-			
 			fethe.register();
 			
+			Person teo = new Person("TEO", "Leonardo", "Baldassari", "Golosangeles",
+					new Calendar.Builder().setDate(2001, Calendar.OCTOBER, 10).build());
+			teo.insert();
 			Database.close();
+			System.out.println("Setuppato il database");
 		} catch (NotBookableException e) {
 			System.out.println(e.getType());
 			throw e;
