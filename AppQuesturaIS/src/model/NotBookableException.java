@@ -1,5 +1,6 @@
 package model;
 
+@SuppressWarnings("serial")
 public class NotBookableException extends Exception {
 	public enum Types {
 		NO_PREVIOUS_REQ,
