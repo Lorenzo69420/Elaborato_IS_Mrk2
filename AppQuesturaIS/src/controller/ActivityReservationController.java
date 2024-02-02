@@ -58,11 +58,27 @@ public class ActivityReservationController extends ActivityController {
 
 		try {
 			reservation.book(currentPerson);
-			getMC().showMessagePrompt("Prenotazione andata a buon fine", getMC().getCloseHandler());
+			getMC().showMessagePrompt(getDocument(reservation), getMC().getCloseHandler());
 			updateWindow();
 		} catch (NotBookableException e) {
 			getMC().showMessagePrompt(getDisplayError(e.getType()), getMC().getCloseHandler());
 		} catch (Exception e) {
+		}
+	}
+
+	private String getDocument(Reservation reservation) {
+		String res = "Documenti e ricevute da portare: "
+				+ "modulo stampato della richiesta passaporto, "
+				+ "documento di riconoscimento valido, "
+				+ "2 foto formato tessera identiche e recenti, "
+				+ "ricevuta del pagamento a mezzo c/c di 42,50 euro per il passaporto ordinario, "
+				+ "contrassegno amministrativo per passaporto da 73,50 euro";
+		switch (reservation.getType()) {
+		case ISSUANCE_EXPIRED:
+		case ISSUANCE_DAMAGED:
+			return res + ", vecchio passaporto";
+		default:
+			return res;
 		}
 	}
 
