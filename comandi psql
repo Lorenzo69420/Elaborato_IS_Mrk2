@@ -1,5 +1,2 @@
-sudo -u postgres psql
-\c ingegneria (creare prima database ingegneria)
-
-CREATE TABLE Person(IDcode VARCHAR(16) PRIMARY KEY, name VARCHAR(16), surname VARCHAR(16), data_nascita DATE, placeBirth VARCHAR(32), num_sanitario BIGINT, belonging_category VARCHAR(32), tutor_id VARCHAR(16), CONSTRAINT fk_tutor_id FOREIGN KEY(tutor_id) REFERENCES Person(IDcode));
-CREATE TABLE Passport(IDcode VARCHAR(16), release_date DATE, expiry_date DATE, state VARCHAR(16), CONSTRAINT fk_person FOREIGN KEY(IDcode) REFERENCES person(IDcode), CONSTRAINT pk_passport PRIMARY KEY(IDcode, release_date));
+psql -U admin elaborato_is
+password: password
