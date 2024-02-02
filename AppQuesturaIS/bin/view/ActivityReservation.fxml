@@ -130,7 +130,7 @@
                                           </StackPane>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
-                                                <DatePicker fx:id="datePicker" />
+                                                <DatePicker fx:id="datePicker" editable="false"/>
                                              </children>
                                              <VBox.margin>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" />
@@ -285,7 +285,7 @@
                                           </StackPane>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
-                                                <Button mnemonicParsing="false" onAction="#exit" style="-fx-background-radius: 10;" text="Esci" />
+                                                <Button mnemonicParsing="false" onAction="#back" style="-fx-background-radius: 10;" text="Indietro" />
                                              </children>
                                           </StackPane>
                                        </children>
