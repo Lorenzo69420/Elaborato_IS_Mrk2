@@ -69,7 +69,7 @@ public class Main {
 			fethe.register();
 			
 			Person teo = new Person("TEO", "Leonardo", "Baldassari", "Golosangeles",
-					new Calendar.Builder().setDate(2001, Calendar.OCTOBER, 10).build());
+					new Calendar.Builder().setDate(2010, Calendar.OCTOBER, 10).build());
 			teo.insert();
 			Database.close();
 			System.out.println("Setuppato il database");

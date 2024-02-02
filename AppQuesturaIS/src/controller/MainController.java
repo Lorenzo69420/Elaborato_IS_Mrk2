@@ -55,6 +55,11 @@ public class MainController {
 
 	// Person from login operations
 	private Person currentPerson;
+	
+	// AddTutor Page
+	private FXMLLoader addTutorLoader;
+	private AddTutorController addTutorController;
+	private Scene addTutorScene;
 
 	public EventHandler<ActionEvent> getCloseHandler() {
 		return new EventHandler<ActionEvent>() {
@@ -64,7 +69,15 @@ public class MainController {
 			}
 		};
 	}
-
+	public EventHandler<ActionEvent> getTutorHandler() {
+		return new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				mainStage.setScene(addTutorScene);
+				mainStage.show();
+			}
+		};
+	}
 	public MainController() throws IOException, SQLException {
 		Database.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password", false);
 
@@ -73,42 +86,44 @@ public class MainController {
 
 		// Login setup
 		logLoader = new FXMLLoader(getClass().getResource("../view/Login.fxml"));
-		logPane = logLoader.load();
+		logScene = new Scene(logLoader.load());
 		logController = logLoader.getController();
 		logController.setMainController(this);
-		logScene = new Scene(logPane);
 		mainStage.setScene(logScene);
 		mainStage.setTitle("Login");
 		
 		// Register setup
 		regLoader = new FXMLLoader(getClass().getResource("../view/Register.fxml"));
-		regPane = regLoader.load();
+		regScene = new Scene(regLoader.load());
 		regController = regLoader.getController();
 		regController.setMainController(this);
-		regScene = new Scene(regPane);
 		// Activity Selector setup
 		actResLoader = new FXMLLoader(getClass().getResource("../view/ActivityReservation.fxml"));
-		actResPane = actResLoader.load();
+		actResScene = new Scene(actResLoader.load());
 		actResController = actResLoader.getController();
 		actResController.setMainController(this);
 		actResController.addAll();
-		actResScene = new Scene(actResPane);
 		populateActivityReservation();
 		// Activity Setter setup
 		actSetLoader = new FXMLLoader(getClass().getResource("../view/ActivitySetter.fxml"));
-		actSetPane = actSetLoader.load();
+		actSetScene = new Scene(actSetLoader.load());
 		actSetController = actSetLoader.getController();
 		actSetController.setMainController(this);
 		actSetController.addAll();
-		actSetScene = new Scene(actSetPane);
 		populateActivitySetter();
 		// MessagePrompt setup
 		msgPromptLoader = new FXMLLoader(getClass().getResource("../view/MessagePrompt.fxml"));
-		msgPromptPane = msgPromptLoader.load();
+		msgPromptScene = new Scene(msgPromptLoader.load());
 		msgPromptController = msgPromptLoader.getController();
-		msgPromptScene = new Scene(msgPromptPane);
-		msgPromptController.setScene(msgPromptScene);
 		msgPromptController.setMC(this);
+		msgPromptController.setScene(msgPromptScene);
+		
+		// AddTutor setup 
+		addTutorLoader = new FXMLLoader(getClass().getResource("../view/AddTutor.fxml"));
+		addTutorScene = new Scene(addTutorLoader.load());
+		addTutorController = addTutorLoader.getController();
+		addTutorController.setMC(this);
+		
 	}
 
 	public void start() {

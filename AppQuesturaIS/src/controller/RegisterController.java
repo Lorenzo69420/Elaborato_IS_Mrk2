@@ -85,8 +85,13 @@ public class RegisterController {
 
 		try {
 			person.exists();
-			person.register();
-			person = null; // :,)
+			if (person.isAdult()) {
+				person.register();
+				person = null; // :,)
+			} else {
+				mainController.showMessagePrompt("Devi aggiungere un tuto in quanto sei minorenne", mainController.getTutorHandler());
+			}
+			
 			mainController.switchToLogin();
 		} catch (SQLException e) {
 			mainController.close();
