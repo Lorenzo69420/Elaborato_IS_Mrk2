@@ -15,7 +15,7 @@ public class Main {
 			Database.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password", true);
 
 			Person sbatachiones = new Person("TIA", "Mattias", "Giambirtones", 't', "Terronia",
-					new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build(), "Africa", 69420);
+					new Calendar.Builder().setDate(2022, Calendar.DECEMBER, 27).build(), "Africa", 69420);
 			sbatachiones.insert();
 			sbatachiones.register();
 
@@ -61,7 +61,7 @@ public class Main {
 
 			Person sbat = new Person("TIA", "Mattias", "Giambirtones", "Terronia",
 					new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build());
-			sbat.exists();
+			//sbat.exists();
 
 			Person fethe = new Person("FETHER", "Federico", "Buchi", "Buco di culo di Illasi",
 					new Calendar.Builder().setDate(2001, Calendar.DECEMBER, 29).build());

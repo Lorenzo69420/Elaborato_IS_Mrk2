@@ -69,15 +69,7 @@ public class MainController {
 			}
 		};
 	}
-	public EventHandler<ActionEvent> getTutorHandler() {
-		return new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent arg0) {
-				mainStage.setScene(addTutorScene);
-				mainStage.show();
-			}
-		};
-	}
+	
 	public MainController() throws IOException, SQLException {
 		Database.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password", false);
 
@@ -122,6 +114,7 @@ public class MainController {
 		addTutorLoader = new FXMLLoader(getClass().getResource("../view/AddTutor.fxml"));
 		addTutorScene = new Scene(addTutorLoader.load());
 		addTutorController = addTutorLoader.getController();
+		addTutorController.setScene(addTutorScene);
 		addTutorController.setMC(this);
 		
 	}
@@ -154,6 +147,10 @@ public class MainController {
 
 	public void showMessagePrompt(String message, EventHandler<ActionEvent> event) {
 		msgPromptController.setup(message, event);
+	}
+	
+	public void showAddTutor(Person minor) {
+		addTutorController.setup(minor);
 	}
 
 	public MessagePromptController getPromptController() {
