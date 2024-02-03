@@ -9,10 +9,15 @@ import model.NotBookableException;
 import model.Person;
 import model.Reservation;
 
-public class ActivityReservationController extends ActivityController {
+public class ActivityUserController extends ActivityController {
 	private String activity;
 	private Person currentPerson;
 	private static String UPDATE_ERROR_STRING = "Riempi tutti e tre i campi richiesti prima di premere \"Conferma\"";
+	private static String DESCRIPTION = "Benvenuto nel sistema di prenotazione per l'emissione e il ritiro dei passaporti";
+	
+	public void setDescriptionText() {
+		super.setDescriptionText(DESCRIPTION);
+	}
 
 	@Override
 	protected boolean checkBeforeUpdate() {

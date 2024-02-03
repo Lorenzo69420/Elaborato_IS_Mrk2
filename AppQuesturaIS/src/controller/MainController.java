@@ -25,31 +25,26 @@ public class MainController {
 
 	// Login page
 	private FXMLLoader logLoader;
-	private BorderPane logPane;
 	private LoginController logController;
 	private Scene logScene;
 
 	// Register page
 	private FXMLLoader regLoader;
-	private BorderPane regPane;
 	private RegisterController regController;
 	private Scene regScene;
 
 	// ActivitySelector page
-	private FXMLLoader actResLoader;
-	private BorderPane actResPane;
-	private ActivityReservationController actResController;
-	private Scene actResScene;
+	private FXMLLoader actUserLoader;
+	private ActivityUserController actUserController;
+	private Scene actUserScene;
 
 	// ActivitySetter page
-	private FXMLLoader actSetLoader;
-	private BorderPane actSetPane;
-	private ActivitySetterController actSetController;
-	private Scene actSetScene;
+	private FXMLLoader actAdminLoader;
+	private ActivityAdminController actAdminController;
+	private Scene actAdminScene;
 
 	// MessagePrompt page
 	private FXMLLoader msgPromptLoader;
-	private BorderPane msgPromptPane;
 	private MessagePromptController msgPromptController;
 	private Scene msgPromptScene;
 
@@ -90,18 +85,22 @@ public class MainController {
 		regController = regLoader.getController();
 		regController.setMainController(this);
 		// Activity Selector setup
-		actResLoader = new FXMLLoader(getClass().getResource("../view/ActivityReservation.fxml"));
-		actResScene = new Scene(actResLoader.load());
-		actResController = actResLoader.getController();
-		actResController.setMainController(this);
-		actResController.addAll();
+		actUserLoader = new FXMLLoader(getClass().getResource("../view/ActivityReservation.fxml"));
+		actUserController = new ActivityUserController();
+		actUserLoader.setController(actUserController);
+		actUserScene = new Scene(actUserLoader.load());
+		actUserController.setDescriptionText();
+		actUserController.setMainController(this);
+		actUserController.addAll();
 		populateActivityReservation();
 		// Activity Setter setup
-		actSetLoader = new FXMLLoader(getClass().getResource("../view/ActivitySetter.fxml"));
-		actSetScene = new Scene(actSetLoader.load());
-		actSetController = actSetLoader.getController();
-		actSetController.setMainController(this);
-		actSetController.addAll();
+		actAdminLoader = new FXMLLoader(getClass().getResource("../view/ActivityReservation.fxml"));
+		actAdminController = new ActivityAdminController();
+		actAdminLoader.setController(actAdminController);
+		actAdminScene = new Scene(actAdminLoader.load());
+		actAdminController.setDescriptionText();
+		actAdminController.setMainController(this);
+		actAdminController.addAll();
 		populateActivitySetter();
 		// MessagePrompt setup
 		msgPromptLoader = new FXMLLoader(getClass().getResource("../view/MessagePrompt.fxml"));
@@ -137,10 +136,10 @@ public class MainController {
 	}
 
 	public void switchToActivityReservation() {
-		actResController.emptySelector();
+		actUserController.emptySelector();
 		currentPerson = logController.getLogPerson();
-		actResController.setPerson(currentPerson);
-		mainStage.setScene(actResScene);
+		actUserController.setPerson(currentPerson);
+		mainStage.setScene(actUserScene);
 		mainStage.setTitle("Prenotazione");
 		start();
 	}
@@ -158,18 +157,18 @@ public class MainController {
 	}
 
 	public void switchToActivitySetter() {
-		actSetController.emptySelector();
-		mainStage.setScene(actSetScene);
+		actAdminController.emptySelector();
+		mainStage.setScene(actAdminScene);
 		mainStage.setTitle("Disponibilità");
 		start();
 	}
 
 	private void populateActivitySetter() {
-		actSetController.populateSelector(activityList, policeStationList);
+		actAdminController.populateSelector(activityList, policeStationList);
 	}
 
 	private void populateActivityReservation() {
-		actResController.populateSelector(activityList, policeStationList);
+		actUserController.populateSelector(activityList, policeStationList);
 	}
 
 	private void getActivityList() {

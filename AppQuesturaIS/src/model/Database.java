@@ -72,7 +72,6 @@ public class Database {
 		connection.prepareStatement(PERSON_TABLE).execute();
 		connection.prepareStatement(POLICE_TABLE).execute();
 		connection.prepareStatement(PASSPORT_TABLE).execute();
-
 		connection.prepareStatement(PASSPORT_REQUEST_TABLE).execute();
 		connection.prepareStatement(RESERVATION_TABLE).execute();
 	}

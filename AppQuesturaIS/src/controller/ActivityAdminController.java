@@ -4,9 +4,14 @@ import java.sql.SQLException;
 
 import model.Reservation;
 
-public class ActivitySetterController extends ActivityController {
+public class ActivityAdminController extends ActivityController {
 	private static String UPDATE_ERROR_STRING = "Uno o più campi sono vuoti. Inserisci correttamente la questura e "
 			+ "la data che desideri";
+	private static String DESCRIPTION = "Benvenuto nel sistema di inserimento degli appuntamenti da prendere in questura";
+	
+	public void setDescriptionText() {
+		super.setDescriptionText(DESCRIPTION);
+	}
 
 	@Override
 	protected String getUpdateErrorString() {

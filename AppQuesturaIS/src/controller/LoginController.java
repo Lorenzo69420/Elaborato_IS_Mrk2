@@ -37,6 +37,11 @@ public class LoginController {
 
 	@FXML
 	void adminLogReq(ActionEvent event) {
+		if (!checkField()) {
+			getMC().showMessagePrompt("Inserisci un Codice Fiscale valido", getMC().getCloseHandler());
+			return;
+		}
+		
 		try {
 			this.logPerson = Database.getPerson(IDField.getText());
 
@@ -62,6 +67,11 @@ public class LoginController {
 
 	@FXML
 	void logReq(ActionEvent event) {
+		if (!checkField()) {
+			getMC().showMessagePrompt("Inserisci un Codice Fiscale valido", getMC().getCloseHandler());
+			return;
+		}
+		
 		try {
 			this.logPerson = Person.get(IDField.getText());
 
@@ -83,7 +93,7 @@ public class LoginController {
 
 	@FXML
 	void setName(ActionEvent event) {
-		if (IDField.getText().equals("")) {
+		if (checkField()) {
 			getMC().showMessagePrompt("Inserisci un ID valido", getMC().getCloseHandler());
 		} else {
 			this.ID = IDField.getText();
@@ -105,5 +115,9 @@ public class LoginController {
 
 	public MainController getMC() {
 		return mainController;
+	}
+	
+	private boolean checkField() {
+		return !IDField.getText().equals("");
 	}
 }

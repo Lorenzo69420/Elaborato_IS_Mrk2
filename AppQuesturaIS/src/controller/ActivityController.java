@@ -27,6 +27,8 @@ public abstract class ActivityController {
 	@FXML
 	private Text errorText;
 	@FXML
+	private Text descriptionText;
+	@FXML
 	private CheckBox select1;
 	@FXML
 	private CheckBox select2;
@@ -51,6 +53,10 @@ public abstract class ActivityController {
 	
 	private static String SAVE_ERROR_STRING = "Informazioni disallineate, prima di inserire la disponibilità premi "
 			+ "\"Conferma\" nuovamente";
+	
+	protected void setDescriptionText(String description) {
+		descriptionText.setText(description);
+	}
 
 	protected abstract String getUpdateErrorString();
 
@@ -195,6 +201,7 @@ public abstract class ActivityController {
 	protected boolean checkIntegrity() {
 		return datePicker.getValue().equals(date) && policeStationSelector.getValue().equals(policeStation.getTown());
 	}
+	
 	protected MainController getMC() {
 		return mainController;
 	}
