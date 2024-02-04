@@ -59,6 +59,7 @@ public class Main {
 					sbatachiones, ps, ReservationState.BOOKED_UP);
 			res.insert();
 
+			@SuppressWarnings("unused")
 			Person sbat = new Person("TIA", "Mattias", "Giambirtones", "Terronia",
 					new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build());
 			//sbat.exists();

@@ -43,7 +43,7 @@ public class LoginController {
 		}
 		
 		try {
-			this.logPerson = Database.getPerson(IDField.getText());
+			this.logPerson = Person.get(IDField.getText());
 
 			if (logPerson.isAdmin()) {
 				mainController.switchToActivitySetter();

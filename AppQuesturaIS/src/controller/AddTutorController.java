@@ -29,7 +29,7 @@ public class AddTutorController {
 			MC.showMessagePrompt("Il codice fiscale non è valido", MC.getCloseHandler());
 		} else {
 			try {
-				tutor = Database.getPerson(taxID);
+				tutor = Person.get(taxID);
 				if (tutor.getTaxID().equals(minor.getTaxID())) {
 					MC.showMessagePrompt("Non puoi essere il tutore di te stesso", MC.getCloseHandler());
 				} else if (!tutor.isAdult()) {

@@ -68,7 +68,7 @@ public class Database {
 		initialized = false;
 	}
 
-	public static void createTable() throws SQLException {
+	protected static void createTable() throws SQLException {
 		connection.prepareStatement(PERSON_TABLE).execute();
 		connection.prepareStatement(POLICE_TABLE).execute();
 		connection.prepareStatement(PASSPORT_TABLE).execute();
@@ -76,7 +76,7 @@ public class Database {
 		connection.prepareStatement(RESERVATION_TABLE).execute();
 	}
 
-	public static void dropTable(boolean cascade) throws SQLException {
+	protected static void dropTable(boolean cascade) throws SQLException {
 		dropPersonTable(cascade);
 		dropPassportTable(cascade);
 		dropPassportRequestTable(cascade);
@@ -84,29 +84,29 @@ public class Database {
 		dropReservationTable(cascade);
 	}
 
-	public static void dropPersonTable(boolean cascade) throws SQLException {
+	private static void dropPersonTable(boolean cascade) throws SQLException {
 		connection.prepareStatement("DROP TABLE IF EXISTS person " + (cascade ? "CASCADE" : "") + ";").execute();
 	}
 
-	public static void dropPassportTable(boolean cascade) throws SQLException {
+	private static void dropPassportTable(boolean cascade) throws SQLException {
 		connection.prepareStatement("DROP TABLE IF EXISTS passport " + (cascade ? "CASCADE" : "") + ";").execute();
 	}
 
-	public static void dropPassportRequestTable(boolean cascade) throws SQLException {
+	private static void dropPassportRequestTable(boolean cascade) throws SQLException {
 		connection.prepareStatement("DROP TABLE IF EXISTS passport_request " + (cascade ? "CASCADE" : "") + ";")
 				.execute();
 	}
 
-	public static void dropPoliceTable(boolean cascade) throws SQLException {
+	private static void dropPoliceTable(boolean cascade) throws SQLException {
 		connection.prepareStatement("DROP TABLE IF EXISTS police_station " + (cascade ? "CASCADE" : "") + ";")
 				.execute();
 	}
 
-	public static void dropReservationTable(boolean cascade) throws SQLException {
+	private static void dropReservationTable(boolean cascade) throws SQLException {
 		connection.prepareStatement("DROP TABLE IF EXISTS reservation " + (cascade ? "CASCADE" : "") + ";").execute();
 	}
 
-	public static void insert(Person person) throws SQLException {
+	protected static void insert(Person person) throws SQLException {
 		var statement = connection.prepareStatement("INSERT INTO person VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 		statement.setString(1, person.getTaxID());
@@ -125,7 +125,7 @@ public class Database {
 		statement.execute();
 	}
 
-	public static void insert(Passport passport) throws SQLException {
+	protected static void insert(Passport passport) throws SQLException {
 		var statement = connection
 				.prepareStatement("INSERT INTO passport(tax_id, release_date, expiry_date, release_location, state) "
 						+ "VALUES (?, ?, ?, ?, ?) RETURNING passport_id");
@@ -143,7 +143,7 @@ public class Database {
 		passport.setID(result.getInt("passport_id"));
 	}
 
-	public static void insert(PoliceStation policeStation) throws SQLException {
+	protected static void insert(PoliceStation policeStation) throws SQLException {
 		var statement = connection.prepareStatement("INSERT INTO police_station VALUES (?)");
 
 		statement.setString(1, policeStation.getTown());
@@ -151,7 +151,7 @@ public class Database {
 		statement.execute();
 	}
 
-	public static void insert(Reservation reservation) throws SQLException {
+	protected static void insert(Reservation reservation) throws SQLException {
 		var statement = connection.prepareStatement("INSERT INTO reservation VALUES (?, ?, ?, ?, ?, ?) "
 				+ "ON CONFLICT ON CONSTRAINT reservation_pkey DO UPDATE SET type = ? WHERE reservation.state = ?");
 
@@ -171,7 +171,7 @@ public class Database {
 		statement.execute();
 	}
 
-	public static void insertRequest(Reservation reservation) throws SQLException {
+	protected static void insertRequest(Reservation reservation) throws SQLException {
 		var statement = connection.prepareStatement("INSERT INTO passport_request VALUES (?, ?, ?)");
 
 		statement.setString(1, reservation.getBookedBy().getTaxID());
@@ -181,7 +181,7 @@ public class Database {
 		statement.execute();
 	}
 
-	public static Person getPerson(String taxID) throws SQLException, NoSuchUserException {
+	protected static Person getPerson(String taxID) throws SQLException, NoSuchUserException {
 		var query = connection.prepareStatement("SELECT * FROM person WHERE tax_id = ?");
 
 		query.setString(1, taxID);
@@ -194,7 +194,7 @@ public class Database {
 		return resultQueryToPerson(result);
 	}
 
-	public static Passport getPassport(int passportID) throws SQLException {
+	protected static Passport getPassport(int passportID) throws SQLException {
 		var query = connection
 				.prepareStatement("SELECT * FROM passport WHERE passport_id = ? ORDER BY passport_id LIMIT 1");
 
@@ -208,7 +208,7 @@ public class Database {
 		return resultQueryToPassport(result);
 	}
 
-	public static Passport getLastPassport(Person person) throws SQLException {
+	protected static Passport getLastPassport(Person person) throws SQLException {
 		var query = connection
 				.prepareStatement("SELECT * FROM passport WHERE tax_id = ? ORDER BY passport_id DESC LIMIT 1");
 		query.setString(1, person.getTaxID());
@@ -222,7 +222,7 @@ public class Database {
 		return resultQueryToPassport(result);
 	}
 
-	public static List<String> getPoliceStation() throws SQLException {
+	protected static List<String> getPoliceStation() throws SQLException {
 		List<String> result = new ArrayList<>();
 
 		var query = connection.prepareStatement("SELECT * FROM police_station");
@@ -235,7 +235,7 @@ public class Database {
 		return result;
 	}
 
-	public static void existsPerson(Person person) throws SQLException, NoSuchUserException {
+	protected static void existsPerson(Person person) throws SQLException, NoSuchUserException {
 		var query = connection.prepareStatement("SELECT 1 FROM person WHERE tax_id = ? AND "
 				+ "name = ? AND surname = ? AND place_birth = ? AND date_birth = ? LIMIT 1");
 
@@ -252,7 +252,7 @@ public class Database {
 		}
 	}
 
-	public static void register(Person person) throws SQLException {
+	protected static void register(Person person) throws SQLException {
 		var query = connection.prepareStatement("UPDATE person SET registered = TRUE WHERE tax_id = ?");
 
 		query.setString(1, person.getTaxID());
@@ -260,11 +260,11 @@ public class Database {
 		query.executeUpdate();
 	}
 
-	public static boolean isRegister(Person person) throws SQLException {
+	protected static boolean isRegister(Person person) throws SQLException {
 		return permissionQuery(person, "registered");
 	}
 
-	public static void makeAdmin(Person person) throws SQLException {
+	protected static void makeAdmin(Person person) throws SQLException {
 		var query = connection.prepareStatement("UPDATE person SET admin = TRUE, registered = TRUE WHERE tax_id = ?");
 
 		query.setString(1, person.getTaxID());
@@ -272,7 +272,7 @@ public class Database {
 		query.executeUpdate();
 	}
 
-	public static boolean isAdmin(Person person) throws SQLException {
+	protected static boolean isAdmin(Person person) throws SQLException {
 		return permissionQuery(person, "admin");
 	}
 
@@ -286,7 +286,7 @@ public class Database {
 		return result.next();
 	}
 
-	public static void changeState(Passport passport) throws SQLException {
+	protected static void changeState(Passport passport) throws SQLException {
 		var query = connection.prepareStatement("UPDATE passport SET state = ? WHERE passport_id = ?");
 
 		query.setString(1, passport.getState().toString());
@@ -295,7 +295,7 @@ public class Database {
 		query.executeUpdate();
 	}
 
-	public static void book(Reservation reservation) throws SQLException {
+	protected static void book(Reservation reservation) throws SQLException {
 		var query = connection.prepareStatement(
 				"UPDATE reservation SET passport_id = ?, booked_by = ?, state = ? WHERE date = ? AND place = ?");
 
@@ -309,7 +309,7 @@ public class Database {
 		query.executeUpdate();
 	}
 
-	public static void updateTutor(Person person) throws SQLException {
+	protected static void updateTutor(Person person) throws SQLException {
 		var query = connection.prepareStatement("UPDATE person SET tutor_id = ? WHERE tax_id = ?");
 
 		query.setString(1, person.getTutor().getTaxID());
@@ -318,7 +318,7 @@ public class Database {
 		query.executeUpdate();
 	}
 
-	public static Reservation getReservation(Reservation reservation) throws SQLException {
+	protected static Reservation getReservation(Reservation reservation) throws SQLException {
 		var query = connection.prepareStatement("SELECT * FROM reservation WHERE date = ? AND place = ? LIMIT 1");
 
 		query.setTimestamp(1, Timestamp.valueOf(reservation.getDate()));
@@ -332,7 +332,7 @@ public class Database {
 		return resultQueryToReservation(result);
 	}
 
-	public static Reservation getRequest(Person person) throws SQLException {
+	protected static Reservation getRequest(Person person) throws SQLException {
 		var query = connection.prepareStatement("SELECT date, place FROM passport_request WHERE tax_id = ? LIMIT 1");
 
 		query.setString(1, person.getTaxID());
@@ -347,7 +347,7 @@ public class Database {
 				new PoliceStation(resultQuery.getString("place")));
 	}
 
-	public static void deleteRequest(Person person) throws SQLException {
+	protected static void deleteRequest(Person person) throws SQLException {
 		var statement = connection.prepareStatement("DELETE FROM passport_request WHERE tax_id = ?");
 
 		statement.setString(1, person.getTaxID());
