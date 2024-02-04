@@ -27,3 +27,5 @@ replay_pid*
 AppQuesturaIS/.settings/
 .classpath
 
+#ingores bin files
+AppQuesturaIS/bin
