@@ -25,12 +25,12 @@ public class MainController {
 	// Login page
 	
 	private LoginController logController;
-	private Scene logScene;
+	
 
 	// Register page
 	
 	private RegisterController regController;
-	private Scene regScene;
+	
 
 	// ActivitySelector page
 	
@@ -39,7 +39,7 @@ public class MainController {
 	// ActivitySetter page
 	
 	private ActivityAdminController actAdminController;
-	private Scene actAdminScene;
+	
 
 	// MessagePrompt page
 	
@@ -61,32 +61,25 @@ public class MainController {
 	}
 	
 	public MainController() {
+		//Getting the database connection
 		try {
 			Database.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password", false);
 		} catch (SQLException | RuntimeException e) {
 			e.printStackTrace();
 		}
-
 		// Login setup
-		
 		logController = new LoginController(this);
-		logScene = logController.getScene();
-		mainStage.setScene(logScene);
+		mainStage.setScene(logController.getScene());
 		mainStage.setTitle("Login");
 		
-		
 		// Register setup
-		
 		regController = new RegisterController(this);
-		regScene = regController.getScene();
-		
-		
+	
 		// Activity Selector setup
 		actUserController = new ActivityUserController(this);
 		
 		// Activity Setter setup
 		actAdminController = new ActivityAdminController(this);
-		actAdminScene = actAdminController.getScene();
 		
 		// MessagePrompt setup
 		msgPromptController = new MessagePromptController(this);
@@ -100,14 +93,14 @@ public class MainController {
 	}
 
 	public void switchToLogin() {
-		mainStage.setScene(logScene);
+		mainStage.setScene(logController.getScene());
 		mainStage.setTitle("Login");
 		start();
 	}
 
 	public void switchToRegister() {
 		regController.emptySelector();
-		mainStage.setScene(regScene);
+		mainStage.setScene(regController.getScene());
 		mainStage.setTitle("Registrazione");
 		start();
 	}
@@ -135,7 +128,7 @@ public class MainController {
 
 	public void switchToActivitySetter() {
 		actAdminController.emptySelector();
-		mainStage.setScene(actAdminScene);
+		mainStage.setScene(actAdminController.getScene());
 		mainStage.setTitle("Disponibilità");
 		start();
 	}
