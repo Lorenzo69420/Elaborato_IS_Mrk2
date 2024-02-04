@@ -20,8 +20,9 @@ public class ActivityUserController extends ActivityController {
 		super(MC);
 	}
 	@Override
-	public void setDescriptionText() {
+	public void setDescription() {
 		getDescriptionText().setText(DESCRIPTION);
+		getSaveButton().setText("Prenota");
 	}
 
 	@Override

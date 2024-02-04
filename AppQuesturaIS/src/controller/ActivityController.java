@@ -7,9 +7,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -45,6 +45,8 @@ public abstract class ActivityController extends AbstractController{
 	private Text text3;
 	@FXML
 	private Text text4;
+	@FXML
+	private Button saveButton;
 
 	private LocalDate date;
 	private PoliceStation policeStation;
@@ -53,7 +55,7 @@ public abstract class ActivityController extends AbstractController{
 	
 	protected ActivityController(MainController MC) {
 		super("ActivityReservation",MC);
-		setDescriptionText();
+		setDescription();
 		addAll();
 		populateSelector();
 	}
@@ -61,10 +63,13 @@ public abstract class ActivityController extends AbstractController{
 	private static String SAVE_ERROR_STRING = "Informazioni disallineate, prima di inserire la disponibilità premi "
 			+ "\"Conferma\" nuovamente";
 	
-	abstract protected void setDescriptionText();
+	abstract protected void setDescription();
 	
 	protected Text getDescriptionText() {
 		return descriptionText;
+	}
+	protected Button getSaveButton() {
+		return saveButton;
 	}
 
 	protected abstract String getUpdateErrorString();

@@ -11,7 +11,6 @@ public class RunApp extends Application {
 		//new SelectPage();
 		
 		MainController MC = new MainController(stage);
-		MC.start();
 	}
 
 	public static void main(String[] args) {

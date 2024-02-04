@@ -19,9 +19,6 @@ import model.Reservation;
 public class MainController {
 
 	private Stage mainStage;
-	public MainController (Stage stage) {
-		mainStage = stage;
-	} 
 	// Login page
 	
 	private LoginController logController;
@@ -60,8 +57,9 @@ public class MainController {
 		};
 	}
 	
-	public MainController() {
+	public MainController(Stage stage) {
 		//Getting the database connection
+		mainStage = stage;
 		try {
 			Database.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password", false);
 		} catch (SQLException | RuntimeException e) {
@@ -69,8 +67,6 @@ public class MainController {
 		}
 		// Login setup
 		logController = new LoginController(this);
-		mainStage.setScene(logController.getScene());
-		mainStage.setTitle("Login");
 		
 		// Register setup
 		regController = new RegisterController(this);
@@ -86,9 +82,13 @@ public class MainController {
 		
 		// AddTutor setup 
 		addTutorController = new AddTutorController(this);
+		
+		//starting app
+		switchToLogin();
 	}
 
 	public void start() {
+		
 		mainStage.show();
 	}
 

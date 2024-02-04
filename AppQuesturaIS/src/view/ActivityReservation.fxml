@@ -280,7 +280,7 @@
                                        <children>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
-                                                <Button mnemonicParsing="false" onAction="#saveReservation" style="-fx-background-radius: 10;" text="Prenota" />
+                                                <Button mnemonicParsing="false" onAction="#saveReservation" style="-fx-background-radius: 10;" fx:id="saveButton" />
                                              </children>
                                           </StackPane>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
