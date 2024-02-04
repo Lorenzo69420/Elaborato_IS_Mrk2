@@ -10,7 +10,7 @@ public class RunApp extends Application {
 		//LoginPage LP = new LoginPage();
 		//new SelectPage();
 		
-		MainController MC = new MainController();
+		MainController MC = new MainController(stage);
 		MC.start();
 	}
 

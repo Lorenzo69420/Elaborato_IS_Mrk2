@@ -10,13 +10,18 @@ import model.Person;
 import model.Reservation;
 
 public class ActivityUserController extends ActivityController {
+
 	private String activity;
 	private Person currentPerson;
 	private static String UPDATE_ERROR_STRING = "Riempi tutti e tre i campi richiesti prima di premere \"Conferma\"";
 	private static String DESCRIPTION = "Benvenuto nel sistema di prenotazione per l'emissione e il ritiro dei passaporti";
 	
+	protected ActivityUserController(MainController MC) {
+		super(MC);
+	}
+	@Override
 	public void setDescriptionText() {
-		super.setDescriptionText(DESCRIPTION);
+		getDescriptionText().setText(DESCRIPTION);
 	}
 
 	@Override

@@ -18,42 +18,38 @@ import model.Reservation;
 
 public class MainController {
 
-	private Stage mainStage = new Stage();
-	private ObservableList<String> activityList = FXCollections.observableArrayList();
-	private ObservableList<String> policeStationList = FXCollections.observableArrayList();
-
+	private Stage mainStage;
+	public MainController (Stage stage) {
+		mainStage = stage;
+	} 
 	// Login page
-	private FXMLLoader logLoader;
+	
 	private LoginController logController;
 	private Scene logScene;
 
 	// Register page
-	private FXMLLoader regLoader;
+	
 	private RegisterController regController;
 	private Scene regScene;
 
 	// ActivitySelector page
-	private FXMLLoader actUserLoader;
+	
 	private ActivityUserController actUserController;
-	private Scene actUserScene;
 
 	// ActivitySetter page
-	private FXMLLoader actAdminLoader;
+	
 	private ActivityAdminController actAdminController;
 	private Scene actAdminScene;
 
 	// MessagePrompt page
-	private FXMLLoader msgPromptLoader;
+	
 	private MessagePromptController msgPromptController;
-	private Scene msgPromptScene;
 
 	// Person from login operations
 	private Person currentPerson;
 	
 	// AddTutor Page
-	private FXMLLoader addTutorLoader;
 	private AddTutorController addTutorController;
-	private Scene addTutorScene;
 
 	public EventHandler<ActionEvent> getCloseHandler() {
 		return new EventHandler<ActionEvent>() {
@@ -64,57 +60,39 @@ public class MainController {
 		};
 	}
 	
-	public MainController() throws IOException, SQLException {
-		Database.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password", false);
-
-		getActivityList();
-		getPSList();
+	public MainController() {
+		try {
+			Database.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password", false);
+		} catch (SQLException | RuntimeException e) {
+			e.printStackTrace();
+		}
 
 		// Login setup
-		logLoader = new FXMLLoader(getClass().getResource("../view/Login.fxml"));
-		logScene = new Scene(logLoader.load());
-		logController = logLoader.getController();
-		logController.setMainController(this);
+		
+		logController = new LoginController(this);
+		logScene = logController.getScene();
 		mainStage.setScene(logScene);
 		mainStage.setTitle("Login");
 		
+		
 		// Register setup
-		regLoader = new FXMLLoader(getClass().getResource("../view/Register.fxml"));
-		regScene = new Scene(regLoader.load());
-		regController = regLoader.getController();
-		regController.setMainController(this);
+		
+		regController = new RegisterController(this);
+		regScene = regController.getScene();
+		
+		
 		// Activity Selector setup
-		actUserLoader = new FXMLLoader(getClass().getResource("../view/ActivityReservation.fxml"));
-		actUserController = new ActivityUserController();
-		actUserLoader.setController(actUserController);
-		actUserScene = new Scene(actUserLoader.load());
-		actUserController.setDescriptionText();
-		actUserController.setMainController(this);
-		actUserController.addAll();
-		populateActivityReservation();
+		actUserController = new ActivityUserController(this);
+		
 		// Activity Setter setup
-		actAdminLoader = new FXMLLoader(getClass().getResource("../view/ActivityReservation.fxml"));
-		actAdminController = new ActivityAdminController();
-		actAdminLoader.setController(actAdminController);
-		actAdminScene = new Scene(actAdminLoader.load());
-		actAdminController.setDescriptionText();
-		actAdminController.setMainController(this);
-		actAdminController.addAll();
-		populateActivitySetter();
+		actAdminController = new ActivityAdminController(this);
+		actAdminScene = actAdminController.getScene();
+		
 		// MessagePrompt setup
-		msgPromptLoader = new FXMLLoader(getClass().getResource("../view/MessagePrompt.fxml"));
-		msgPromptScene = new Scene(msgPromptLoader.load());
-		msgPromptController = msgPromptLoader.getController();
-		msgPromptController.setMC(this);
-		msgPromptController.setScene(msgPromptScene);
+		msgPromptController = new MessagePromptController(this);
 		
 		// AddTutor setup 
-		addTutorLoader = new FXMLLoader(getClass().getResource("../view/AddTutor.fxml"));
-		addTutorScene = new Scene(addTutorLoader.load());
-		addTutorController = addTutorLoader.getController();
-		addTutorController.setScene(addTutorScene);
-		addTutorController.setMC(this);
-		
+		addTutorController = new AddTutorController(this);
 	}
 
 	public void start() {
@@ -138,7 +116,7 @@ public class MainController {
 		actUserController.emptySelector();
 		currentPerson = logController.getLogPerson();
 		actUserController.setPerson(currentPerson);
-		mainStage.setScene(actUserScene);
+		mainStage.setScene(actUserController.getScene());
 		mainStage.setTitle("Prenotazione");
 		start();
 	}
@@ -162,23 +140,12 @@ public class MainController {
 		start();
 	}
 
-	private void populateActivitySetter() {
-		actAdminController.populateSelector(activityList, policeStationList);
-	}
-
-	private void populateActivityReservation() {
-		actUserController.populateSelector(activityList, policeStationList);
-	}
-
-	private void getActivityList() {
-		Arrays.asList(Reservation.ReservationType.values()).forEach(type -> activityList.add(type.toDisplayString()));
-	}
-
-	private void getPSList() throws SQLException {
-		policeStationList.addAll(PoliceStation.getStations());
-	}
-
 	public void close() {
+		try {
+			Database.close();
+		} catch (Exception e ) {
+			e.printStackTrace();
+		}
 		mainStage.close();
 	}
 }

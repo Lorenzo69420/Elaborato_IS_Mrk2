@@ -17,7 +17,7 @@ import javafx.scene.text.Text;
 import model.NoSuchUserException;
 import model.Person;
 
-public class RegisterController {
+public class RegisterController extends AbstractController{
 
 	@FXML
 	private Text errorText;
@@ -63,12 +63,15 @@ public class RegisterController {
 	@FXML
 	private Label surLabel;
 
-	private MainController mainController;
 	private Person person;
-
+	
+	protected RegisterController(MainController MC) {
+		super("Register",MC);
+	}
+	
 	@FXML
 	void appExit(ActionEvent event) {
-		mainController.close();
+		getMC().close();
 	}
 
 	@FXML
@@ -88,14 +91,14 @@ public class RegisterController {
 			if (person.isAdult()) {
 				person.register();
 				person = null; // :,)
-				mainController.switchToLogin();
+				getMC().switchToLogin();
 			} else {
-				mainController.showAddTutor(person);
+				getMC().showAddTutor(person);
 			}
 			
 			
 		} catch (SQLException e) {
-			mainController.close();
+			getMC().close();
 		} catch (NoSuchUserException e) {
 			// setting all label to error message
 			getMC().showMessagePrompt(
@@ -152,12 +155,10 @@ public class RegisterController {
 
 	@FXML
 	void switchToLogin(ActionEvent event) {
-		mainController.switchToLogin();
+		getMC().switchToLogin();
 	}
 
-	public void setMainController(MainController mC) {
-		mainController = mC;
-	}
+	
 
 	private boolean checkAll() {
 		return checkName() && checkSur() && checkID() && checkDate() && checkPlace();
@@ -181,10 +182,6 @@ public class RegisterController {
 
 	private boolean checkName() {
 		return !nameField.getText().isBlank();
-	}
-
-	public MainController getMC() {
-		return mainController;
 	}
 
 	public void emptySelector() {

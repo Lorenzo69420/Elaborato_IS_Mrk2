@@ -11,9 +11,12 @@ import model.Database;
 import model.NoSuchUserException;
 import model.Person;
 
-public class AddTutorController {
+public class AddTutorController extends AbstractController{
 
-	private MainController MC;
+	protected AddTutorController(MainController MC) {
+		super("AddTutor", MC);
+		stage.setScene(getScene());
+	}
 	private Person minor;
 
 	private Stage stage = new Stage();
@@ -26,42 +29,32 @@ public class AddTutorController {
 		String taxID = IDField.getText();
 		Person tutor;
 		if (taxID == null) {
-			MC.showMessagePrompt("Il codice fiscale non è valido", MC.getCloseHandler());
+			getMC().showMessagePrompt("Il codice fiscale non è valido", getMC().getCloseHandler());
 		} else {
 			try {
 				tutor = Person.get(taxID);
 				if (tutor.getTaxID().equals(minor.getTaxID())) {
-					MC.showMessagePrompt("Non puoi essere il tutore di te stesso", MC.getCloseHandler());
+					getMC().showMessagePrompt("Non puoi essere il tutore di te stesso", getMC().getCloseHandler());
 				} else if (!tutor.isAdult()) {
-					MC.showMessagePrompt("L'utente non è di maggiore età", MC.getCloseHandler());
+					getMC().showMessagePrompt("L'utente non è di maggiore età", getMC().getCloseHandler());
 				} else {
 					minor.register();
 					minor.addTutor(tutor);
-					MC.switchToLogin();
+					getMC().switchToLogin();
 					stage.close();
 				}
 			} catch (SQLException | NoSuchUserException e) {
 				if (e instanceof NoSuchUserException) {
-					MC.showMessagePrompt("Utente non trovato", MC.getCloseHandler());
+					getMC().showMessagePrompt("Utente non trovato", getMC().getCloseHandler());
 					return;
 				}
 				e.printStackTrace();
 			}
 		}
 	}
-
-	public void setMC(MainController mC) {
-		MC = mC;
-	}
-
-	public void setup(Person minor) {
+	protected void setup(Person minor) {
 		this.minor = minor;
 		stage.show();
 
 	}
-
-	public void setScene(Scene addTutorScene) {
-		this.stage.setScene(addTutorScene);
-	}
-
 }

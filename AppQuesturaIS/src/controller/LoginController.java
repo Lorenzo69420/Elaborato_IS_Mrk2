@@ -4,14 +4,15 @@ import java.sql.SQLException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import model.Database;
 import model.NoSuchUserException;
 import model.Person;
 
-public class LoginController {
+public class LoginController  extends AbstractController {
 
 	@FXML
 	private TextField IDField;
@@ -33,8 +34,10 @@ public class LoginController {
 
 	private String ID;
 	private Person logPerson;
-	private MainController mainController;
-
+	
+	protected LoginController (MainController MC) {
+		super("Login", MC);
+	}
 	@FXML
 	void adminLogReq(ActionEvent event) {
 		if (!checkField()) {
@@ -46,7 +49,7 @@ public class LoginController {
 			this.logPerson = Person.get(IDField.getText());
 
 			if (logPerson.isAdmin()) {
-				mainController.switchToActivitySetter();
+				getMC().switchToActivitySetter();
 			} else {
 				getMC().showMessagePrompt("L'utente selezionato non è admin", getMC().getCloseHandler());
 			}
@@ -54,7 +57,7 @@ public class LoginController {
 			getMC().showMessagePrompt(
 					"Il codice fiscale inserito non corrisponde a nessuna persona nell'anagrafica, "
 							+ "per ulteriori chiarementi contattare la mail aiuto@questura.anagrafica.it",
-					getMC().getCloseHandler());
+							getMC().getCloseHandler());
 		} catch (SQLException E) {
 			System.out.println("Database compro-fjDSVIAM...Database compromised");
 		}
@@ -62,7 +65,7 @@ public class LoginController {
 
 	@FXML
 	void exitApp(ActionEvent event) {
-		mainController.close();
+		getMC().close();
 	}
 
 	@FXML
@@ -76,7 +79,7 @@ public class LoginController {
 			this.logPerson = Person.get(IDField.getText());
 
 			if (logPerson.isRegister()) {
-				mainController.switchToActivityReservation();
+				getMC().switchToActivityReservation();
 			} else {
 				getMC().showMessagePrompt("L'utente selezionato non è registrato", getMC().getCloseHandler());
 			}
@@ -84,7 +87,7 @@ public class LoginController {
 			getMC().showMessagePrompt(
 					"Il codice fiscale inserito non corrisponde a nessuna persona nell'anagrafica, "
 							+ "per ulteriori chiarementi contattare la mail aiuto@questura.anagrafica.it",
-					getMC().getCloseHandler());
+							getMC().getCloseHandler());
 		} catch (SQLException E) {
 			System.out.println("Database compro-fjDSVIAM...Database compromised");
 		}
@@ -102,19 +105,11 @@ public class LoginController {
 
 	@FXML
 	void switchReg(ActionEvent event) {
-		mainController.switchToRegister();
-	}
-
-	public void setMainController(MainController mC) {
-		mainController = mC;
+		getMC().switchToRegister();
 	}
 
 	public Person getLogPerson() {
 		return logPerson;
-	}
-
-	public MainController getMC() {
-		return mainController;
 	}
 	
 	private boolean checkField() {

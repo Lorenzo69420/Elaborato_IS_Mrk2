@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +18,7 @@ import model.PoliceStation;
 import model.Reservation;
 import model.Reservation.ReservationType;
 
-public abstract class ActivityController {
+public abstract class ActivityController extends AbstractController{
 	@FXML
 	private ComboBox<String> activitySelector;
 	@FXML
@@ -45,22 +46,31 @@ public abstract class ActivityController {
 	@FXML
 	private Text text4;
 
-	private MainController mainController;
 	private LocalDate date;
 	private PoliceStation policeStation;
 	private ArrayList<Text> activityTexts;
 	private ArrayList<CheckBox> activityBoxs;
 	
+	protected ActivityController(MainController MC) {
+		super("ActivityReservation",MC);
+		setDescriptionText();
+		addAll();
+		populateSelector();
+	}
+	
 	private static String SAVE_ERROR_STRING = "Informazioni disallineate, prima di inserire la disponibilità premi "
 			+ "\"Conferma\" nuovamente";
 	
-	protected void setDescriptionText(String description) {
-		descriptionText.setText(description);
+	abstract protected void setDescriptionText();
+	
+	protected Text getDescriptionText() {
+		return descriptionText;
 	}
 
 	protected abstract String getUpdateErrorString();
 
 	protected abstract void insertReservation(int hour);
+	
 	
 	protected boolean checkBeforeUpdate() {
 		return checkPoliceStationSelector() && checkDatePicker();
@@ -123,7 +133,7 @@ public abstract class ActivityController {
 
 	@FXML
 	final void back(ActionEvent event) {
-		mainController.switchToLogin();
+		getMC().switchToLogin();
 	}
 
 	public final void addAll() {
@@ -157,10 +167,6 @@ public abstract class ActivityController {
 	}
 
 
-	public final void setMainController(MainController mainController) {
-		this.mainController = mainController;
-	}
-
 	public final LocalDate getDate() {
 		return date;
 	}
@@ -177,10 +183,16 @@ public abstract class ActivityController {
 		this.policeStation = policeStation;
 	}
 
-	public final void populateSelector(ObservableList<String> activityList, ObservableList<String> policeStationList) {
-		this.activitySelector.getItems().addAll(activityList);
-		this.policeStationSelector.getItems().addAll(policeStationList);
+	public final void populateSelector() {
+		
+		Arrays.asList(Reservation.ReservationType.values()).forEach(type -> activitySelector.getItems().add(type.toDisplayString()));
+		try {
+			this.policeStationSelector.getItems().addAll(FXCollections.observableArrayList(PoliceStation.getStations()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
+	
 
 	protected final ComboBox<String> getActivitySelector() {
 		return activitySelector;
@@ -202,9 +214,6 @@ public abstract class ActivityController {
 		return datePicker.getValue().equals(date) && policeStationSelector.getValue().equals(policeStation.getTown());
 	}
 	
-	protected MainController getMC() {
-		return mainController;
-	}
 	
 	protected void emptySelector() {
 		activitySelector.setValue(null);
