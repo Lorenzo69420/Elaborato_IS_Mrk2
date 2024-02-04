@@ -1,0 +1,1 @@
+- admin non puo rimuovere (prenotazioni)
