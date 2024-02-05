@@ -18,7 +18,7 @@ import model.PoliceStation;
 import model.Reservation;
 import model.Reservation.ReservationType;
 
-public abstract class ActivityController extends AbstractController{
+public abstract class ActivityController extends AbstractController {
 	@FXML
 	private ComboBox<String> activitySelector;
 	@FXML
@@ -98,7 +98,7 @@ public abstract class ActivityController extends AbstractController{
 	final void updateWindow() throws SQLException {
 		disableActivityBoxs();
 		if (!checkBeforeUpdate()) {
-			getMC().showMessagePrompt(getUpdateErrorString(), getMC().getCloseHandler());
+			getMC().showMessagePrompt(getUpdateErrorString(), getMC().getCloseHandler(), true);
 			return;
 		}
 
@@ -120,7 +120,7 @@ public abstract class ActivityController extends AbstractController{
 	@FXML
 	final void saveReservation(ActionEvent event) {
 		if (!checkBeforeSave()) {
-			getMC().showMessagePrompt(SAVE_ERROR_STRING, getMC().getCloseHandler());
+			getMC().showMessagePrompt(SAVE_ERROR_STRING, getMC().getCloseHandler(), true);
 			return;
 		}
 

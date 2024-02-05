@@ -3,7 +3,6 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -23,10 +22,11 @@ public class MessagePromptController extends AbstractController {
     @FXML
     private Button procedeButton;
 
-    public void setup(String message, EventHandler<ActionEvent> event) {
+    public void setup(String message, EventHandler<ActionEvent> event, boolean error) {
     	messageText.setText(message);
     	procedeButton.setOnAction(event);
     	promptStage.show();
+    	promptStage.setTitle(error ? "Errore" : "Successo");
     }
 	
 	public Stage getStage() {

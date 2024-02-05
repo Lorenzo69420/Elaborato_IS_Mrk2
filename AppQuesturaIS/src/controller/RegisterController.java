@@ -17,7 +17,7 @@ import javafx.scene.text.Text;
 import model.NoSuchUserException;
 import model.Person;
 
-public class RegisterController extends AbstractController{
+public class RegisterController extends AbstractController {
 
 	@FXML
 	private Text errorText;
@@ -64,11 +64,11 @@ public class RegisterController extends AbstractController{
 	private Label surLabel;
 
 	private Person person;
-	
+
 	protected RegisterController(MainController MC) {
-		super("Register",MC);
+		super("Register", MC);
 	}
-	
+
 	@FXML
 	void appExit(ActionEvent event) {
 		getMC().close();
@@ -78,7 +78,7 @@ public class RegisterController extends AbstractController{
 	void getPerson(ActionEvent event) {
 		if (!checkAll()) {
 			getMC().showMessagePrompt("Uno o più campi inseriti sono vuoti,\n inserisci tutti i campi in modo corretto",
-					getMC().getCloseHandler());
+					getMC().getCloseHandler(), true);
 			return;
 		}
 
@@ -95,8 +95,7 @@ public class RegisterController extends AbstractController{
 			} else {
 				getMC().showAddTutor(person);
 			}
-			
-			
+
 		} catch (SQLException e) {
 			getMC().close();
 		} catch (NoSuchUserException e) {
@@ -104,7 +103,7 @@ public class RegisterController extends AbstractController{
 			getMC().showMessagePrompt(
 					"Le credenziali indicate non corrispondono a nessuna persona nell'anagrafica, "
 							+ "per ulteriori chiarementi contattare la mail aiuto@questura.anagrafica.it",
-					getMC().getCloseHandler());
+					getMC().getCloseHandler(), true);
 		}
 	}
 
@@ -157,8 +156,6 @@ public class RegisterController extends AbstractController{
 	void switchToLogin(ActionEvent event) {
 		getMC().switchToLogin();
 	}
-
-	
 
 	private boolean checkAll() {
 		return checkName() && checkSur() && checkID() && checkDate() && checkPlace();

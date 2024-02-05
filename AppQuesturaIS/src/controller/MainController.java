@@ -114,8 +114,8 @@ public class MainController {
 		start();
 	}
 
-	public void showMessagePrompt(String message, EventHandler<ActionEvent> event) {
-		msgPromptController.setup(message, event);
+	public void showMessagePrompt(String message, EventHandler<ActionEvent> event, boolean error) {
+		msgPromptController.setup(message, event, error);
 	}
 	
 	public void showAddTutor(Person minor) {

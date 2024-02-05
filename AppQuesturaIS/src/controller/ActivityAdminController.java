@@ -9,10 +9,11 @@ public class ActivityAdminController extends ActivityController {
 	private static String UPDATE_ERROR_STRING = "Uno o più campi sono vuoti. Inserisci correttamente la questura e "
 			+ "la data che desideri";
 	private static String DESCRIPTION = "Benvenuto nel sistema di inserimento degli appuntamenti da prendere in questura";
-	
+
 	protected ActivityAdminController(MainController MC) {
 		super(MC);
 	}
+
 	@Override
 	public void setDescription() {
 		getDescriptionText().setText(DESCRIPTION);
@@ -28,7 +29,7 @@ public class ActivityAdminController extends ActivityController {
 	protected void insertReservation(int hour) {
 		if (!checkIntegrity()) {
 			getMC().showMessagePrompt("Se vuoi cambiare questura o data, premi \"Conferma\" nuovamente",
-					getMC().getCloseHandler());
+					getMC().getCloseHandler(), true);
 			return;
 		}
 
@@ -37,7 +38,7 @@ public class ActivityAdminController extends ActivityController {
 		try {
 			reservation.insert();
 			// using new message prompt : test 1
-			getMC().showMessagePrompt("Inserimento andato a buon fine", getMC().getCloseHandler());
+			getMC().showMessagePrompt("Inserimento andato a buon fine", getMC().getCloseHandler(), false);
 		} catch (SQLException e) {
 			System.err.println("C'è stato un errore nell'inserimento della prenotazione: " + e.getMessage());
 		}

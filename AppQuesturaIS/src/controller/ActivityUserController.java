@@ -15,10 +15,11 @@ public class ActivityUserController extends ActivityController {
 	private Person currentPerson;
 	private static String UPDATE_ERROR_STRING = "Riempi tutti e tre i campi richiesti prima di premere \"Conferma\"";
 	private static String DESCRIPTION = "Benvenuto nel sistema di prenotazione per l'emissione e il ritiro dei passaporti";
-	
+
 	protected ActivityUserController(MainController MC) {
 		super(MC);
 	}
+
 	@Override
 	public void setDescription() {
 		getDescriptionText().setText(DESCRIPTION);
@@ -57,7 +58,8 @@ public class ActivityUserController extends ActivityController {
 		}
 
 		if (!reservation.getType().equals(getReservationType(activity))) {
-			getMC().showMessagePrompt("Sono state modificate le disponibilità, ecco quelle aggiornate", getMC().getCloseHandler());
+			getMC().showMessagePrompt("Sono state modificate le disponibilità, ecco quelle aggiornate",
+					getMC().getCloseHandler(), true);
 			try {
 				updateWindow();
 				disableActivityBoxs();
@@ -69,19 +71,17 @@ public class ActivityUserController extends ActivityController {
 
 		try {
 			reservation.book(currentPerson);
-			getMC().showMessagePrompt(getDocument(reservation), getMC().getCloseHandler());
+			getMC().showMessagePrompt(getDocument(reservation), getMC().getCloseHandler(), false);
 			updateWindow();
 		} catch (NotBookableException e) {
-			getMC().showMessagePrompt(getDisplayError(e.getType()), getMC().getCloseHandler());
+			getMC().showMessagePrompt(getDisplayError(e.getType()), getMC().getCloseHandler(), true);
 		} catch (Exception e) {
 		}
 	}
 
 	private String getDocument(Reservation reservation) {
-		String res = "Documenti e ricevute da portare: "
-				+ "modulo stampato della richiesta passaporto, "
-				+ "documento di riconoscimento valido, "
-				+ "2 foto formato tessera identiche e recenti, "
+		String res = "Documenti e ricevute da portare: " + "modulo stampato della richiesta passaporto, "
+				+ "documento di riconoscimento valido, " + "2 foto formato tessera identiche e recenti, "
 				+ "ricevuta del pagamento a mezzo c/c di 42,50 euro per il passaporto ordinario, "
 				+ "contrassegno amministrativo per passaporto da 73,50 euro";
 		switch (reservation.getType()) {
