@@ -1,18 +1,12 @@
 package testing;
 
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.Calendar;
 
 import model.Database;
-import model.NotBookableException;
 import model.Passport;
 import model.Passport.PassportState;
 import model.Person;
 import model.PoliceStation;
-import model.Reservation;
-import model.Reservation.ReservationState;
-import model.Reservation.ReservationType;
 
 public class MainTest {
 
