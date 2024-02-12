@@ -20,17 +20,16 @@ public class MainTest {
 		try {
 			Database.init("jdbc:postgresql://localhost:5432/elaborato_is", "admin", "password", true);
 
-			Person sbatachiones = new Person("TIA", "Mattias", "Giambirtones", 't', "Terronia",
-					new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build(), "Africa", 69420);
-			sbatachiones.insert();
-			sbatachiones.register();
+			Person edi = new Person("EDI", "Edi", "De candido", 'm', "Trentino",
+					new Calendar.Builder().setDate(2001, Calendar.DECEMBER, 27).build(), null, 123456);
+			edi.insert();
+			edi.register();
 
-			Person IlKingNeto = new Person("CH4D", "Neto", "Whites", '$', "vostri muri",
-					new Calendar.Builder().setDate(2002, Calendar.SEPTEMBER, 14).build(), "Supremo", 9001);
-			IlKingNeto.insert();
-			IlKingNeto.makeAdmin();
-			IlKingNeto.register();
-			sbatachiones.addTutor(IlKingNeto);
+			Person lorenzo = new Person("LOR", "Lorenzo", "Bianchi", 'm', "Verona",
+					new Calendar.Builder().setDate(2002, Calendar.SEPTEMBER, 14).build(), null, 789);
+			lorenzo.insert();
+			lorenzo.makeAdmin();
+			lorenzo.register();
 			
 			
 
@@ -42,46 +41,15 @@ public class MainTest {
 			ps.insert();
 			ps = new PoliceStation("Belluno");
 			ps.insert();
+			
 
-			Passport pass = new Passport("TIA", new Calendar.Builder().setDate(2013, Calendar.JANUARY, 23).build(),
+			Passport pass = new Passport("EDI", new Calendar.Builder().setDate(2013, Calendar.JANUARY, 23).build(),
 					PassportState.VALID, ps);
 			pass.insert();
-
-			Reservation res = new Reservation(ReservationType.COLLECTION, LocalDateTime.now(), pass, sbatachiones, ps,
-					ReservationState.BOOKABLE);
-			res.insert();
-			res = new Reservation(ReservationType.ISSUANCE_LOST, LocalDateTime.of(2023, Month.JANUARY, 1, 9, 0),
-					new PoliceStation("Verona"));
-			res.insert();
-			res = new Reservation(ReservationType.ISSUANCE_NEW, LocalDateTime.of(2023, Month.JANUARY, 1, 9, 0),
-					new PoliceStation("Verona"));
-			res.insert();
-			res = new Reservation(ReservationType.ISSUANCE_EXPIRED, LocalDateTime.of(2023, Month.JANUARY, 22, 10, 0),
-					null, sbatachiones, ps, ReservationState.BOOKED_UP);
-			res.book(sbatachiones);
-			res = new Reservation(ReservationType.COLLECTION, LocalDateTime.of(2024, Month.FEBRUARY, 2, 10, 0), ps);
-			res.book(sbatachiones);
-			res = new Reservation(ReservationType.COLLECTION, LocalDateTime.of(2023, Month.JANUARY, 1, 10, 0), pass,
-					sbatachiones, ps, ReservationState.BOOKED_UP);
-			res.insert();
-
-			Person sbat = new Person("TIA", "Mattias", "Giambirtones", "Terronia",
-					new Calendar.Builder().setDate(2002, Calendar.DECEMBER, 27).build());
-			sbat.exists();
-
-			Person fethe = new Person("FETHER", "Federico", "Buchi", "Buco di culo di Illasi",
-					new Calendar.Builder().setDate(2001, Calendar.DECEMBER, 29).build());
-			fethe.insert();
-			fethe.register();
 			
-			Person teo = new Person("TEO", "Leonardo", "Baldassari", "Golosangeles",
-					new Calendar.Builder().setDate(2001, Calendar.OCTOBER, 10).build());
-			teo.insert();
+			
+			
 			Database.close();
-			System.out.println("Setuppato il database");
-		} catch (NotBookableException e) {
-			System.out.println(e.getType());
-			throw e;
 		} catch (Exception e) {
 			throw e;
 		}
