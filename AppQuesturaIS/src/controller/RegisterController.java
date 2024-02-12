@@ -70,12 +70,12 @@ public class RegisterController extends AbstractController {
 	}
 
 	@FXML
-	void appExit(ActionEvent event) {
+	protected void appExit(ActionEvent event) {
 		getMC().close();
 	}
 
 	@FXML
-	void getPerson(ActionEvent event) {
+	protected void getPerson(ActionEvent event) {
 		if (!checkAll()) {
 			getMC().showMessagePrompt("Uno o più campi inseriti sono vuoti,\n inserisci tutti i campi in modo corretto",
 					getMC().getCloseHandler(), true);
@@ -108,7 +108,7 @@ public class RegisterController extends AbstractController {
 	}
 
 	@FXML
-	void setBirhdate(ActionEvent event) {
+	protected void setBirhdate(ActionEvent event) {
 		if (dateField.getValue().isAfter(LocalDate.now()) || dateField.getValue().toString().equals("")) {
 			dateLabel.setText("Inserisci una data valida");
 		} else {
@@ -117,7 +117,7 @@ public class RegisterController extends AbstractController {
 	}
 
 	@FXML
-	void setPlace(ActionEvent event) {
+	protected void setPlace(ActionEvent event) {
 		if (placeField.getText().equals("")) {
 			placeLabel.setText("Inserisci un luogo valido");
 		} else {
@@ -126,7 +126,7 @@ public class RegisterController extends AbstractController {
 	}
 
 	@FXML
-	void setID(ActionEvent event) {
+	protected void setID(ActionEvent event) {
 		if (IDField.getText().equals("")) {
 			IDLabel.setText("Inserisci un Codice Fiscale valido");
 		} else {
@@ -135,7 +135,7 @@ public class RegisterController extends AbstractController {
 	}
 
 	@FXML
-	void setName(ActionEvent event) {
+	protected void setName(ActionEvent event) {
 		if (nameField.getText().equals("")) {
 			nameLabel.setText("Inserisci un nome valido");
 		} else {
@@ -144,7 +144,7 @@ public class RegisterController extends AbstractController {
 	}
 
 	@FXML
-	void setSurname(ActionEvent event) {
+	protected void setSurname(ActionEvent event) {
 		if (surField.getText().equals("")) {
 			surLabel.setText("Inserisci un cognome valido");
 		} else {
@@ -153,7 +153,7 @@ public class RegisterController extends AbstractController {
 	}
 
 	@FXML
-	void switchToLogin(ActionEvent event) {
+	protected void switchToLogin(ActionEvent event) {
 		getMC().switchToLogin();
 	}
 
@@ -181,7 +181,7 @@ public class RegisterController extends AbstractController {
 		return !nameField.getText().isBlank();
 	}
 
-	public void emptySelector() {
+	protected void emptySelector() {
 		IDField.setText(null);
 		nameField.setText(null);
 		surField.setText(null);

@@ -38,7 +38,7 @@ public class LoginController extends AbstractController {
 	}
 
 	@FXML
-	void adminLogReq(ActionEvent event) {
+	protected void adminLogReq(ActionEvent event) {
 		if (!checkField()) {
 			getMC().showMessagePrompt("Inserisci un Codice Fiscale valido", getMC().getCloseHandler(), true);
 			return;
@@ -63,12 +63,12 @@ public class LoginController extends AbstractController {
 	}
 
 	@FXML
-	void exitApp(ActionEvent event) {
+	protected void exitApp(ActionEvent event) {
 		getMC().close();
 	}
 
 	@FXML
-	void logReq(ActionEvent event) {
+	protected void logReq(ActionEvent event) {
 		if (!checkField()) {
 			getMC().showMessagePrompt("Inserisci un Codice Fiscale valido", getMC().getCloseHandler(), true);
 			return;
@@ -94,7 +94,7 @@ public class LoginController extends AbstractController {
 	}
 
 	@FXML
-	void setName(ActionEvent event) {
+	protected void setName(ActionEvent event) {
 		if (checkField()) {
 			getMC().showMessagePrompt("Inserisci un ID valido", getMC().getCloseHandler(), true);
 		} else {
@@ -103,11 +103,11 @@ public class LoginController extends AbstractController {
 	}
 
 	@FXML
-	void switchReg(ActionEvent event) {
+	protected void switchReg(ActionEvent event) {
 		getMC().switchToRegister();
 	}
 
-	public Person getLogPerson() {
+	protected Person getLogPerson() {
 		return logPerson;
 	}
 

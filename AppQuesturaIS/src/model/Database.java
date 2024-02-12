@@ -3,6 +3,7 @@ package model;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -57,6 +58,27 @@ public class Database {
 			dropTable(true);
 			createTable();
 		}
+		updatePassport();
+	}
+
+	protected static void updatePassport() throws SQLException {
+		var query = connection
+				.prepareStatement("SELECT * FROM passport WHERE release_date <= CURRENT_DATE AND state = ?");
+		query.setString(1, PassportState.NOT_COLLECTED.toString());
+		var resultQuery = query.executeQuery();
+		while (resultQuery.next()) {
+			var passport = resultQueryToPassport(resultQuery);
+			var update = connection.prepareStatement("UPDATE passport SET state = ? WHERE tax_id = ? AND state = ?");
+			update.setString(1, PassportState.EXPIRED.toString());
+			update.setString(2, passport.getTaxID());
+			update.setString(3, PassportState.VALID.toString());
+			update.executeUpdate();
+			passport.changeState(PassportState.VALID);
+		}
+		connection
+				.prepareStatement(
+						"UPDATE passport SET state = 'EXPIRED' WHERE expiry_date <= CURRENT_DATE AND state = 'VALID'")
+				.executeUpdate();
 	}
 
 	public static void close() throws SQLException {

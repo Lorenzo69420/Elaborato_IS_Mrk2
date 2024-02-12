@@ -9,7 +9,8 @@ public class NotBookableException extends Exception {
 		NOT_EXPIRED, 
 		MISSING_PASSPORT, 
 		ALREDY_BOOKED, 
-		EXPIRED
+		EXPIRED, 
+		TIME_TRAVEL
 	}
 	
 	private final Types type;

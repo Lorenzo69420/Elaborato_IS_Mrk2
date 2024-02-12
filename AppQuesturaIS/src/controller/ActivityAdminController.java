@@ -2,6 +2,7 @@ package controller;
 
 import java.sql.SQLException;
 
+import model.NotBookableException;
 import model.Reservation;
 
 public class ActivityAdminController extends ActivityController {
@@ -15,7 +16,7 @@ public class ActivityAdminController extends ActivityController {
 	}
 
 	@Override
-	public void setDescription() {
+	protected void setDescription() {
 		getDescriptionText().setText(DESCRIPTION);
 		getSaveButton().setText("Inserisci");
 	}
@@ -41,6 +42,8 @@ public class ActivityAdminController extends ActivityController {
 			getMC().showMessagePrompt("Inserimento andato a buon fine", getMC().getCloseHandler(), false);
 		} catch (SQLException e) {
 			System.err.println("C'è stato un errore nell'inserimento della prenotazione: " + e.getMessage());
+		} catch (NotBookableException e) {
+			getMC().showMessagePrompt("Inserimento di : " + reservation.getType().toDisplayString() + " non riuscito, è gia presente un appuntamento in quella fascia oraria", getMC().getCloseHandler(), true);
 		}
 	}
 

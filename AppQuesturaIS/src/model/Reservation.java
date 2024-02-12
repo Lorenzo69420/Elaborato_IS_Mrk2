@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import model.NotBookableException.Types;
+import model.Passport.PassportState;
 
 public class Reservation {
 	public enum ReservationState {
@@ -59,12 +60,19 @@ public class Reservation {
 		this.place = place;
 	}
 
-	public void insert() throws SQLException {
+	public void insert() throws SQLException, NotBookableException {
+		Reservation completeRes = getCompleteReservation();
+		if (completeRes != null && completeRes.getState().equals(ReservationState.BOOKED_UP)) {
+			throw new NotBookableException(Types.ALREDY_BOOKED);
+		}
 		Database.insert(this);
 	}
 
 	public void book(Person person) throws SQLException, NotBookableException {
 		Reservation request = person.getRequest();
+		Passport lastPassport = null;
+		PassportState newState = null;
+
 		switch (this.type) {
 		case COLLECTION:
 			if (request == null) {
@@ -79,7 +87,7 @@ public class Reservation {
 			Database.deleteRequest(person);
 			break;
 		case ISSUANCE_NEW:
-			var lastPassport = person.getLastPassport();
+			lastPassport = person.getLastPassport();
 			if (lastPassport != null) {
 				throw new NotBookableException(Types.ALREDY_HAVE_PASSPORT);
 			}
@@ -90,7 +98,7 @@ public class Reservation {
 				throw new NotBookableException(Types.MISSING_PASSPORT);
 			}
 
-			Calendar bookableExpired = (Calendar) lastPassport.getExpiryDate().clone();
+			Calendar bookableExpired = (Calendar)lastPassport.getExpiryDate().clone();
 			bookableExpired.add(Calendar.MONTH, -6);
 			if (bookableExpired.after(this.getCalendarDate())) {
 				throw new NotBookableException(Types.NOT_EXPIRED);
@@ -99,6 +107,7 @@ public class Reservation {
 		case ISSUANCE_DAMAGED:
 		case ISSUANCE_STOLEN:
 		case ISSUANCE_LOST:
+			newState = getPassportState();
 			lastPassport = person.getLastPassport();
 			if (lastPassport == null) {
 				throw new NotBookableException(Types.MISSING_PASSPORT);
@@ -112,17 +121,31 @@ public class Reservation {
 			break;
 		}
 
+		if (lastPassport != null && this.getCalendarDate().before(lastPassport.getReleaseDate())) {
+			throw new NotBookableException(Types.TIME_TRAVEL);
+		}
+
 		if (this.type != ReservationType.COLLECTION) {
 			if (request != null) {
 				throw new NotBookableException(Types.ALREDY_BOOKED);
 			}
 			this.bookedBy = person;
 			Database.insertRequest(this);
+			if (newState != null) {
+				lastPassport.changeState(newState);
+			}
 		}
 
 		this.bookedBy = person;
 		this.state = ReservationState.BOOKED_UP;
 		Database.book(this);
+
+		if (this.type == ReservationType.COLLECTION) {
+			Passport passport = new Passport(this.getBookedBy().getTaxID(), this.getCalendarDate(),
+					PassportState.NOT_COLLECTED, this.getPlace());
+			passport.insert();
+		}
+		Database.updatePassport();
 	}
 
 	// TODO LORE SISTEMA STA ROBA, GRZ
@@ -132,6 +155,19 @@ public class Reservation {
 			throw new Exception();
 		}
 		this.state = newState;
+	}
+	
+	private PassportState getPassportState() {
+		switch (this.type) {
+		case ISSUANCE_DAMAGED:
+			return PassportState.DAMAGED;
+		case ISSUANCE_STOLEN:
+			return PassportState.STOLEN;
+		case ISSUANCE_LOST:
+			return PassportState.LOST;
+		default:
+			return null;
+		}
 	}
 
 	public Reservation getCompleteReservation() throws SQLException {

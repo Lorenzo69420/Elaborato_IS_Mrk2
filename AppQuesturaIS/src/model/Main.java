@@ -37,7 +37,7 @@ public class Main {
 			ps = new PoliceStation("Belluno");
 			ps.insert();
 
-			Passport pass = new Passport("TIA", new Calendar.Builder().setDate(2020, Calendar.JANUARY, 23).build(),
+			Passport pass = new Passport("TIA", new Calendar.Builder().setDate(2000, Calendar.JANUARY, 23).build(),
 					PassportState.VALID, ps);
 			pass.insert();
 
@@ -54,10 +54,10 @@ public class Main {
 					null, sbatachiones, ps, ReservationState.BOOKED_UP);
 			//res.book(sbatachiones);
 			res = new Reservation(ReservationType.COLLECTION, LocalDateTime.of(2024, Month.FEBRUARY, 2, 10, 0), ps);
-			res.book(sbatachiones);
+			//res.book(sbatachiones);
 			res = new Reservation(ReservationType.COLLECTION, LocalDateTime.of(2023, Month.JANUARY, 1, 10, 0), pass,
 					sbatachiones, ps, ReservationState.BOOKED_UP);
-			res.insert();
+			//res.insert();
 
 			@SuppressWarnings("unused")
 			Person sbat = new Person("TIA", "Mattias", "Giambirtones", "Terronia",

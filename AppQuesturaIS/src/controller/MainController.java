@@ -48,7 +48,7 @@ public class MainController {
 	// AddTutor Page
 	private AddTutorController addTutorController;
 
-	public EventHandler<ActionEvent> getCloseHandler() {
+	protected EventHandler<ActionEvent> getCloseHandler() {
 		return new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -83,29 +83,30 @@ public class MainController {
 		// AddTutor setup 
 		addTutorController = new AddTutorController(this);
 		
-		//starting app
+	}
+	public void startApp() {
 		switchToLogin();
 	}
-
-	public void start() {
+	
+	protected void start() {
 		
 		mainStage.show();
 	}
 
-	public void switchToLogin() {
+	protected void switchToLogin() {
 		mainStage.setScene(logController.getScene());
 		mainStage.setTitle("Login");
 		start();
 	}
 
-	public void switchToRegister() {
+	protected void switchToRegister() {
 		regController.emptySelector();
 		mainStage.setScene(regController.getScene());
 		mainStage.setTitle("Registrazione");
 		start();
 	}
 
-	public void switchToActivityReservation() {
+	protected void switchToActivityReservation() {
 		actUserController.emptySelector();
 		currentPerson = logController.getLogPerson();
 		actUserController.setPerson(currentPerson);
@@ -114,26 +115,26 @@ public class MainController {
 		start();
 	}
 
-	public void showMessagePrompt(String message, EventHandler<ActionEvent> event, boolean error) {
+	protected void showMessagePrompt(String message, EventHandler<ActionEvent> event, boolean error) {
 		msgPromptController.setup(message, event, error);
 	}
 	
-	public void showAddTutor(Person minor) {
+	protected void showAddTutor(Person minor) {
 		addTutorController.setup(minor);
 	}
 
-	public MessagePromptController getPromptController() {
+	protected MessagePromptController getPromptController() {
 		return msgPromptController;
 	}
 
-	public void switchToActivitySetter() {
+	protected void switchToActivitySetter() {
 		actAdminController.emptySelector();
 		mainStage.setScene(actAdminController.getScene());
 		mainStage.setTitle("Disponibilità");
 		start();
 	}
 
-	public void close() {
+	protected void close() {
 		try {
 			Database.close();
 		} catch (Exception e ) {

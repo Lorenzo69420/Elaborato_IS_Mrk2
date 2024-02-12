@@ -95,7 +95,7 @@ public abstract class ActivityController extends AbstractController {
 	}
 	
 	@FXML
-	final void updateWindow() throws SQLException {
+	protected final void updateWindow() throws SQLException {
 		disableActivityBoxs();
 		if (!checkBeforeUpdate()) {
 			getMC().showMessagePrompt(getUpdateErrorString(), getMC().getCloseHandler(), true);
@@ -118,7 +118,7 @@ public abstract class ActivityController extends AbstractController {
 	}
 
 	@FXML
-	final void saveReservation(ActionEvent event) {
+	protected final void saveReservation(ActionEvent event) {
 		if (!checkBeforeSave()) {
 			getMC().showMessagePrompt(SAVE_ERROR_STRING, getMC().getCloseHandler(), true);
 			return;
@@ -141,7 +141,7 @@ public abstract class ActivityController extends AbstractController {
 		getMC().switchToLogin();
 	}
 
-	public final void addAll() {
+	protected final void addAll() {
 		activityTexts = new ArrayList<>(List.of(text1, text2, text3, text4));
 		activityBoxs = new ArrayList<>(List.of(select1, select2, select3, select4));
 		disableActivityBoxs();
@@ -172,23 +172,23 @@ public abstract class ActivityController extends AbstractController {
 	}
 
 
-	public final LocalDate getDate() {
+	protected final LocalDate getDate() {
 		return date;
 	}
 
-	public final void setDate(LocalDate date) {
+	protected final void setDate(LocalDate date) {
 		this.date = date;
 	}
 
-	public final PoliceStation getPoliceStation() {
+	protected final PoliceStation getPoliceStation() {
 		return policeStation;
 	}
 
-	public final void setPoliceStation(PoliceStation policeStation) {
+	protected final void setPoliceStation(PoliceStation policeStation) {
 		this.policeStation = policeStation;
 	}
 
-	public final void populateSelector() {
+	protected final void populateSelector() {
 		
 		Arrays.asList(Reservation.ReservationType.values()).forEach(type -> activitySelector.getItems().add(type.toDisplayString()));
 		try {

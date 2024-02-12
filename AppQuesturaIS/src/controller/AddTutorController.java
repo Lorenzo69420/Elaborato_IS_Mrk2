@@ -24,7 +24,7 @@ public class AddTutorController extends AbstractController {
 	private TextField IDField;
 
 	@FXML
-	void addTutor(ActionEvent event) {
+	protected void addTutor(ActionEvent event) {
 		String taxID = IDField.getText();
 		Person tutor;
 		if (taxID == null) {

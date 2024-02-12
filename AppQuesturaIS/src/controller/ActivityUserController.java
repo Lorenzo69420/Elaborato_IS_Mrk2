@@ -21,7 +21,7 @@ public class ActivityUserController extends ActivityController {
 	}
 
 	@Override
-	public void setDescription() {
+	protected void setDescription() {
 		getDescriptionText().setText(DESCRIPTION);
 		getSaveButton().setText("Prenota");
 	}
@@ -128,6 +128,8 @@ public class ActivityUserController extends ActivityController {
 				bookableDate.add(Calendar.MONTH, 1);
 				return "La data di emissione del suo passaporto sarà disponibile dal giorno "
 						+ dateFormatter.format(bookableDate.getTime()) + " in poi";
+			case TIME_TRAVEL:
+				return "La data selezionata è antecedente al rilascio del suo ultimo passaporto valido";
 			default:
 				return "Errore non definito ops, aggiungi in getDisplayError";
 			}
@@ -136,7 +138,7 @@ public class ActivityUserController extends ActivityController {
 		}
 	}
 
-	public void setPerson(Person person) {
+	protected void setPerson(Person person) {
 		currentPerson = person;
 	}
 }

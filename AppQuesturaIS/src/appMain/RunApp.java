@@ -6,11 +6,10 @@ import javafx.stage.Stage;
 public class RunApp extends Application {
 
 	@Override
-	public void start(Stage stage) throws Exception {
-		//LoginPage LP = new LoginPage();
-		//new SelectPage();
+	public void start(Stage stage) {
 		
 		MainController MC = new MainController(stage);
+		MC.startApp();
 	}
 
 	public static void main(String[] args) {

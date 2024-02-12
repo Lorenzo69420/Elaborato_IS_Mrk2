@@ -10,7 +10,8 @@ public class Passport {
 		EXPIRED,
 		LOST,
 		STOLEN,
-		DAMAGED
+		DAMAGED,
+		NOT_COLLECTED
 	}
 	
 	private final String taxID;
